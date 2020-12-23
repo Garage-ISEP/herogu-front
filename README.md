@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Project
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.0.
@@ -25,3 +26,6 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+=======
+# Garage herogu-front
+>>>>>>> fe70a7bcd52e0ee063b0a1cdf6587c24c31556b5
