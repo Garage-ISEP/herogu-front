@@ -1,20 +1,9 @@
 <div class="wrapper">
-  <h1>Bienvenu sur Herogu, le service d'hébergement de GarageIsep pour les isépiens</h1>
-
-  <div class="auth">
-    <h3>Connexion</h3>
-    <form>
-      <mat-form-field appearance="outline">
-        <mat-label>Code élève</mat-label>
-        <input matInput placeholder="thpr60710" name="code" [(ngModel)]="connexionData.code"/>
-        <mat-error>Identifiants incorrects</mat-error>
-      </mat-form-field><br>
-      <mat-form-field appearance="outline">
-        <mat-label>Mot de passe</mat-label>
-        <input type="password" matInput name="password" [(ngModel)]="connexionData.password">
-        <mat-error>Identifiants incorrects</mat-error>
-      </mat-form-field><br>
-      <button type="submit" mat-stroked-button>Me connecter</button>
-    </form>
-  </div>
+  <h1>Bienvenu sur Herogu, le service d'hébergement de GarageIsep pour les isépiens !</h1>
+  <mat-divider [vertical]="false"></mat-divider>
+  <app-login *ngIf="isLoging"></app-login>
+  <app-register *ngIf="!isLoging"></app-register>
+  <mat-divider [vertical]="false" style="width: 30%; margin: auto"></mat-divider>
+  <button button color="accent" class="no-account" mat-stroked-button *ngIf="isLoging" (click)="isLoging = false" >Je n'ai pas encore de compte !</button>
+  <button button color="accent" class="no-account" mat-stroked-button *ngIf="!isLoging" (click)="isLoging = true" >J'ai déjà un compte !</button>
 </div>
