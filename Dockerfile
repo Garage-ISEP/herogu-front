@@ -15,4 +15,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
-COPY --from=build /app/dist/Laura-Dashboard /app
+COPY --from=build /app/dist /app
