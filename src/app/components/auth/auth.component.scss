@@ -13,4 +13,11 @@
     text-align: center;
     margin: 20px auto;
   }
+  @media (max-width: 500px) {
+    margin: 20px 5% 0 5%;
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    };
+  }
 }
