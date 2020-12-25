@@ -5,5 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class ApiService {
 
+  private _jwt: any;
+
   constructor() { }
+
+  get logged(): boolean {
+    return false;
+  }
 }
