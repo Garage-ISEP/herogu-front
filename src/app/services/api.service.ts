@@ -20,7 +20,7 @@ export class ApiService implements OnInit {
   }
 
   get logged(): boolean {
-    return this._token.length > 0;
+    return this._token?.length > 0;
   }
 
   public async login(body: LoginRequestModel): Promise<"bad_password"|"bad_id"|"error"> {
