@@ -1,0 +1,9 @@
+<div class="wrapper">
+  <h1>Bienvenu sur Herogu, le service d'hébergement de GarageIsep pour les isépiens !</h1>
+  <mat-divider [vertical]="false"></mat-divider>
+  <app-login *ngIf="isLoging"></app-login>
+  <app-register *ngIf="!isLoging"></app-register>
+  <mat-divider [vertical]="false" style="width: 30%; margin: auto"></mat-divider>
+  <button button color="accent" class="no-account" mat-stroked-button *ngIf="isLoging" (click)="isLoging = false" >Je n'ai pas encore de compte !</button>
+  <button button color="accent" class="no-account" mat-stroked-button *ngIf="!isLoging" (click)="isLoging = true" >J'ai déjà un compte !</button>
+</div>
