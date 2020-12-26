@@ -24,14 +24,14 @@ export class RegisterComponent {
   ) { }
 
 
-  public submitAuth() {
+  public async submitAuth() {
     if (this.connexionData.password != this.connexionData.confirmPassword) {
       this.submitStatus = "cannot";
       this._snackBar.open("Les mots de passes ne concordent pas !", null, { duration: 4000 });
       return;
     }
     this.submitStatus = "loading";
-    this._apiService
+    // await this._apiService.register();
   }
 
   public checkForm(form: HTMLFormElement) {

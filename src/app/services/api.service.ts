@@ -1,4 +1,4 @@
-import { LoginResponseModel } from './../models/api/login.model';
+import { LoginResponseModel, RegisterRequestModel } from './../models/api/login.model';
 import { LoginRequestModel } from '../models/api/login.model';
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
@@ -25,7 +25,7 @@ export class ApiService implements OnInit {
 
   public async login(body: LoginRequestModel): Promise<"bad_password"|"bad_id"|"error"> {
     try {
-      const data = await this._http.post<LoginResponseModel>(this.rootUrl + "/auth/login", body).toPromise();
+      const data = await this.postRequest<LoginRequestModel, LoginResponseModel>("/auth/login", body);
       if (!data.token)
         return "error";
       localStorage.setItem("token", data.token);
@@ -41,6 +41,15 @@ export class ApiService implements OnInit {
         default:
           return "error";
       }
+    }
+  }
+  public async register(body: RegisterRequestModel): Promise<"sucess"|"error"> {
+    try {
+      await this.postRequest<RegisterRequestModel, void>("/auth/register", body);
+      return "sucess";
+    } catch (e) {
+      console.error(e);
+      return "error";
     }
   }
 
@@ -69,9 +78,5 @@ export class ApiService implements OnInit {
         "Content-Type": "application/json"
       }
     }).toPromise();
-  }
-
-  public register() {
-
   }
 }
