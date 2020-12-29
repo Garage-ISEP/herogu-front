@@ -11,4 +11,5 @@ export interface RegisterRequestModel {
   password: string;
   student_id: string;
   email: string;
+  captchaToken: string;
 }

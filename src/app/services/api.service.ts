@@ -6,26 +6,22 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService implements OnInit {
+export class ApiService {
 
-  private _token: string;
-  private readonly rootUrl = environment.apiUrl
+  private _token: string = localStorage.getItem("token");
 
   constructor(
     private readonly _http: HttpClient
   ) { }
 
-  public ngOnInit() {
-    this._token = localStorage.getItem("token");
-  }
-
   get logged(): boolean {
     return this._token?.length > 0;
   }
 
-  public async login(body: LoginRequestModel): Promise<"bad_password"|"bad_id"|"error"> {
+  public async login(body: LoginRequestModel): Promise<"bad_password"|"bad_id"|"error"|"success"> {
     try {
-      const data = await this.postRequest<LoginRequestModel, LoginResponseModel>("/auth/login", body);
+      const data = await this._http.post<LoginResponseModel>(environment.apiUrl + "/auth/login", body).toPromise();
+      console.log(data);
       if (!data.token)
         return "error";
       localStorage.setItem("token", data.token);
@@ -42,19 +38,24 @@ export class ApiService implements OnInit {
           return "error";
       }
     }
+    return "success";
   }
-  public async register(body: RegisterRequestModel): Promise<"sucess"|"error"> {
+
+  public async register(body: RegisterRequestModel): Promise<"sucess"|"error"|"bad_request"> {
     try {
-      await this.postRequest<RegisterRequestModel, void>("/auth/register", body);
-      return "sucess";
+      await this.postRequest<RegisterRequestModel, void>("/users", body, false);
     } catch (e) {
       console.error(e);
-      return "error";
+      const error: HttpErrorResponse = e;
+      if (error.status == 400)
+        return "bad_request";
+      else
+        return "error";
     }
   }
 
   public async getRequest<R>(path: string): Promise<R> {
-    return await this._http.get<R>(path, {
+    return await this._http.get<R>(environment.apiUrl + path, {
       headers: {
         "auth": this._token,
         "Content-Type": "application/json"
@@ -62,21 +63,21 @@ export class ApiService implements OnInit {
     }).toPromise();
   }
 
-  public async postRequest<Q, R>(path: string, body: Q): Promise<R> {
-    return await this._http.post<R>(path, body, {
-      headers: {
+  public async postRequest<Q, R>(path: string, body: Q, protec = true): Promise<R> {
+    return await this._http.post<R>(environment.apiUrl + path, body, {
+      headers: protec ? {
         "auth": this._token,
         "Content-Type": "application/json"
-      }
+      } : { "Content-Type": "application/json" }
     }).toPromise();
   }
 
-  public async patchRequest<Q, R>(path: string, body: Q): Promise<R> {
+  public async patchRequest<Q, R>(path: string, body: Q, protec = true): Promise<R> {
     return await this._http.patch<R>(path, body, {
-      headers: {
+      headers: protec ? {
         "auth": this._token,
         "Content-Type": "application/json"
-      }
+      } : { "Content-Type": "application/json" }
     }).toPromise();
   }
 }

@@ -3,8 +3,9 @@ export interface AuthConnexionModel {
   password: string;
 }
 export interface AuthRegisterModel {
-  code: string | boolean;
-  email: string | boolean;
-  password: string | boolean;
-  confirmPassword: string | boolean;
+  code: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  captcha: string;
 }

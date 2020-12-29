@@ -1,8 +1,8 @@
 import { ApiService } from './../../services/api.service';
 import { AuthRegisterModel } from './../../models/auth.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,13 +14,16 @@ export class RegisterComponent {
     code: '',
     password: '',
     confirmPassword: '',
-    email: ''
+    email: '',
+    captcha: ''
   };
   public submitStatus: "cannot" | "loading" | "can" = "cannot";
+  public succeed: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private readonly _apiService: ApiService,
-    private readonly _snackBar: MatSnackBar
+    private readonly _snackBar: MatSnackBar,
+    private readonly _recaptchaService: ReCaptchaV3Service,
   ) { }
 
 
@@ -31,7 +34,27 @@ export class RegisterComponent {
       return;
     }
     this.submitStatus = "loading";
-    // await this._apiService.register();
+    let token: string;
+    this._recaptchaService.execute("submit").subscribe(newToken => token = newToken);
+    const res = await this._apiService.register({
+      email: this.connexionData.email,
+      password: this.connexionData.password,
+      student_id: this.connexionData.code,
+      captchaToken: token
+    });
+    switch (res) {
+      case "bad_request":
+        this._snackBar.open("Ce code élève correspond déjà à un compte, essayez de vous connecter", null, { duration: 4000 });
+        break;
+      case "error":
+        this._snackBar.open("Erreur serveur lors de la création du compte !", null, { duration: 4000 });
+        break;
+      case "sucess":
+        localStorage.setItem("email_validation", "true");
+        this.succeed.emit();
+        break;
+    }
+    this.submitStatus = "can";
   }
 
   public checkForm(form: HTMLFormElement) {
