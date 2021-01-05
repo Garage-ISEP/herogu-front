@@ -1,0 +1,27 @@
+.wrapper {
+  color: whitesmoke;
+  h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 35px;
+  }
+  .projects {
+    width: 70%;
+    margin: 50px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    .project {
+      margin: 30px 20px;
+      width: 200px;
+      height: 200px;
+      $icon-size: 70px;
+      mat-icon {
+        font-size: $icon-size;
+        width: $icon-size;
+        height: $icon-size;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

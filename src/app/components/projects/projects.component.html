@@ -1,3 +1,9 @@
-<div class="app-projects">
-
+<div class="wrapper" [style.opacity]="projects.length > 0 ? 1 : 0 ">
+  <h1>Mes projets</h1>
+  <div class="projects" *ngIf="projects.length > 0">
+    <button class="project" mat-stroked-button *ngFor="let project of projects">
+      <mat-icon>folder_special</mat-icon><br>
+      <span>{{ project.name }}</span>
+    </button>
+  </div>
 </div>
