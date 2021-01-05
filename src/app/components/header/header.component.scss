@@ -14,8 +14,9 @@
     flex: 1 1 auto;
   }
   button {
-    transform: scale(1.5);
-    mat-icon {
+    // transform: scale(1.5);
+    color: white !important;
+      mat-icon {
       color: white !important;
     }
   }

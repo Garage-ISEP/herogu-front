@@ -10,7 +10,11 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent {
 
+  //TODO: Get Username
+
   public dispAccountIcon: boolean;
+
+  public username = "Théodore Prévot";
 
   constructor(private readonly apiService: ApiService) {
     this.dispAccountIcon = this.apiService.logged;

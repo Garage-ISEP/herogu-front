@@ -4,7 +4,8 @@
       <img src="/assets/garage.png" class="garage-icon" alt="Garage Logo" />
       <span>Herogu</span>
       <span class="spacer"></span>
-      <button *ngIf="dispAccountIcon" mat-icon-button color="accent">
+      <button *ngIf="dispAccountIcon" mat-stroked-button color="accent">
+        {{ username }}
         <mat-icon>person</mat-icon>
       </button>
     </mat-toolbar>
