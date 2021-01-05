@@ -1,3 +1,4 @@
+import { DeauthGuardService } from './services/deauth-guard.service';
 import { environment } from 'src/environments/environment';
 import { AuthGuardService } from './services/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,6 +18,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from "@angular/material/divider";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
@@ -51,10 +53,12 @@ import { HeaderComponent } from './components/header/header.component';
     MatSnackBarModule,
     HttpClientModule,
     RecaptchaV3Module,
-    MatToolbarModule
+    MatToolbarModule,
+    MatProgressBarModule
   ],
   providers: [
     AuthGuardService,
+    DeauthGuardService,
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: environment.captcha

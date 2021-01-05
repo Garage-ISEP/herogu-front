@@ -1,7 +1,6 @@
+import { ProgressService } from './../../services/progress.service';
 import { ApiService } from 'src/app/services/api.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +15,10 @@ export class HeaderComponent {
 
   public username = "Théodore Prévot";
 
-  constructor(private readonly apiService: ApiService) {
-    this.dispAccountIcon = this.apiService.logged;
-  }
+  public displayProgress: boolean = false;
+
+  constructor(
+    public readonly apiService: ApiService,
+    public readonly progressService: ProgressService
+  ) {}
 }

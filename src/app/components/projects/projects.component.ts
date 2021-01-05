@@ -1,3 +1,4 @@
+import { ProgressService } from './../../services/progress.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _progressService: ProgressService
+  ) { }
 
   ngOnInit(): void {
-
   }
 
 }
