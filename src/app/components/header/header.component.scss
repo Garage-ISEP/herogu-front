@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+
+.mat-toolbar {
+  background-color: #383838;
+  color: white !important;
+  @include mat-elevation(3);
+
+  .garage-icon {
+    height: 60%;
+    width: auto;
+    margin-right: 16px;
+  }
+  .spacer {
+    flex: 1 1 auto;
+  }
+  button {
+    transform: scale(1.5);
+    mat-icon {
+      color: white !important;
+    }
+  }
+}

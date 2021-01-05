@@ -1,8 +1,13 @@
 <div class="app-header">
-  <mat-toolbar>
-    <span>Herogu</span>
-  </mat-toolbar>
-  <button mat-icon-button>
-    <mat-icon>account</mat-icon>
-  </button>
+  <p>
+    <mat-toolbar>
+      <img src="/assets/garage.png" class="garage-icon" alt="Garage Logo" />
+      <span>Herogu</span>
+      <span class="spacer"></span>
+      <button *ngIf="dispAccountIcon" mat-icon-button color="accent">
+        <mat-icon>person</mat-icon>
+      </button>
+    </mat-toolbar>
+  </p>
+
 </div>
