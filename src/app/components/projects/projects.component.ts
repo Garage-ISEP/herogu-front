@@ -19,6 +19,7 @@ export class ProjectsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.apiService.loadUserData();
     for (let i = 0; i < 4; i++) {
       this.projects.push({
         author: "Théodore",

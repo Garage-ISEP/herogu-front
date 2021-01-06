@@ -3,6 +3,9 @@
     <img src="/assets/garage.png" class="garage-icon" alt="Garage Logo" />
     <span>Herogu</span>
     <span class="spacer"></span>
+    <button mat-icon-button routerLink="/" class="projects-button">
+      <mat-icon>apps</mat-icon>
+    </button>
     <button *ngIf="apiService.logged && apiService.userData" mat-stroked-button color="accent" routerLink="/account">
       {{ apiService.userData?.first_name }} {{ apiService.userData?.last_name }}
       <mat-icon>person</mat-icon>
