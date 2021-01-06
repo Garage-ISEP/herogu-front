@@ -11,7 +11,6 @@ export class ProgressService {
 
   public toggle(mode?: "determinate" | "indeterminate") {
     this.display = !this.display;
-    console.log(this.display);
     this.mode ??= mode;
   }
 }

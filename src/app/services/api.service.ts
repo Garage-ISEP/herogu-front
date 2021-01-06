@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
 
   private token: string = localStorage.getItem("token");
-  public userData: Partial<UserModel> = localStorage.getItem("student_id") ? {studentId: localStorage.getItem("student_id")} : undefined;
+  public userData: UserModel;
 
   constructor(
     private readonly http: HttpClient,
@@ -30,9 +30,7 @@ export class ApiService {
       if (!data.token)
         return "error";
       localStorage.setItem("token", data.token);
-      localStorage.setItem("student_id", body.student_id);
       this.token = data.token;
-      this.userData ??= { studentId: body.student_id };
     } catch (e) {
       const error: HttpErrorResponse = e;
       console.log(error.status, error.statusText);
@@ -51,7 +49,6 @@ export class ApiService {
   public logout(): boolean {
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("student_id");
       this.token = this.userData = undefined;
       return true;
     } catch (e) {
@@ -74,11 +71,10 @@ export class ApiService {
   }
 
   public async loadUserData(): Promise<UserModel> {
-    if (!this.userData.studentId)
-      return;
+    if (this.userData)
+      return this.userData;
     try {
-      this.userData = await this.getRequest<UserModel>(`/users/${this.userData.studentId}`);
-      return this.userData as UserModel;
+      return this.userData = await this.getRequest<UserModel>(`/me`);
     } catch (e) {
       console.error(e);
     }

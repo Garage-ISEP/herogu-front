@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserModel, UpdatePasswordModel } from 'src/app/models/user.model';
 import { MatSnackBarRef } from '@angular/material/snack-bar';
 import { PasswordDialogComponent } from '../utils/password-dialog/password-dialog.component';
-import { PartialObserver } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -18,8 +17,8 @@ import { PartialObserver } from 'rxjs';
 export class AccountComponent implements OnInit, OnDestroy {
 
   public loading = true;
-  public data: AccountModel = { last_name: "", first_name: "", mail: "" };
-  public dataUpdate: { [K in keyof AccountModel]: boolean } = { last_name: false, first_name: false, mail: false };
+  public data: AccountModel;
+  public dataUpdate: { [K in keyof AccountModel]: boolean } = { last_name: false, first_name: false };
   public snackbar: MatSnackBarRef<any>;
   public error: boolean = false;
 
@@ -31,14 +30,16 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) { }
 
   public async ngOnInit() {
-    if (!this.apiService.userData.mail) {
+    if (!this.apiService.userData) {
       this.progressService.toggle("indeterminate");
-      if (await this.apiService.loadUserData()) {
-        this.data = { ...this.apiService.userData as UserModel, ...this.data };
-      } else
+      if (!await this.apiService.loadUserData())
         this.error = true;
       this.progressService.toggle();
     }
+    this.data = this.apiService.userData ? {
+      first_name: this.apiService.userData.first_name,
+      last_name: this.apiService.userData.last_name,
+    } : undefined;
     this.loading = false;
   }
 
