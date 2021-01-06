@@ -34,27 +34,27 @@ export class RegisterComponent {
       return;
     }
     this.submitStatus = "loading";
-    let token: string;
-    this._recaptchaService.execute("submit").subscribe(newToken => token = newToken);
-    const res = await this._apiService.register({
-      email: this.connexionData.email,
-      password: this.connexionData.password,
-      student_id: this.connexionData.code,
-      captchaToken: token
+    this._recaptchaService.execute("submit").subscribe(async token => {
+      const res = await this._apiService.register({
+        email: this.connexionData.email,
+        password: this.connexionData.password,
+        student_id: this.connexionData.code,
+        captchaToken: token
+      });
+      switch (res) {
+        case "bad_request":
+          this._snackBar.open("Ce code élève correspond déjà à un compte, essayez de vous connecter", null, { duration: 4000 });
+          break;
+        case "error":
+          this._snackBar.open("Erreur serveur lors de la création du compte !", null, { duration: 4000 });
+          break;
+        case "sucess":
+          localStorage.setItem("email_validation", "true");
+          this.succeed.emit();
+          break;
+      }
+      this.submitStatus = "can";
     });
-    switch (res) {
-      case "bad_request":
-        this._snackBar.open("Ce code élève correspond déjà à un compte, essayez de vous connecter", null, { duration: 4000 });
-        break;
-      case "error":
-        this._snackBar.open("Erreur serveur lors de la création du compte !", null, { duration: 4000 });
-        break;
-      case "sucess":
-        localStorage.setItem("email_validation", "true");
-        this.succeed.emit();
-        break;
-    }
-    this.submitStatus = "can";
   }
 
   public checkForm(form: HTMLFormElement) {

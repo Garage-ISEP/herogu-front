@@ -38,5 +38,4 @@ export class ProjectsComponent implements OnInit {
       console.error(e);
     }
   }
-
 }
