@@ -15,20 +15,10 @@
         <mat-label>Email</mat-label>
         <input matInput [value]="apiService.userData.mail" disabled/>
       </mat-form-field>
-      <mat-form-field [(ngModel)]="data.first_name" name="first_name" ngDefaultControl appearance="outline" color="accent">
-        <mat-label>Prénom</mat-label>
-        <input matInput [value]="data.first_name" (change)="updateField('first_name')"/>
-      </mat-form-field>
-      <mat-form-field [(ngModel)]="data.last_name" name="last_name" ngDefaultControl appearance="outline" color="accent">
-        <mat-label>Nom</mat-label>
-        <input matInput [value]="data.last_name" (change)="updateField('last_name')"/>
-      </mat-form-field>
       <mat-divider></mat-divider>
       <button mat-stroked-button (click)="updatePassword()">Mettre à jour mon mot de passe</button>
     </ng-container>
 
     <button mat-stroked-button (click)="logout()">Me déconnecter</button>
-    <button mat-stroked-button (click)="removeAccount()">Supprimer mon compte</button>
   </div>
-
 </div>

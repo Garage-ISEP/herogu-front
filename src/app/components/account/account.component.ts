@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UserModel, UpdatePasswordModel } from 'src/app/models/user.model';
+import { UpdatePasswordModel } from 'src/app/models/user.model';
 import { MatSnackBarRef } from '@angular/material/snack-bar';
 import { PasswordDialogComponent } from '../utils/password-dialog/password-dialog.component';
 
@@ -14,7 +14,7 @@ import { PasswordDialogComponent } from '../utils/password-dialog/password-dialo
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit, OnDestroy {
+export class AccountComponent implements OnInit {
 
   public loading = true;
   public data: AccountModel;
@@ -36,23 +36,7 @@ export class AccountComponent implements OnInit, OnDestroy {
         this.error = true;
       this.progressService.toggle();
     }
-    this.data = this.apiService.userData ? {
-      first_name: this.apiService.userData.first_name,
-      last_name: this.apiService.userData.last_name,
-    } : undefined;
     this.loading = false;
-  }
-
-  public ngOnDestroy() {
-    this.snackbar?.dismiss();
-  }
-
-  public updateField(field: "last_name"|"first_name"|"mail") {
-    this.dataUpdate[field] = true;
-    if (!this.snackbar) {
-      this.snackbar = this.apiService.snack("Appliquer les modifications ?", null, "Confirmer");
-      this.snackbar.afterDismissed().subscribe(() => this.updateAccountData());
-    }
   }
 
   public logout() {
@@ -76,20 +60,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     })
   }
 
-  public removeAccount() {
-    this.dialog.open(TextDialogComponent, { data: "Veux tu vraiment supprimer ton compte, tu perdras tous les projets créés avec ce compte" }).afterClosed().subscribe((e: string) => {
-      if (e) {
-        console.log("Delete account !");
-      }
-    });
-  }
-
   public resendEmailConfirmation() {
     this.apiService.snack(`Une email de confirmation a été réenvoyé à l'adresse ${this.apiService.userData.mail}`, 3000);
-  }
-
-  private updateAccountData() {
-    console.log(this.data);
-    //TODO: Mettre à jour les données utilisateur
   }
 }
