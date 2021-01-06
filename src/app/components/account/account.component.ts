@@ -21,6 +21,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   public data: AccountModel = { last_name: "", first_name: "", mail: "" };
   public dataUpdate: { [K in keyof AccountModel]: boolean } = { last_name: false, first_name: false, mail: false };
   public snackbar: MatSnackBarRef<any>;
+  public error: boolean = false;
 
   constructor(
     public apiService: ApiService,
@@ -33,11 +34,9 @@ export class AccountComponent implements OnInit, OnDestroy {
     if (!this.apiService.userData.mail) {
       this.progressService.toggle("indeterminate");
       if (await this.apiService.loadUserData()) {
-        this.data = { ...this.apiService.userData as UserModel };
+        this.data = { ...this.apiService.userData as UserModel, ...this.data };
       } else
-        this.apiService.snack("Impossible de charger les données de ton compte !", 3000);
-      this.data = { ...this.apiService.userData as UserModel, ...this.data };
-      console.log(this.data);
+        this.error = true;
       this.progressService.toggle();
     }
     this.loading = false;
