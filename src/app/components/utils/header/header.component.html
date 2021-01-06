@@ -3,7 +3,7 @@
     <img src="/assets/garage.png" class="garage-icon" alt="Garage Logo" />
     <span>Herogu</span>
     <span class="spacer"></span>
-    <button *ngIf="apiService.logged" mat-stroked-button color="accent">
+    <button *ngIf="apiService.logged" mat-stroked-button color="accent" routerLink="/account">
       {{ username }}
       <mat-icon>person</mat-icon>
     </button>

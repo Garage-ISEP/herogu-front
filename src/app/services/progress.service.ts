@@ -9,8 +9,9 @@ export class ProgressService {
   public mode: "determinate" | "indeterminate" = "indeterminate";
   public display: boolean = false;
 
-  public toggle(mode?: "determinate"|"indeterminate") {
+  public toggle(mode?: "determinate" | "indeterminate") {
     this.display = !this.display;
+    console.log(this.display);
     this.mode ??= mode;
   }
 }

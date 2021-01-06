@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ProjectModel } from './../../models/project.model';
 import { ApiService } from 'src/app/services/api.service';
 import { ProgressService } from './../../services/progress.service';
@@ -13,7 +14,8 @@ export class ProjectsComponent implements OnInit {
   public projects: ProjectModel[] = [];
   constructor(
     public progressService: ProgressService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public router: Router
   ) { }
 
   ngOnInit(): void {

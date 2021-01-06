@@ -1,3 +1,4 @@
+import { AccountComponent } from './components/account/account.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -9,6 +10,7 @@ import { DeauthGuardService } from './services/deauth-guard.service';
 const routes: Routes = [
   { path: '', component: ProjectsComponent, canActivate: [AuthGuardService] },
   { path: "auth", component: AuthComponent, canActivate: [DeauthGuardService]},
+  { path: "account", component: AccountComponent, canActivate: [AuthGuardService]},
   { path: "**", redirectTo: '' },
 ];
 

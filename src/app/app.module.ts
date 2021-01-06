@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
@@ -27,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from "ng-recaptcha";
 import { ProjectsComponent } from './components/projects/projects.component';
 import { AccountComponent } from './components/account/account.component';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './components/utils/header/header.component';
+import { TextDialogComponent } from './components/utils/text-dialog/text-dialog.component';
+import { PasswordDialogComponent } from './components/utils/password-dialog/password-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +40,9 @@ import { HeaderComponent } from './components/header/header.component';
     RegisterComponent,
     ProjectsComponent,
     AccountComponent,
-    HeaderComponent
+    HeaderComponent,
+    TextDialogComponent,
+    PasswordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,8 @@ import { HeaderComponent } from './components/header/header.component';
     HttpClientModule,
     RecaptchaV3Module,
     MatToolbarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
   ],
   providers: [
     AuthGuardService,

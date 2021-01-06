@@ -1,4 +1,5 @@
-import { ProgressService } from './../../services/progress.service';
+import { RouterLink } from '@angular/router';
+import { ProgressService } from '../../../services/progress.service';
 import { ApiService } from 'src/app/services/api.service';
 import { Component } from '@angular/core';
 
@@ -19,6 +20,6 @@ export class HeaderComponent {
 
   constructor(
     public readonly apiService: ApiService,
-    public readonly progressService: ProgressService
+    public readonly progressService: ProgressService,
   ) {}
 }
