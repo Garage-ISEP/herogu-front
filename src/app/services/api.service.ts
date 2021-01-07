@@ -1,8 +1,9 @@
+import { ProgressService } from './progress.service';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material/snack-bar';
 import { UserModel } from './../models/user.model';
 import { LoginResponseModel, RegisterRequestModel } from './../models/api/login.model';
 import { LoginRequestModel } from '../models/api/login.model';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 @Injectable({
@@ -15,6 +16,7 @@ export class ApiService {
 
   constructor(
     private readonly http: HttpClient,
+    private readonly progress: ProgressService,
     private readonly snackbar: MatSnackBar
   ) { }
 
@@ -80,9 +82,13 @@ export class ApiService {
     if (this.userData)
       return this.userData;
     try {
-      return this.userData = await this.getRequest<UserModel>(`/me`);
+      this.progress.toggle("indeterminate");
+      this.userData = await this.getRequest<UserModel>(`/me`);
+      this.progress.toggle("indeterminate");
+      return this.userData;
     } catch (e) {
       console.error(e);
+      this.progress.toggle("indeterminate");
     }
   }
 

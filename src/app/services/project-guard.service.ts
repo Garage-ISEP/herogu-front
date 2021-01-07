@@ -12,8 +12,8 @@ export class ProjectGuardService implements CanActivate {
     private api: ApiService
   ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.api.userData?.verified) {
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if ((await this.api.loadUserData())?.verified) {
       return true;
     } else {
       this.router.navigateByUrl("/account");

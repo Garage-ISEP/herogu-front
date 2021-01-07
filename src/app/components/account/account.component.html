@@ -1,7 +1,7 @@
 <div class="global-wrapper">
   <h1>Mon compte</h1>
   <h2 *ngIf="error">Impossible de charger les données de ton compte !</h2>
-  <div class="wrapper" *ngIf="!loading && this.apiService.userData?.verified === false">
+  <div class="wrapper" *ngIf="!loading && this.api.userData?.verified === false">
     <h2>Tu ne peux pas créer de projets tant que l'adresse mail n'à pas été vérifiée !</h2>
     <button mat-stroked-button class="resend-mail" (click)="resendEmailConfirmation()">Renvoyer un mail</button>
   </div>
@@ -9,11 +9,11 @@
     <ng-container *ngIf="!error">
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Code élève</mat-label>
-        <input matInput [value]="apiService.userData.studentId" disabled />
+        <input matInput [value]="api.userData.studentId" disabled />
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Email</mat-label>
-        <input matInput [value]="apiService.userData.mail" disabled/>
+        <input matInput [value]="api.userData.mail" disabled/>
       </mat-form-field>
       <mat-divider></mat-divider>
       <button mat-stroked-button (click)="updatePassword()">Mettre à jour mon mot de passe</button>
