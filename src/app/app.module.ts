@@ -32,6 +32,7 @@ import { HeaderComponent } from './components/utils/header/header.component';
 import { TextDialogComponent } from './components/utils/text-dialog/text-dialog.component';
 import { PasswordDialogComponent } from './components/utils/password-dialog/password-dialog.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { VerifyEmailComponent } from './components/utils/verify-email/verify-email.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,8 @@ import { CreateProjectComponent } from './components/create-project/create-proje
     HeaderComponent,
     TextDialogComponent,
     PasswordDialogComponent,
-    CreateProjectComponent
+    CreateProjectComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserModule,

@@ -2,8 +2,8 @@
   <h1>Mon compte</h1>
   <h2 *ngIf="error">Impossible de charger les données de ton compte !</h2>
   <div class="wrapper" *ngIf="!loading && this.apiService.userData?.verified === false">
-    <h2>L'adresse mail n'à toujours pas été vérifiée !</h2>
-    <button mat-stroked-button class="resend-mail" (click)="resendEmailConfirmation()">Renvoyer un mail !</button>
+    <h2>Tu ne peux pas créer de projets tant que l'adresse mail n'à pas été vérifiée !</h2>
+    <button mat-stroked-button class="resend-mail" (click)="resendEmailConfirmation()">Renvoyer un mail</button>
   </div>
   <div class="wrapper" *ngIf="!loading">
     <ng-container *ngIf="!error">
