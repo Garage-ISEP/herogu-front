@@ -22,8 +22,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from "ng-recaptcha";
 import { ProjectsComponent } from './components/projects/projects.component';
@@ -31,6 +31,7 @@ import { AccountComponent } from './components/account/account.component';
 import { HeaderComponent } from './components/utils/header/header.component';
 import { TextDialogComponent } from './components/utils/text-dialog/text-dialog.component';
 import { PasswordDialogComponent } from './components/utils/password-dialog/password-dialog.component';
+import { CreateProjectComponent } from './components/create-project/create-project.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import { PasswordDialogComponent } from './components/utils/password-dialog/pass
     AccountComponent,
     HeaderComponent,
     TextDialogComponent,
-    PasswordDialogComponent
+    PasswordDialogComponent,
+    CreateProjectComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,13 @@
-<div class="wrapper" [style.opacity]="projects.length > 0 ? 1 : 0 ">
+<div class="wrapper" [style.opacity]="apiService.userData">
   <h1>Mes projets</h1>
-  <div class="projects" *ngIf="projects.length > 0">
-    <button class="project" mat-stroked-button *ngFor="let project of projects">
+  <div class="projects" *ngIf="apiService.userData.projects">
+    <button class="project" mat-stroked-button *ngFor="let project of apiService.userData.projects">
       <mat-icon>folder_special</mat-icon><br>
       <span>{{ project.name }}</span>
+    </button>
+    <button class="project" mat-stroked-button routerLink="project/create">
+      <mat-icon>add</mat-icon><br>
+      <span>Créer un projet</span>
     </button>
   </div>
 </div>

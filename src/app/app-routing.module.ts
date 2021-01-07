@@ -1,3 +1,4 @@
+import { CreateProjectComponent } from './components/create-project/create-project.component';
 import { AccountComponent } from './components/account/account.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -10,7 +11,9 @@ import { DeauthGuardService } from './services/deauth-guard.service';
 const routes: Routes = [
   { path: '', component: ProjectsComponent, canActivate: [AuthGuardService] },
   { path: "auth", component: AuthComponent, canActivate: [DeauthGuardService]},
-  { path: "account", component: AccountComponent, canActivate: [AuthGuardService]},
+  { path: "account", component: AccountComponent, canActivate: [AuthGuardService] },
+  { path: "project/create", component: CreateProjectComponent, canActivate: [AuthGuardService] },
+  { path: "project/:id", component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: "**", redirectTo: '' },
 ];
 

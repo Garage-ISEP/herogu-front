@@ -1,5 +1,5 @@
-import { ApiService } from './../../services/api.service';
-import { AuthRegisterModel } from './../../models/auth.model';
+import { ApiService } from '../../../services/api.service';
+import { AuthRegisterModel } from '../../../models/auth.model';
 import { Component, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
