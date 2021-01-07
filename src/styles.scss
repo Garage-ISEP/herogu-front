@@ -9,7 +9,14 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+a {
+  color: black;
+  text-decoration: none;
+}
 
+* {
+  // color: whitesmoke
+}
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 $grey-dark-color: #212121;
 $grey-color: #383838;

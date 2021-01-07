@@ -1,7 +1,9 @@
 <div class="app-header">
   <mat-toolbar>
-    <img src="/assets/garage.png" class="garage-icon" alt="Garage Logo" />
-    <span>Herogu</span>
+    <a routerLink="/">
+      <img src="/assets/garage.png" class="garage-icon" alt="Garage Logo" />
+      <span>Herogu</span>
+    </a>
     <span class="spacer"></span>
     <button mat-icon-button routerLink="/" class="projects-button" *ngIf="apiService.logged && apiService.userData?.verified">
       <mat-icon>home</mat-icon>
