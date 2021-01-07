@@ -5,6 +5,8 @@ export interface LoginRequestModel {
 export interface LoginResponseModel {
   status: string;
   token: string;
+  httpCode: number;
+  message: string;
 }
 
 export interface RegisterRequestModel {

@@ -26,21 +26,27 @@ export class ApiService {
   public async login(body: LoginRequestModel): Promise<"bad_password"|"bad_id"|"error"|"success"> {
     try {
       const data = await this.http.post<LoginResponseModel>(environment.apiUrl + "/auth/login", body).toPromise();
-      console.log(data);
-      if (!data.token)
-        return "error";
+      if (data?.httpCode >= 300 || !data.token) {
+        if (data?.httpCode === 400)
+          return "bad_id"
+        else if (data?.httpCode === 401)
+          return "bad_password"
+        else
+          return "error";
+      }
       localStorage.setItem("token", data.token);
       this.token = data.token;
     } catch (e) {
-      const error: HttpErrorResponse = e;
-      console.log(error.status, error.statusText);
-      switch (error.status) {
-        case 400:
-          return "bad_id";
-        case 401:
-          return "bad_password";
-        default:
-          return "error";
+      if (e instanceof HttpErrorResponse) {
+        console.log(e.status, e.statusText);
+        switch (e.status) {
+          case 400:
+            return "bad_id";
+          case 401:
+            return "bad_password";
+          default:
+            return "error";
+        }
       }
     }
     return "success";
