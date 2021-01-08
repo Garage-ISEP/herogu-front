@@ -11,7 +11,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from "@angular/material/input";
@@ -20,6 +20,11 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper';
+import { YouTubePlayerModule } from "@angular/youtube-player";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/auth/login/login.component';
@@ -32,6 +37,7 @@ import { HeaderComponent } from './components/utils/header/header.component';
 import { TextDialogComponent } from './components/utils/text-dialog/text-dialog.component';
 import { PasswordDialogComponent } from './components/utils/password-dialog/password-dialog.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { AddStudentComponent } from "./components/utils/add-student/add-student.component";
 import { VerifyEmailComponent } from './components/utils/verify-email/verify-email.component';
 @NgModule({
   declarations: [
@@ -46,7 +52,8 @@ import { VerifyEmailComponent } from './components/utils/verify-email/verify-ema
     TextDialogComponent,
     PasswordDialogComponent,
     CreateProjectComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    AddStudentComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +63,7 @@ import { VerifyEmailComponent } from './components/utils/verify-email/verify-ema
     MatInputModule,
     MatIconModule,
     FormsModule,
+    ReactiveFormsModule,
     MatRippleModule,
     MatButtonModule,
     MatDividerModule,
@@ -64,7 +72,12 @@ import { VerifyEmailComponent } from './components/utils/verify-email/verify-ema
     RecaptchaV3Module,
     MatToolbarModule,
     MatProgressBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatStepperModule,
+    YouTubePlayerModule,
+    MatSlideToggleModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [
     AuthGuardService,
