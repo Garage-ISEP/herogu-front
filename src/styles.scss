@@ -18,6 +18,9 @@ a {
   // color: whitesmoke
 }
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import "~prismjs/plugins/toolbar/prism-toolbar.css";
+@import "~prismjs/themes/prism-okaidia";
+
 $grey-dark-color: #212121;
 $grey-color: #383838;
 

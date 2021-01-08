@@ -1,9 +1,29 @@
 <h1>Créer un nouveau projet Herogu</h1>
 <mat-vertical-stepper linear class="stepper" color="accent" #stepper>
+  <mat-step [stepControl]="infosForm">
+    <form [formGroup]="infosForm">
+      <ng-template matStepLabel>Configuration du nouveau projet</ng-template>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Nom du projet</mat-label>
+        <input type="text" matInput placeholder="MonSuperProjet" formControlName="projectName" required>
+      </mat-form-field>
+      <section>
+        <mat-checkbox formControlName="enablePHP">Utiliser PHP</mat-checkbox>
+      </section>
+      <section>
+        <mat-checkbox formControlName="enableMysql">Utiliser une base de donnée MySQL</mat-checkbox>
+      </section><br>
+      <app-add-student class="user-add" (users)="addedUsers = $event"></app-add-student>
+      <div>
+        <button mat-stroked-button matStepperNext color="accent">Suivant</button>
+      </div>
+    </form>
+  </mat-step>
   <mat-step [stepControl]="configForm" #firstStep>
-    <ng-template matStepLabel>Créer mon projet sur les différentes plateformes</ng-template>
+    <ng-template matStepLabel>Initialiser un repository DockerHub</ng-template>
     <br>
-    <p>Tout d'abord le code source du projet doit être intégralement sur Github !</p>
+    <p>Ton code source doit être intégralement sur Github ! Il faut ensuite que tu créés un fichier nommé Dockerfile à la racine de ton projet avec le contenu suivant :</p>
+    <pre><code>{{ dockerfile }}</code></pre>
     <p>Tu dois te créer un compte sur <a href="https://hub.docker.com" target="_blank">DockerHub</a> si tu n'en as pas.</p>
     <p>Il faut ensuite créer et configurer un repository public Docker puis le lier au repository Github ! Voici une vidéo indiquant la marche à suivre :</p>
     <youtube-player [videoId]="'EjvNWa_GTK0'" [width]="videoConfig.w" [height]="videoConfig.h" ></youtube-player>
@@ -14,20 +34,6 @@
       </mat-form-field>
       <div>
         <button mat-stroked-button color="accent" (click)="verifyManifest(input.value)">Suivant</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="infosForm">
-    <form [formGroup]="infosForm">
-      <ng-template matStepLabel>Configuration du nouveau projet</ng-template>
-      <mat-form-field appearance="outline" color="accent">
-        <mat-label>Nom du projet</mat-label>
-        <input type="text" matInput placeholder="MonSuperProjet" formControlName="projectName" required>
-      </mat-form-field>
-      <mat-slide-toggle color="accent" class="toggle" formControlName="enableMysql">Utiliser une base de donnée MySQL</mat-slide-toggle>
-      <app-add-student class="user-add" (users)="addedUsers = $event"></app-add-student>
-      <div>
-        <button mat-stroked-button matStepperNext color="accent">Suivant</button>
       </div>
     </form>
   </mat-step>
