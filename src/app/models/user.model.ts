@@ -2,6 +2,7 @@ export interface UserModel {
   id: number;
   first_name: string;
   last_name: string;
+  last_mail: number;
   mail: string;
   studentId: string;
   verified: boolean;

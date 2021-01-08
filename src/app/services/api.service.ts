@@ -78,8 +78,8 @@ export class ApiService {
     }
   }
 
-  public async loadUserData(): Promise<UserModel> {
-    if (this.userData)
+  public async loadUserData(force = false): Promise<UserModel> {
+    if (this.userData && !force)
       return this.userData;
     try {
       this.progress.toggle("indeterminate");

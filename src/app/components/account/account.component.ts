@@ -1,3 +1,4 @@
+import { ProgressService } from './../../services/progress.service';
 import { AccountModel } from './../../models/api/account.model';
 import { TextDialogComponent } from './../utils/text-dialog/text-dialog.component';
 import { Router } from '@angular/router';
@@ -24,6 +25,7 @@ export class AccountComponent implements OnInit {
   constructor(
     public api: ApiService,
     private router: Router,
+    private progress: ProgressService,
     private dialog: MatDialog
   ) { }
 
@@ -56,7 +58,20 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  public resendEmailConfirmation() {
-    this.api.snack(`Une email de confirmation a été réenvoyé à l'adresse ${this.api.userData.mail}`, 3000);
+  public async resendEmailConfirmation() {
+    console.log(this.api.userData.last_mail);
+    const lastTime = (await this.api.loadUserData(true))?.last_mail - Date.now();
+    if (lastTime > 0) {
+      this.api.snack(`Tu dois encore attendre ${new Date(lastTime).getMinutes()} minutes pour renvoyer un mail !`, 3000);
+    }
+    try {
+      this.progress.toggle();
+      await this.api.postRequest("/users/resend", {});
+      this.api.snack(`Une email de confirmation a été réenvoyé à l'adresse ${this.api.userData.mail}`, 3000);
+    } catch (e) {
+      this.api.snack("Une erreur est apparue lors du renvoi du mail !", 3000);
+    } finally {
+      this.progress.toggle();
+    }
   }
 }
