@@ -26,6 +26,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgeMonacoModule } from 'nge-monaco';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/auth/login/login.component';
@@ -40,7 +41,6 @@ import { PasswordDialogComponent } from './components/utils/password-dialog/pass
 import { CreateProjectComponent } from './components/create-project/create-project.component';
 import { AddStudentComponent } from "./components/utils/add-student/add-student.component";
 import { VerifyEmailComponent } from './components/utils/verify-email/verify-email.component';
-import { PrismService } from './services/prism.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,12 +80,12 @@ import { PrismService } from './services/prism.service';
     MatSlideToggleModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgeMonacoModule.forRoot({ theming: { themes: ["assets/nge-monaco/themes/vs-dark"], default: "vs-dark" } }),
   ],
   providers: [
     AuthGuardService,
     DeauthGuardService,
-    PrismService,
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: environment.captcha

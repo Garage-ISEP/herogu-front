@@ -1,17 +1,17 @@
 <h1>Créer un nouveau projet Herogu</h1>
-<mat-vertical-stepper linear class="stepper" color="accent" #stepper>
+<mat-vertical-stepper linear class="stepper" color="accent" #stepper (selectionChange)="getDockerfile(input.checked)">
   <mat-step [stepControl]="infosForm">
     <form [formGroup]="infosForm">
       <ng-template matStepLabel>Configuration du nouveau projet</ng-template>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Nom du projet</mat-label>
-        <input type="text" matInput placeholder="MonSuperProjet" formControlName="projectName" required>
+        <input type="text" matInput placeholder="MonSuperProjet" formControlName="projectName" #projectName required>
       </mat-form-field>
       <section>
-        <mat-checkbox formControlName="enablePHP">Utiliser PHP</mat-checkbox>
+        <mat-checkbox formControlName="enablePHP" #input>Utiliser PHP</mat-checkbox>
       </section>
       <section>
-        <mat-checkbox formControlName="enableMysql">Utiliser une base de donnée MySQL</mat-checkbox>
+        <mat-checkbox formControlName="enableMysql" [disabled]="!input.checked">Utiliser une base de donnée MySQL</mat-checkbox>
       </section><br>
       <app-add-student class="user-add" (users)="addedUsers = $event"></app-add-student>
       <div>
@@ -20,20 +20,24 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="configForm" #firstStep>
-    <ng-template matStepLabel>Initialiser un repository DockerHub</ng-template>
+    <ng-template matStepLabel>Configurer un repository DockerHub</ng-template>
     <br>
-    <p>Ton code source doit être intégralement sur Github ! Il faut ensuite que tu créés un fichier nommé Dockerfile à la racine de ton projet avec le contenu suivant :</p>
-    <pre><code>{{ dockerfile }}</code></pre>
-    <p>Tu dois te créer un compte sur <a href="https://hub.docker.com" target="_blank">DockerHub</a> si tu n'en as pas.</p>
-    <p>Il faut ensuite créer et configurer un repository public Docker puis le lier au repository Github ! Voici une vidéo indiquant la marche à suivre :</p>
+      <li>Ton code source doit être sur un repository Github</li>
+      <li>Créer un fichier nommé <code>Dockerfile</code> à la racine du repository avec le contenu suivant</li>
+    <nge-monaco-viewer [code]="dockerfile" [language]="'dockerfile'"></nge-monaco-viewer>
+      <li>Créer un compte sur <a href="https://hub.docker.com" target="_blank" class="inline-link">DockerHub</a></li>
+      <li>Lier le compte Dockerhub au compte Github via les paramètres de Dockerhub</li>
+      <li>Créer un repository sur Dockerhub et le lier au repository Github</li>
+      <li>Configurer les builds automatisés sur Dockerhub</li>
+      <li>Ajouter un webhook avec le nom : <code>Deploy</code> et comme URL : <code>https://deploy.garageisep.com/{{ projectName.value }}</code></li><br>
     <youtube-player [videoId]="'EjvNWa_GTK0'" [width]="videoConfig.w" [height]="videoConfig.h" ></youtube-player>
     <form [formGroup]="configForm">
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Tag du repository docker</mat-label>
-        <input type="text" matInput placeholder="theodoreprevot/docker-ci" formControlName="tagName" required #input>
+        <input type="text" matInput placeholder="theodoreprevot/docker-ci" formControlName="tagName" required #dockerTag>
       </mat-form-field>
       <div>
-        <button mat-stroked-button color="accent" (click)="verifyManifest(input.value)">Suivant</button>
+        <button mat-stroked-button color="accent" (click)="verifyManifest(dockerTag.value)">Suivant</button>
       </div>
     </form>
   </mat-step>

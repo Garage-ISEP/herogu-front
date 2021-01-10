@@ -1,10 +1,8 @@
-import { PrismService } from './../../services/prism.service';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material/stepper';
 
-import 'prismjs/components/prism-docker.min';
 @Component({
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
@@ -23,13 +21,10 @@ export class CreateProjectComponent implements OnInit {
   constructor(
     private api: ApiService,
     private formBuilder: FormBuilder,
-    public prism: PrismService
   ) { }
 
   ngOnInit(): void {
-    this.prism.highlightAll();
     this.processVideoConfig();
-    this.getDockerfile();
     window.addEventListener("resize", () => this.processVideoConfig());
     this.initYt();
     this.configForm = this.formBuilder.group({
@@ -37,15 +32,15 @@ export class CreateProjectComponent implements OnInit {
     });
     this.infosForm = this.formBuilder.group({
       projectName: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[a-zA-Z ]*')]],
-      enablePhp: ['true'],
+      enablePHP: ['true'],
       enableMysql: ['true'],
     });
+    console.log(this.infosForm?.controls['enablePHP'].value);
   }
 
   public async verifyManifest(repo: string) {
     try {
       await this.api.getRequest(`/projects/manifest/${encodeURIComponent(repo)}`);
-      this.stepper.next();
     } catch (e) {
       this.api.snack(`Le repository ${repo} n'existe pas sur DockerHub !`);
       this.stepper.next();
@@ -66,7 +61,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
 
-  private async getDockerfile() {
-    this.dockerfile = await (await fetch("https://gist.githubusercontent.com/Totodore/da524e3d66c6589208ac809ca57487a4/raw/318ec5e4f688f2b7a13d189ce09321c3f6d9ff38/Dockerfile")).text();
+  public async getDockerfile(usePhp: boolean) {
+    this.dockerfile = `FROM garageisep/herogu:${usePhp ? 'php' : 'nginx'}\nCOPY . /var/www/html/`;
   }
 }

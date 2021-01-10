@@ -13,13 +13,16 @@ a {
   color: black;
   text-decoration: none;
 }
-
-* {
-  // color: whitesmoke
+.inline-link {
+  color: white;
+  border-bottom: solid white 1px;
 }
+pre, code {
+  background-color: #1e1e1e;
+  border: none !important;
+}
+
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
-@import "~prismjs/plugins/toolbar/prism-toolbar.css";
-@import "~prismjs/themes/prism-okaidia";
 
 $grey-dark-color: #212121;
 $grey-color: #383838;
