@@ -4,7 +4,6 @@
   background-color: #383838;
   color: white !important;
   @include mat-elevation(3);
-
   a {
     height: 100%;
     color: white;
@@ -33,6 +32,9 @@
   }
 }
 mat-progress-bar {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
   transition: opacity 250ms;
 
   ::ng-deep .mat-progress-bar-fill::after {

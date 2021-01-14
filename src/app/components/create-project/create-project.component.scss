@@ -27,10 +27,68 @@ h1 {
     display: block;
     width: 100%;
   }
+  li {
+    line-height: 2em;
+  }
+  .doc-img {
+    width: 50%;
+    max-width: 500px;
+    height: auto;
+    float: left;
+    margin-right: 15px;
+    @include mat-elevation(2);
+    border-radius: 5px;
+  }
+  .docker-btn {
+    border-style: solid;
+    outline: none;
+    padding: 0 15px;
+    margin: 6px 6px;
+    line-height: 32px;
+    min-height: 32px;
+    border-width: 2px;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 140px !important;
+    background-color: #099cec;
+    border-color: #099cec;
+    font-weight: 600;
+  }
+  .docker-build-btn {
+    outline: 0;
+    padding: 0 15px;
+    min-height: 32px;
+    font-size: 14px;
+    cursor: pointer;
+    box-sizing: border-box;
+    line-height: 40px;
+    min-width: 100px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: none;
+    border-bottom: 2px solid #099cec;
+    font-weight: 600;
+    color: #099cec;
+  }
 }
 p, li {
   font-size: 1rem;
 }
+
+@media (max-width: 1200px) {
+  .stepper {
+    .doc-img {
+      float: none;
+      display: block;
+      width: 80%;
+      margin: auto;
+      max-width: none;
+      margin-bottom: 10px;
+    }
+  }
+}
+
 
 @media (max-width: 450px) {
   h1 {
@@ -38,6 +96,16 @@ p, li {
   }
   p {
     font-size: 1em;
+  }
+  .stepper {
+    li {
+      line-height: 1.2em;
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+    .doc-img {
+      width: 100%;
+    }
   }
   :host ::ng-deep .mat-vertical-content-container {
     margin-left: 0px;

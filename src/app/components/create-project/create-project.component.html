@@ -1,5 +1,6 @@
 <h1>Créer un nouveau projet Herogu</h1>
 <mat-vertical-stepper linear class="stepper" color="accent" #stepper (selectionChange)="getDockerfile(input.checked)">
+
   <mat-step [stepControl]="infosForm">
     <form [formGroup]="infosForm">
       <ng-template matStepLabel>Configuration du nouveau projet</ng-template>
@@ -19,29 +20,46 @@
       </div>
     </form>
   </mat-step>
+
   <mat-step [stepControl]="configForm" #firstStep>
     <ng-template matStepLabel>Configurer un repository DockerHub</ng-template>
     <br>
-      <li>Ton code source doit être sur un repository Github</li>
-      <li>Créer un fichier nommé <code>Dockerfile</code> à la racine du repository avec le contenu suivant</li>
+    <img src="/assets/dockerhub1.png" class="doc-img" alt="">
+    <li>Ton code source doit être sur un repository Github</li>
+    <li>Créer un fichier nommé <code>Dockerfile</code> à la racine du repository avec le contenu suivant</li>
     <nge-monaco-viewer [code]="dockerfile" [language]="'dockerfile'"></nge-monaco-viewer>
-      <li>Créer un compte sur <a href="https://hub.docker.com" target="_blank" class="inline-link">DockerHub</a></li>
-      <li>Lier le compte Dockerhub au compte Github via les paramètres de Dockerhub</li>
-      <li>Créer un repository sur Dockerhub et le lier au repository Github</li>
-      <li>Configurer les builds automatisés sur Dockerhub</li>
-      <li>Ajouter un webhook avec le nom : <code>Deploy</code> et comme URL : <code>https://deploy.garageisep.com/{{ projectName.value }}</code></li><br>
-    <youtube-player [videoId]="'EjvNWa_GTK0'" [width]="videoConfig.w" [height]="videoConfig.h" ></youtube-player>
+    <li>Créer un compte sur <a href="https://hub.docker.com" target="_blank" style="color: #099cec; font-weight: 500">DockerHub</a></li>
+    <li>Lier le compte Dockerhub au compte Github via les paramètres de Dockerhub</li>
+    <li>Créer un repository public nommé <code>{{ projectName.value }}</code> sur Dockerhub depuis le repository Github. Cliquer sur ➕ dans la partie <code>Build Rules</code>, cela va ajouter une règle de build par défaut, veillez à ce que la branche source soit la branche principale de votre repository Github (<code>main</code> ou <code>master</code>)</li>
+    <li>Terminer la création du projet en cliquant sur <button class="docker-btn">Create & Build</button></li>
+    <li>Une fois le projet créé, aller dans la section <button class="docker-build-btn">Builds</button> et attendre quelques minutes le premier build se termine...</li>
+    <li>Si le build s'est déroulé correctement entrer le tag de l'image Docker :</li>
+    <!-- <youtube-player [videoId]="'EjvNWa_GTK0'" [width]="videoConfig.w" [height]="videoConfig.h" ></youtube-player> -->
+
     <form [formGroup]="configForm">
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Tag du repository docker</mat-label>
-        <input type="text" matInput placeholder="theodoreprevot/docker-ci" formControlName="tagName" required #dockerTag>
+        <input type="text" matInput placeholder="theodoreprevot/myproject" formControlName="tagName" required #dockerTag>
       </mat-form-field>
       <div>
-        <button mat-stroked-button color="accent" (click)="verifyManifest(dockerTag.value)">Suivant</button>
+        <button mat-stroked-button matStepperNext #checkManifestBtn color="accent">Suivant</button>
       </div>
     </form>
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Patate</ng-template>
+
+  <mat-step [formGroup]="webhookForm">
+    <ng-template matStepLabel>Configurer l'intégration continue</ng-template>
+    <p>Il reste une dernière étape !</p>
+    <li>Ajouter un webhook dans l'onglet <button class="docker-build-btn">Webhooks</button> avec le nom : <code>Deploy</code> et l'URL : <code>https://deploy.garageisep.com/deploy/{{ projectName.value }}</code></li><br>
+    <li>Grâce à cela à chaque fois que tu fais un push sur la branche master de ton github, en quelques minutes ton projet sera mis à jour sur nos serveurs !</li>
+    <form [formGroup]="webhookForm" (submit)="createProject()">
+      <section>
+        <mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement</mat-checkbox>
+      </section><br>
+      <div>
+        <button mat-stroked-button type="submit" color="accent">Créer mon projet !</button>
+      </div>
+    </form>
   </mat-step>
+
 </mat-vertical-stepper>
