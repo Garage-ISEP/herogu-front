@@ -17,25 +17,25 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
     private api: ApiService
   ) { }
 
-  ngOnInit(): void {
-    this.subscriber = this.route.params.subscribe(async params => {
-      try {
-        if (!params.token) throw new Error("Erreur lors de la requête ! Impossible de vérifier ton adresse mail");
+  async ngOnInit() {
+    const token = this.route.snapshot.queryParams.token;
+    try {
+      console.log(token);
+      if (!token) throw new Error("Erreur lors de la requête ! Impossible de vérifier ton adresse mail");
 
-        try {
-          await this.api.postRequest<{ token: string }, { status: "success", user: UserModel }>("/verify", { token: params.token });
-          if (this.api.userData)
-            this.api.userData.verified = true;
-          this.api.snack("Ton email à bien été vérifié !");
-          this.router.navigateByUrl("/");
-        } catch (e) {
-          console.error(e);
-          throw new Error("Erreur lors de la requête ! Impossible de vérifier ton adresse mail");
-        }
+      try {
+        await this.api.postRequest<{ token: string }, { status: "success", user: UserModel }>("/auth/verify", { token: token });
+        if (this.api.userData)
+          this.api.userData.verified = true;
+        this.api.snack("Ton email à bien été vérifié !");
+        this.router.navigateByUrl("/");
       } catch (e) {
-        this.throwError(e);
+        console.error(e);
+        throw new Error("Erreur lors de la requête ! Impossible de vérifier ton adresse mail");
       }
-    });
+    } catch (e) {
+      this.throwError(e);
+    }
   }
 
   ngOnDestroy(): void {
