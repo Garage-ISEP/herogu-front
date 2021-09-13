@@ -6,28 +6,25 @@ import { LoginRequestModel } from '../models/api/login.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
+import { BaseApi } from '../utils/base-api.util';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiService extends BaseApi {
 
-  private token: string = localStorage.getItem("token");
   public userData: UserModel;
 
   constructor(
-    private readonly http: HttpClient,
+    http: HttpClient,
     private readonly progress: ProgressService,
     private readonly snackbar: MatSnackBar
-  ) { }
-
-
-  get logged(): boolean {
-    return this.token?.length > 0;
+  ) {
+    super(http);
   }
 
   public async login(body: LoginRequestModel): Promise<"bad_password"|"bad_id"|"error"|"success"> {
     try {
-      const data = await this.http.post<LoginResponseModel>(environment.apiUrl + "/auth/login", body).toPromise();
+      const data = await this.http.post<LoginResponseModel>(environment.api + "/auth/login", body).toPromise();
       if (data?.httpCode >= 300 || !data.token) {
         if (data?.httpCode === 400)
           return "bad_id"
@@ -54,20 +51,9 @@ export class ApiService {
     return "success";
   }
 
-  public logout(): boolean {
-    try {
-      localStorage.removeItem("token");
-      this.token = this.userData = undefined;
-      return true;
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
-  }
-
   public async register(body: RegisterRequestModel): Promise<"sucess"|"error"|"bad_request"> {
     try {
-      await this.postRequest<RegisterRequestModel, void>("/users", body, false);
+      await this.post<RegisterRequestModel, void>("/users", body, false);
     } catch (e) {
       console.error(e);
       const error: HttpErrorResponse = e;
@@ -83,40 +69,13 @@ export class ApiService {
       return this.userData;
     try {
       this.progress.toggle("indeterminate");
-      this.userData = await this.getRequest<UserModel>(`/me`);
+      this.userData = await this.get<UserModel>(`/me`);
       this.progress.toggle("indeterminate");
       return this.userData;
     } catch (e) {
       console.error(e);
       this.progress.toggle("indeterminate");
     }
-  }
-
-  public async getRequest<R>(path: string): Promise<R> {
-    return await this.http.get<R>(environment.apiUrl + path, {
-      headers: {
-        "auth": this.token,
-        "Content-Type": "application/json"
-      }
-    }).toPromise();
-  }
-
-  public async postRequest<Q, R>(path: string, body: Q, protec = true): Promise<R> {
-    return await this.http.post<R>(environment.apiUrl + path, body, {
-      headers: protec ? {
-        "auth": this.token,
-        "Content-Type": "application/json"
-      } : { "Content-Type": "application/json" }
-    }).toPromise();
-  }
-
-  public async patchRequest<Q, R>(path: string, body: Q, protec = true): Promise<R> {
-    return await this.http.patch<R>(path, body, {
-      headers: protec ? {
-        "auth": this.token,
-        "Content-Type": "application/json"
-      } : { "Content-Type": "application/json" }
-    }).toPromise();
   }
 
   public snack(text: string, duration?: number, buttonText?: string): MatSnackBarRef<any>  {
