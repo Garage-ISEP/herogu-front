@@ -1,4 +1,5 @@
 import { HttpClient, HttpEvent, HttpHeaders } from "@angular/common/http";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { ProgressService } from "../services/progress.service";
@@ -6,7 +7,8 @@ import { ProgressService } from "../services/progress.service";
 export abstract class BaseApi {
   constructor(
     protected readonly http: HttpClient,
-    protected readonly progress: ProgressService
+    protected readonly progress: ProgressService,
+    protected readonly router: Router,
   ) { }
 
   protected async get<R>(path: string, captcha?: string) {
@@ -55,6 +57,7 @@ export abstract class BaseApi {
 
   public async logout() {
     this.token = null;
+    this.router.navigateByUrl("/auth");
   }
 
   protected get token() {

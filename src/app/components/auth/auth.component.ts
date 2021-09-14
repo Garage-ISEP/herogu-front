@@ -19,7 +19,7 @@ export class AuthComponent {
   public submitting = false;
 
   constructor(
-    private readonly _apiService: ApiService,
+    private readonly _api: ApiService,
     private readonly _snackbar: SnackbarService,
     private readonly _router: Router
   ) { }
@@ -27,15 +27,15 @@ export class AuthComponent {
   public async submitAuth() {
     this.submitting = true;
     try {
-      const res = await this._apiService.login({ ...this.connexionForm.value });
+      const res = await this._api.login({ ...this.connexionForm.value });
       this._router.navigateByUrl("/");
       this._snackbar.snack(`Bienvenue ${res.firstName} !`);
     } catch (e) {
       if (e instanceof HttpErrorResponse && (e.status === 401 || e.status === 400))
-        this._snackbar.snack("Votre identifiant ou mot de passe est incorrect.");
+        this._snackbar.snack("Ton identifiant ou mot de passe est incorrect.");
       else
         this._snackbar.snack("Une erreur est survenue.");
-
+      this._api.logout();
     } finally {
       this.submitting = false;
       this.connexionForm.reset();
@@ -43,7 +43,6 @@ export class AuthComponent {
   }
 
   public get enabled() {
-    console.log(this.connexionForm.value);
     return this.connexionForm.valid && !this.submitting;
   }
 }
