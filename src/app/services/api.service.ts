@@ -29,7 +29,7 @@ export class ApiService extends BaseApi {
       this.progress.toggle();
       const res = await this.http.post<LoginResponseModel>(environment.api + "/auth/login", body).toPromise();
       this.token = res.token;
-      return this.user = res.user;
+      return this.user = new User(res.user);
     } finally {
       this.progress.toggle();
     }
@@ -38,7 +38,7 @@ export class ApiService extends BaseApi {
   public async loadUser(): Promise<User | undefined> {
     if (this.user) return this.user;
     try {
-      return this.user = await this.get<User>(`/auth/me`);
+      return this.user = new User(await this.get<User>(`/auth/me`));
     } catch (e) {
       console.error(e);
       this.logout();
