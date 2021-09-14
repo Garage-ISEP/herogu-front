@@ -1,4 +1,6 @@
-export class User {
+import { BaseModel } from "../base.model";
+
+export class User extends BaseModel {
   public id: string;
   public firstName: string;
   public lastName: string;
@@ -11,11 +13,11 @@ export class User {
   public updatedDate: Date;
 
   public get projects() {
-    return this.collaborators.map(el => el.project);
+    return this.collaborators.map(el => el.project) || [];
   }
 }
 
-export class Collaborator {
+export class Collaborator extends BaseModel {
   public id: number;
   public project: Project;
   public projectId: string;
@@ -32,7 +34,7 @@ export enum Role {
   COLLABORATOR = "COLLABORATOR"
 }
 
-export class Project {
+export class Project extends BaseModel {
   id: number;
   userId: number;
   name: string;

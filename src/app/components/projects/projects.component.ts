@@ -15,6 +15,7 @@ export class ProjectsComponent implements OnInit {
 
   async ngOnInit() {
     await this._api.loadUser();
+    console.log(this._api.user.projects);
   }
 
   public get user() {
