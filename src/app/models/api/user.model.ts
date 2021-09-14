@@ -7,6 +7,8 @@ export class User {
   public admin: boolean;
   public role: Role;
   public collaborators: Collaborator[];
+  public createdDate: Date;
+  public updatedDate: Date;
 
   public get projects() {
     return this.collaborators.map(el => el.project);
@@ -20,6 +22,8 @@ export class Collaborator {
   public user: User;
   public userId: string;
   public role: Role;
+  public createdDate: Date;
+  public updatedDate: Date;
 }
 
 
@@ -28,7 +32,7 @@ export enum Role {
   COLLABORATOR = "COLLABORATOR"
 }
 
-export interface Project {
+export class Project {
   id: number;
   userId: number;
   name: string;
