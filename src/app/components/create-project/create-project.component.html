@@ -1,5 +1,5 @@
 <h1>Créer un nouveau projet Herogu</h1>
-<mat-vertical-stepper linear class="stepper" color="accent" #stepper (selectionChange)="getDockerfile(input.checked)">
+<mat-vertical-stepper linear class="stepper" color="accent" #stepper>
 
   <mat-step [stepControl]="infosForm">
     <form [formGroup]="infosForm">
@@ -14,7 +14,7 @@
       <section>
         <mat-checkbox formControlName="enableMysql" [disabled]="!input.checked">Utiliser une base de donnée MySQL</mat-checkbox>
       </section><br>
-      <app-add-student class="user-add" (users)="addedUsers = $event"></app-add-student>
+      <!-- <app-add-student class="user-add" (users)="addedUsers = $event"></app-add-student> -->
       <div>
         <button mat-stroked-button matStepperNext color="accent">Suivant</button>
       </div>
@@ -27,7 +27,6 @@
     <img src="/assets/dockerhub1.png" class="doc-img" alt="">
     <li>Ton code source doit être sur un repository Github</li>
     <li>Créer un fichier nommé <code>Dockerfile</code> à la racine du repository avec le contenu suivant</li>
-    <nge-monaco-viewer [code]="dockerfile" [language]="'dockerfile'"></nge-monaco-viewer>
     <li>Créer un compte sur <a href="https://hub.docker.com" target="_blank" style="color: #099cec; font-weight: 500">DockerHub</a></li>
     <li>Lier le compte Dockerhub au compte Github via les paramètres de Dockerhub</li>
     <li>Créer un repository public nommé <code>{{ projectName.value }}</code> sur Dockerhub depuis le repository Github. Cliquer sur ➕ dans la partie <code>Build Rules</code>, cela va ajouter une règle de build par défaut, veillez à ce que la branche source soit la branche principale de votre repository Github (<code>main</code> ou <code>master</code>)</li>

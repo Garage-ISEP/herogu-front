@@ -1,12 +1,12 @@
+import { User } from "./user.model";
+
 export interface LoginRequestModel {
   password: string;
   student_id: string;
 }
 export interface LoginResponseModel {
-  status: string;
   token: string;
-  httpCode: number;
-  message: string;
+  user: User;
 }
 
 export interface RegisterRequestModel {

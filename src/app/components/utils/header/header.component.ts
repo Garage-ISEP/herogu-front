@@ -10,7 +10,15 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
 
   constructor(
-    public readonly apiService: ApiService,
-    public readonly progressService: ProgressService,
-  ) {}
+    private readonly _api: ApiService,
+    public readonly progress: ProgressService,
+  ) { }
+  
+  public get logged() {
+    return this._api.logged;
+  }
+
+  public get user() {
+    return this._api.user;
+  }
 }
