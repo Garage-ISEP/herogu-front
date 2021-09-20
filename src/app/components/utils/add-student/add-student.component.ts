@@ -28,8 +28,8 @@ export class AddStudentComponent {
   public addUser(event: MatAutocompleteSelectedEvent | MatChipInputEvent) {
     const value = event instanceof MatAutocompleteSelectedEvent ? event.option.viewValue : event.value;
 
-      this.addedUsers.push(value);
-      this.allUsers.splice(this.allUsers.indexOf(value), 1);
+    this.addedUsers.push(value);
+    this.allUsers.splice(this.allUsers.indexOf(value), 1);
     this.userInput.nativeElement.value = '';
     this.sendUsers();
   }
