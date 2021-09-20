@@ -8,12 +8,12 @@ export class User extends BaseModel {
   public studentId: string;
   public admin: boolean;
   public role: Role;
-  public collaborators: Collaborator[];
+  public collaborators?: Collaborator[];
   public createdDate: Date;
   public updatedDate: Date;
 
   public get projects() {
-    return this.collaborators.map(el => el.project) || [];
+    return this.collaborators?.map(el => el.project) || [];
   }
 }
 
