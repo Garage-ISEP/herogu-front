@@ -45,4 +45,8 @@ export class ApiService extends BaseApi {
       this._snackbar.snack("Connexion impossible !");
     }
   }
+
+  public async verifyRepositoryLink(link: string): Promise<boolean> {
+    return await this.get<boolean>(`/project/check-bot-github?link=${link}`);
+  }
 }

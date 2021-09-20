@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from "@angular/material/divider";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -57,6 +58,7 @@ import { appearance } from './style/default';
     MatRippleModule,
     MatButtonModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
     HttpClientModule,
     RecaptchaV3Module,

@@ -4,9 +4,9 @@
   <mat-step [stepControl]="infosForm">
     <form [formGroup]="infosForm">
       <ng-template matStepLabel>Configuration du nouveau projet</ng-template>
-      <mat-form-field appearance="outline" color="accent">
+      <mat-form-field appearance="outline" color="accent" class="project-name">
         <mat-label>Nom du projet</mat-label>
-        <input type="text" matInput placeholder="MonSuperProjet" formControlName="projectName" #projectName required>
+        <input type="text" matInput placeholder="mon-projet" formControlName="projectName" required>
 				<mat-error>Le nom doit être compris entre 3 et 10 caractères et ne pas contenir de caractères spéciaux et de nombres</mat-error>
       </mat-form-field><br><br>
       <section>
@@ -23,20 +23,28 @@
   </mat-step>
 
   <mat-step [stepControl]="configForm" #firstStep>
-    <ng-template matStepLabel>Configuration du site</ng-template>
+    <ng-template matStepLabel>Configuration du repository</ng-template>
     <br>
     <li>Ton code source doit être sur un repository Github !</li>
-
+		<li>Un bot Github se connectera au repository et ajoutera les fichiers de configuration nécessaires dans les dossiers .github et docker (sans toucher au code présent)</li>
     <form [formGroup]="configForm">
-      <mat-form-field appearance="outline" color="accent">
-        <mat-label>Lien du repository Github</mat-label>
-        <input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required #dockerTag>
-      </mat-form-field>
+			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter le bot à mon repository</a><br><br>
+      <section class="repo-link">
+				<mat-form-field appearance="outline" color="accent">
+					<mat-label>Lien du repository Github</mat-label>
+					<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required>
+				</mat-form-field>
+				<div class="repo-status">
+					<mat-progress-spinner [style.visibility]="botInstalled === 'checking' ? 'visible' : 'hidden'" mode="indeterminate" color="accent"></mat-progress-spinner>
+					<mat-icon class="repo-icons" [style.visibility]="botInstalled === 'valid' ? 'visible' : 'hidden'">done</mat-icon>
+					<mat-icon class="repo-icons" [style.visibility]="botInstalled === 'invalid' ? 'visible' : 'hidden'">close</mat-icon>
+				</div>
+			</section>
 			<section>
         <mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement</mat-checkbox>
       </section><br>
       <div>
-        <button mat-stroked-button type="submit" color="accent">Créer mon projet !</button>
+        <button mat-stroked-button color="accent">Créer mon projet !</button>
       </div>
     </form>
   </mat-step>
