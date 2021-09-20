@@ -11,7 +11,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit{
 
   constructor(
     private readonly _api: ApiService,
@@ -19,6 +19,10 @@ export class AccountComponent {
     private readonly _dialog: MatDialog,
     private readonly _snackbar: SnackbarService,
   ) { }
+
+  public async ngOnInit(): Promise<void> {
+    await this._api.loadUser();
+  }
 
   public logout() {
     this._dialog.open(TextDialogComponent, { data: "Es-tu sûr de te déconnecter ?" }).afterClosed().subscribe((e: string) => {
