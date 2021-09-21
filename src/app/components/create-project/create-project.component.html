@@ -1,9 +1,9 @@
-<h1>Créer un nouveau projet Herogu</h1>
+<h1>Créer un projet Herogu</h1>
 <mat-vertical-stepper linear class="stepper" color="accent" #stepper>
 
   <mat-step [stepControl]="infosForm">
     <form [formGroup]="infosForm">
-      <ng-template matStepLabel>Configuration du nouveau projet</ng-template>
+      <ng-template matStepLabel>Configuration du projet</ng-template>
       <mat-form-field appearance="outline" color="accent" class="project-name">
         <mat-label>Nom du projet</mat-label>
         <input type="text" matInput placeholder="mon-projet" formControlName="projectName" required>
