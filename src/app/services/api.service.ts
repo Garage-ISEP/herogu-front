@@ -36,6 +36,7 @@ export class ApiService extends BaseApi {
   }
 
   public async loadUser(): Promise<User | undefined> {
+    if (!this.logged) return undefined;
     if (this.user) return this.user;
     try {
       return this.user = new User(await this.get<User>(`/auth/me`));
