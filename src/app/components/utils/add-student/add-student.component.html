@@ -5,7 +5,7 @@
       {{ user }}
       <mat-icon matChipRemove>cancel</mat-icon>
     </mat-chip>
-    <input #userInput placeholder="Code étudiant" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="addUserAction" (matChipInputTokenEnd)="addUser($event)">
+    <input #userInput placeholder="Code étudiant (madu56710)" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="addUserAction" (matChipInputTokenEnd)="addUser($event)">
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addUser($event)">
     <mat-option *ngFor="let user of filterUsers(userInput.value)" [value]="user">

@@ -25,10 +25,10 @@
   <mat-step [stepControl]="configForm" #firstStep>
     <ng-template matStepLabel>Configuration du repository</ng-template>
     <br>
-    <li>Ton code source doit être sur un repository Github !</li>
-		<li>Un bot Github se connectera au repository et ajoutera les fichiers de configuration nécessaires dans les dossiers .github et docker (sans toucher au code présent)</li>
+    <li>Ton code source doit être sur un repository publique Github !</li>
+		<li>Tu dois connecter le bot Herogu au repository, il ajoutera les fichiers de configuration nécessaires dans les dossiers .github et docker (sans toucher au code présent)</li>
     <form [formGroup]="configForm">
-			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter le bot à mon repository</a><br><br>
+			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter Herogu à mon repository</a><br><br>
 			<mat-form-field appearance="outline" color="accent" class="repo-link">
 				<mat-label>Lien du repository Github</mat-label>
 				<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required>
