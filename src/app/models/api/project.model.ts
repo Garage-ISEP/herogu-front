@@ -3,9 +3,9 @@ import { FormGroup } from "@angular/forms";
 export class CreateProjectRequest {
 
   public projectName: string;
-  public enablePHP: boolean;
-  public enableMysql: boolean;
-  public enableNotifications: boolean;
+  public enablePHP: "true" | "false";
+  public enableMysql: "true" | "false";
+  public enableNotifications: "true" | "false";
   public addedUsers: string[];
   public githubLink: string;
 
@@ -25,9 +25,9 @@ export class PostProjectRequest {
   constructor(createProject: CreateProjectRequest) {
     this.name = createProject.projectName;
     this.githubLink = createProject.githubLink;
-    this.type = createProject.enablePHP ? "php" : "nginx";
-    this.mysqlEnabled = createProject.enableMysql;
-    this.notificationsEnabled = createProject.enableNotifications;
+    this.type = createProject.enablePHP == "true" ? "php" : "nginx";
+    this.mysqlEnabled = createProject.enableMysql == "true";
+    this.notificationsEnabled = createProject.enableNotifications == "true";
     this.addedUsers = createProject.addedUsers;
   }
 }
