@@ -40,7 +40,7 @@ export class ProjectCreationInfosComponent implements OnInit {
     } catch (e) {
       console.error(e);
       this.projectCreationState = "error";
-      this.projectCreationError = "Erreur lors de la création du project";
+      this.projectCreationError = "Erreur lors de la création du projet";
       throw new Error(e);
     }
   }
