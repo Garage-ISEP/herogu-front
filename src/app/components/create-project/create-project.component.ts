@@ -14,7 +14,8 @@ export class CreateProjectComponent implements OnInit {
   public infosForm: FormGroup;
   public configForm: FormGroup;
 
-  public botInstalled?: "checking" | "invalid" | "valid";
+  public botInstalled?: boolean;
+  public timeoutChecked?: number;
 
   constructor(
     private readonly _api: ApiService,
@@ -33,19 +34,26 @@ export class CreateProjectComponent implements OnInit {
       githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
       enableNotifications: ['true'],
     });
-    this.configForm.controls.githubLink.valueChanges.subscribe(() => this.onGithubLinkUpdated());
+    this.configForm.controls.githubLink.valueChanges.subscribe(() => this.setTimeoutGithubLink());
+  }
+
+  private setTimeoutGithubLink() {
+    if (this.timeoutChecked)
+      window.clearTimeout(this.timeoutChecked);
+    this.timeoutChecked = window.setTimeout(() => this.onGithubLinkUpdated(), 300);
   }
 
   private async onGithubLinkUpdated() {
     if (!/^((http)|(https):\/\/github.com\/).*$/.test(this.configForm.controls.githubLink.value))
       return;
-    this.botInstalled = 'checking';
     try {
-      this.botInstalled = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value) ? "valid" : "invalid";
+      this.botInstalled = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value);
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Impossible de vérifier l'installation du bot sur le repository !");
       this.botInstalled = undefined;
+    } finally {
+      this.timeoutChecked = undefined;
     }
   }
 

@@ -29,22 +29,17 @@
 		<li>Un bot Github se connectera au repository et ajoutera les fichiers de configuration nécessaires dans les dossiers .github et docker (sans toucher au code présent)</li>
     <form [formGroup]="configForm">
 			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter le bot à mon repository</a><br><br>
-      <section class="repo-link">
-				<mat-form-field appearance="outline" color="accent">
-					<mat-label>Lien du repository Github</mat-label>
-					<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required>
-				</mat-form-field>
-				<div class="repo-status">
-					<mat-progress-spinner [style.visibility]="botInstalled === 'checking' ? 'visible' : 'hidden'" mode="indeterminate" color="accent"></mat-progress-spinner>
-					<mat-icon class="repo-icons" [style.visibility]="botInstalled === 'valid' ? 'visible' : 'hidden'">done</mat-icon>
-					<mat-icon class="repo-icons" [style.visibility]="botInstalled === 'invalid' ? 'visible' : 'hidden'">close</mat-icon>
-				</div>
-			</section>
+			<mat-form-field appearance="outline" color="accent" class="repo-link">
+				<mat-label>Lien du repository Github</mat-label>
+				<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required>
+				<mat-icon class="repo-icons" [style.color]="'green'" matSuffix [style.display]="botInstalled === true ? 'inline' : 'none'">done</mat-icon>
+				<mat-icon class="repo-icons" [style.color]="'red'" matSuffix [style.display]="botInstalled === false ? 'inline' : 'none'">close</mat-icon>
+			</mat-form-field>
 			<section>
         <mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement</mat-checkbox>
       </section><br>
       <div>
-        <button mat-stroked-button color="accent">Créer mon projet !</button>
+        <button mat-stroked-button color="accent" [disabled]="botInstalled !== true">Créer mon projet !</button>
       </div>
     </form>
   </mat-step>
