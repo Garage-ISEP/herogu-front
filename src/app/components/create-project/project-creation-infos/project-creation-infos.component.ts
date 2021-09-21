@@ -12,7 +12,15 @@ export class ProjectCreationInfosComponent implements OnInit {
   @Input()
   public createInfos: CreateProjectRequest;
 
-  public projectCreation?: LoadingState;
+  public projectCreationState?: LoadingState;
+  public githubCreationState?: LoadingState;
+  public dockerCreationState?: LoadingState;
+  public mysqlCreationState?: LoadingState;
+
+  public projectCreationError?: string;
+  public githubCreationError?: string;
+  public dockerCreationError?: string;
+  public mysqlCreationError?: string;
 
   constructor(
     private readonly _api: ApiService,
@@ -26,16 +34,17 @@ export class ProjectCreationInfosComponent implements OnInit {
   
   private async _postProject() {
     try {
-      this.projectCreation = "loading";
+      this.projectCreationState = "loading";
       await this._api.createProject(new PostProjectRequest(this.createInfos));
-      this.projectCreation = "loaded";
+      this.projectCreationState = "loaded";
     } catch (e) {
       console.error(e);
-      this.projectCreation = "error";
+      this.projectCreationState = "error";
+      this.projectCreationError = "Erreur lors de la création du project";
       throw new Error(e);
     }
   }
 
 }
 
-type LoadingState = 'loading' | 'loaded' | 'error';
+export type LoadingState = 'loading' | 'loaded' | 'error';

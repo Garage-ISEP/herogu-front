@@ -1,0 +1,18 @@
+li {
+	line-height: 2em;
+	font-size: 1rem;
+	margin-right: 5px;
+}
+
+mat-progress-spinner, mat-progress-spinner ::ng-deep svg {
+	width: 30px !important;
+	height: 30px !important;
+	overflow: visible !important;
+}
+section {
+	display: flex;
+	align-items: center;
+}
+mat-error {
+	margin-left: 10px;
+}
