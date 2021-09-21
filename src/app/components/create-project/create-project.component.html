@@ -22,7 +22,7 @@
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="configForm" #firstStep>
+  <mat-step [stepControl]="configForm">
     <ng-template matStepLabel>Configuration du repository</ng-template>
     <br>
     <li>Ton code source doit être sur un repository publique Github !</li>
@@ -39,8 +39,12 @@
         <mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement</mat-checkbox>
       </section><br>
       <div>
-        <button mat-stroked-button color="accent" [disabled]="botInstalled !== true">Créer mon projet !</button>
+        <button mat-stroked-button color="accent" matStepperNext [disabled]="botInstalled !== true">Créer mon projet !</button>
       </div>
     </form>
   </mat-step>
+	<mat-step>
+		<ng-template matStepLabel>Création du projet</ng-template>
+		<app-project-creation-infos *ngIf="createInfos" [createInfos]="createInfos"></app-project-creation-infos>
+	</mat-step>
 </mat-vertical-stepper>
