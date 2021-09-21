@@ -35,7 +35,7 @@ export enum Role {
 }
 
 export class Project extends BaseModel {
-  id: number;
+  id: string;
   userId: number;
   name: string;
   docker_img_link: string;

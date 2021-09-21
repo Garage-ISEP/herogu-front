@@ -9,7 +9,7 @@ export class CreateProjectRequest {
   public addedUsers: string[];
   public githubLink: string;
 
-  constructor(infosForm: FormGroup, configForm: FormGroup) {
+  constructor(infosForm: FormGroup, configForm: FormGroup, public env: { [key: string]: string }) {
     Object.assign(this, infosForm.value, configForm.value);
   }
 }

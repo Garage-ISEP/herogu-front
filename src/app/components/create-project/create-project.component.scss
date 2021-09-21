@@ -32,6 +32,14 @@ h1 {
 		width: 100%;
 		max-width: 350px;
 	}
+	.env {
+		display: flex;
+		.delimiter {
+			margin: 0 5px;
+			margin-top: 19px;
+			display: block;
+		}
+	}
 }
 p, li {
   font-size: 1rem;

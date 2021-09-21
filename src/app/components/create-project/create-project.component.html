@@ -21,7 +21,27 @@
       </div>
     </form>
   </mat-step>
-
+	<mat-step>
+		<ng-template matStepLabel>Configurer des variables d'environnement</ng-template>
+		<br>
+		<div *ngFor="let item of envForm | keyvalue; let index = index" class="env">
+			<mat-form-field color="accent">
+				<mat-label>Clef</mat-label>
+				<input matInput type="text" (keydown.space)="$event.preventDefault()" [(ngModel)]="item.key" />
+			</mat-form-field>
+			<span class="delimiter">:</span>
+			<mat-form-field color="accent">
+				<mat-label>Valeur</mat-label>
+				<input type="text" matInput [(ngModel)]="item.value" />
+				<button matSuffix mat-icon-button color="accent" (click)="removeEntry(index)">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+		</div>
+		<button [style.display]="'block'" mat-stroked-button color="accent" (click)="addEntry()">Ajouter une variable d'environment</button>
+		<br>
+		<button [style.display]="'block'" mat-stroked-button color="accent" matStepperNext>Continuer</button>
+	</mat-step>
   <mat-step [stepControl]="configForm">
     <ng-template matStepLabel>Configuration du repository</ng-template>
     <br>

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { ProgressService } from './progress.service';
-import { User } from '../models/api/user.model';
+import { Project, User } from '../models/api/user.model';
 import { LoginResponseModel } from '../models/api/auth.model';
 import { LoginRequestModel } from '../models/api/auth.model';
 import { Injectable } from '@angular/core';
@@ -52,7 +52,19 @@ export class ApiService extends BaseApi {
     return await this.get<boolean>(`/project/check-bot-github?link=${link}`);
   }
 
-  public async createProject(body: PostProjectRequest) {
-    await this.post<PostProjectRequest, void>(`/project`, body);
+  public async createProject(body: PostProjectRequest): Promise<Project> {
+    return new Project(await this.post<PostProjectRequest, Project>(`/project`, body));
+  }
+
+  public async linkProjectToGithub(projectId: string): Promise<void> {
+    await this.post(`/project/${projectId}/github-link`);
+  }
+
+  public async linkProjectToDocker(projectId: string): Promise<void> {
+    await this.post(`/project/${projectId}/docker-link`);
+  }
+
+  public async linkProjectToMysql(projectId: string): Promise<void> {
+    await this.post(`/project/${projectId}/mysql-link`);
   }
 }

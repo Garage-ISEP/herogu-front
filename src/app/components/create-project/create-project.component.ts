@@ -1,10 +1,10 @@
 import { CreateProjectRequest } from './../../models/api/project.model';
-import { ProgressService } from './../../services/progress.service';
 import { ApiService } from './../../services/api.service';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material/stepper';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { makeid } from 'src/app/utils/string.util';
 
 @Component({
   selector: 'app-create-project',
@@ -14,6 +14,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class CreateProjectComponent implements OnInit {
   public infosForm: FormGroup;
   public configForm: FormGroup;
+  public envForm: { [key: string]: string } = { };
 
   public botInstalled?: boolean;
   public timeoutChecked?: number;
@@ -41,11 +42,20 @@ export class CreateProjectComponent implements OnInit {
     this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());
   }
 
+  public removeEntry(index: number) {
+    delete this.envForm[Object.keys(this.envForm)[index]];
+  }
+
+  public addEntry() {
+    this.envForm['NEW_KEY_' + makeid(3)] = '';
+  }
+
   public get createInfos() {
-    if (this.configForm.valid && this.infosForm.valid && this.stepper.selectedIndex === 2)
-      return new CreateProjectRequest(this.infosForm, this.configForm);
+    if (this.configForm.valid && this.infosForm.valid && this.stepper.selectedIndex === 3)
+      return new CreateProjectRequest(this.infosForm, this.configForm, this.envForm);
     else return undefined;
   }
+
   private _setTimeoutGithubLink() {
     if (this.timeoutChecked)
       window.clearTimeout(this.timeoutChecked);
