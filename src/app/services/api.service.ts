@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import { BaseApi } from '../utils/base-api.util';
 import { SnackbarService } from './snackbar.service';
+import { PostProjectRequest } from '../models/api/project.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -49,5 +50,9 @@ export class ApiService extends BaseApi {
 
   public async verifyRepositoryLink(link: string): Promise<boolean> {
     return await this.get<boolean>(`/project/check-bot-github?link=${link}`);
+  }
+
+  public async createProject(body: PostProjectRequest) {
+    await this.post<PostProjectRequest, void>(`/project`, body);
   }
 }

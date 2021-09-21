@@ -1,3 +1,4 @@
+import { CreateProjectRequest } from './../../models/api/project.model';
 import { ProgressService } from './../../services/progress.service';
 import { ApiService } from './../../services/api.service';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
@@ -17,6 +18,9 @@ export class CreateProjectComponent implements OnInit {
   public botInstalled?: boolean;
   public timeoutChecked?: number;
 
+  @ViewChild(MatVerticalStepper)
+  public stepper: MatVerticalStepper;
+
   constructor(
     private readonly _api: ApiService,
     private readonly _formBuilder: FormBuilder,
@@ -34,16 +38,21 @@ export class CreateProjectComponent implements OnInit {
       githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
       enableNotifications: ['true'],
     });
-    this.configForm.controls.githubLink.valueChanges.subscribe(() => this.setTimeoutGithubLink());
+    this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());
   }
 
-  private setTimeoutGithubLink() {
+  public get createInfos() {
+    if (this.configForm.valid && this.infosForm.valid && this.stepper.selectedIndex === 2)
+      return new CreateProjectRequest(this.infosForm, this.configForm);
+    else return undefined;
+  }
+  private _setTimeoutGithubLink() {
     if (this.timeoutChecked)
       window.clearTimeout(this.timeoutChecked);
-    this.timeoutChecked = window.setTimeout(() => this.onGithubLinkUpdated(), 300);
+    this.timeoutChecked = window.setTimeout(() => this._onGithubLinkUpdated(), 300);
   }
 
-  private async onGithubLinkUpdated() {
+  private async _onGithubLinkUpdated() {
     if (!/^((http)|(https):\/\/github.com\/).*$/.test(this.configForm.controls.githubLink.value))
       return;
     try {

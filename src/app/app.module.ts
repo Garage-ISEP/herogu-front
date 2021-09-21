@@ -34,6 +34,7 @@ import { AddStudentComponent } from "./components/utils/add-student/add-student.
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { appearance } from './style/default';
+import { ProjectCreationInfosComponent } from './components/create-project/project-creation-infos/project-creation-infos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,8 @@ import { appearance } from './style/default';
     HeaderComponent,
     TextDialogComponent,
     CreateProjectComponent,
-    AddStudentComponent
+    AddStudentComponent,
+    ProjectCreationInfosComponent
   ],
   imports: [
     BrowserModule,
