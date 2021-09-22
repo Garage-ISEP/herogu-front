@@ -47,6 +47,7 @@
     <br>
     <li>Ton code source doit être sur un repository publique Github !</li>
 		<li>Tu dois connecter le bot Herogu au repository, il ajoutera les fichiers de configuration nécessaires dans les dossiers .github et docker (sans toucher au code présent)</li>
+		<li>Tu dois ensuite créer un access token avec les droit de création de package <a target="_blank" href="https://github.com/settings/tokens">https://github.com/settings/tokens</a></li>
     <form [formGroup]="configForm">
 			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter Herogu à mon repository</a><br><br>
 			<mat-form-field appearance="outline" color="accent" class="repo-link">
@@ -54,6 +55,10 @@
 				<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required>
 				<mat-icon class="repo-icons" [style.color]="'green'" matSuffix [style.display]="botInstalled === true ? 'inline' : 'none'">done</mat-icon>
 				<mat-icon class="repo-icons" [style.color]="'red'" matSuffix [style.display]="botInstalled === false ? 'inline' : 'none'">close</mat-icon>
+			</mat-form-field><br>
+			<mat-form-field appearance="outline" color="accent" class="repo-link">
+				<mat-label>Token secret</mat-label>
+				<input type="text" matInput formControlName="accessToken" required>
 			</mat-form-field>
 			<section>
         <mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement</mat-checkbox>

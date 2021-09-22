@@ -1,5 +1,12 @@
 <br>
-<app-create-project-info [error]="projectCreationError" [state]="projectCreationState">Création du projet</app-create-project-info>
-<app-create-project-info [error]="githubCreationError" [state]="githubCreationState">Connection avec Github</app-create-project-info>
-<app-create-project-info [error]="dockerCreationError" [state]="dockerCreationState">Création du container Docker</app-create-project-info>
-<app-create-project-info [error]="mysqlCreationError" *ngIf="createInfos.enableMysql">Création de la base de données MySQL</app-create-project-info>
+<app-create-project-info [error]="projectCreationError" [state]="projectCreationState">
+	Création du projet
+</app-create-project-info>
+<app-create-project-info [error]="githubCreationError" [state]="githubCreationState">
+	Création de fichiers de configuration sur le repository Github</app-create-project-info>
+<app-create-project-info [error]="dockerCreationError" [state]="dockerCreationState">
+	Création du container Docker
+</app-create-project-info>
+<app-create-project-info [error]="mysqlCreationError" *ngIf="createInfos.enableMysql">
+	Création de la base de données MySQL
+</app-create-project-info>

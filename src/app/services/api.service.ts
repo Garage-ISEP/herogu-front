@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import { BaseApi } from '../utils/base-api.util';
 import { SnackbarService } from './snackbar.service';
-import { PostProjectRequest } from '../models/api/project.model';
+import { GithubLinkRequest, PostProjectRequest } from '../models/api/project.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -56,8 +56,8 @@ export class ApiService extends BaseApi {
     return new Project(await this.post<PostProjectRequest, Project>(`/project`, body));
   }
 
-  public async linkProjectToGithub(projectId: string): Promise<void> {
-    await this.post(`/project/${projectId}/github-link`);
+  public async linkProjectToGithub(projectId: string, body: GithubLinkRequest): Promise<void> {
+    await this.post(`/project/${projectId}/github-link`, body);
   }
 
   public async linkProjectToDocker(projectId: string): Promise<void> {

@@ -37,6 +37,7 @@ export class CreateProjectComponent implements OnInit {
     });
     this.configForm = this._formBuilder.group({
       githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
+      accessToken: ['', [Validators.required]],
       enableNotifications: ['true'],
     });
     this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());

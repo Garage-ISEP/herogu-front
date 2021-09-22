@@ -8,6 +8,7 @@ export class CreateProjectRequest {
   public enableNotifications: "true" | "false";
   public addedUsers: string[];
   public githubLink: string;
+  public accessToken: string;
 
   constructor(infosForm: FormGroup, configForm: FormGroup, public env: { [key: string]: string }) {
     Object.assign(this, infosForm.value, configForm.value);
@@ -29,5 +30,13 @@ export class PostProjectRequest {
     this.mysqlEnabled = createProject.enableMysql == "true";
     this.notificationsEnabled = createProject.enableNotifications == "true";
     this.addedUsers = createProject.addedUsers;
+  }
+}
+
+export class GithubLinkRequest {
+  public accessToken: string;
+
+  constructor(createProject: CreateProjectRequest) {
+    this.accessToken = createProject.accessToken;
   }
 }

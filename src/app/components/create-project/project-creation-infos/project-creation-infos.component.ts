@@ -1,4 +1,4 @@
-import { CreateProjectRequest, PostProjectRequest } from './../../../models/api/project.model';
+import { CreateProjectRequest, GithubLinkRequest, PostProjectRequest } from './../../../models/api/project.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Project } from 'src/app/models/api/user.model';
@@ -6,7 +6,6 @@ import { Project } from 'src/app/models/api/user.model';
 @Component({
   selector: 'app-project-creation-infos',
   templateUrl: './project-creation-infos.component.html',
-  styleUrls: ['./project-creation-infos.component.scss']
 })
 export class ProjectCreationInfosComponent implements OnInit {
 
@@ -48,7 +47,7 @@ export class ProjectCreationInfosComponent implements OnInit {
     }
     try {
       this.githubCreationState = "loading";
-      await this._api.linkProjectToGithub(this.createdProject.id);
+      await this._api.linkProjectToGithub(this.createdProject.id, new GithubLinkRequest(this.createInfos));
       this.githubCreationState = "loaded";
     } catch (e) {
       console.error(e);

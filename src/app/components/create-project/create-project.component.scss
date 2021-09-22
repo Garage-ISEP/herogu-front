@@ -27,6 +27,9 @@ h1 {
   }
   li {
     line-height: 2em;
+		a {
+			text-decoration: underline;
+		}
   }
 	.repo-link, .project-name {
 		width: 100%;
