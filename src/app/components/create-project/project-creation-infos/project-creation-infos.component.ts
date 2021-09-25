@@ -14,13 +14,17 @@ export class ProjectCreationInfosComponent implements OnInit {
 
   public projectCreationState?: LoadingState;
   public githubCreationState?: LoadingState;
+  public createImageState?: LoadingState;
   public dockerCreationState?: LoadingState;
   public mysqlCreationState?: LoadingState;
 
   public projectCreationError?: string;
   public githubCreationError?: string;
+  public createImageError?: string;
   public dockerCreationError?: string;
   public mysqlCreationError?: string;
+
+  private _workflowId?: number;
 
   private createdProject?: Project;
 
@@ -56,6 +60,35 @@ export class ProjectCreationInfosComponent implements OnInit {
       throw new Error(e);
     }
     try {
+      this.createImageState = "loading";
+      const observable = this._api.createImageState(this.createdProject.id);
+      observable.subscribe(o => {
+        if (typeof o === "object" && o.id)
+          this._workflowId = o.id;
+        switch (o) {
+          case "none":
+            this.createImageState = "error";
+            this.createImageError = "Aucun workflow détecté !"
+            break;
+          case "failure":
+            this.createImageState = "error";
+            this.createImageError = "Erreur lors de la création de l'image !"
+            break;
+          case "in_progress":
+            this.createImageState = "loading";
+            break;
+          case "success":
+            this.createImageState = "loaded";
+            break;
+        }
+      });
+      await observable.toPromise();
+    } catch (e) {
+      console.error(e);
+      this.createImageState = "error";
+      this.createImageError = "Erreur lors de la création de l'image sur le repository github";
+    }
+    try {
       this.dockerCreationState = "loading";
       await this._api.linkProjectToDocker(this.createdProject.id);
       this.dockerCreationState = "loaded";
@@ -77,6 +110,11 @@ export class ProjectCreationInfosComponent implements OnInit {
     }
   }
 
+  public get workflowUrl(): string | undefined {
+    if (!this._workflowId) return;
+    const [owner, repo] = this.createInfos.githubLink.split("/").slice(-2);
+    return `https://github.com/${owner}/${repo}/actions/runs/${this._workflowId}`;
+  }
 }
 
 export type LoadingState = 'loading' | 'loaded' | 'error';

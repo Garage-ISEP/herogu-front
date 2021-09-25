@@ -3,7 +3,11 @@
 	Création du projet
 </app-create-project-info>
 <app-create-project-info [error]="githubCreationError" [state]="githubCreationState">
-	Création de fichiers de configuration sur le repository Github</app-create-project-info>
+	Création de fichiers de configuration sur le repository Github
+</app-create-project-info>
+<app-create-project-info [error]="createImageError" [state]="createImageState"> 
+	Création de l'image docker sur github <a *ngIf="workflowUrl" [href]="workflowUrl" target="_blank">({{ workflowUrl }})</a>
+</app-create-project-info>
 <app-create-project-info [error]="dockerCreationError" [state]="dockerCreationState">
 	Création du container Docker
 </app-create-project-info>

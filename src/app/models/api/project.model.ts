@@ -40,3 +40,5 @@ export class GithubLinkRequest {
     this.accessToken = createProject.accessToken;
   }
 }
+
+export type WorkflowRunStatus = "none" | "success" | "in_progress" | "failure" | { id: number };

@@ -8,7 +8,9 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import { BaseApi } from '../utils/base-api.util';
 import { SnackbarService } from './snackbar.service';
-import { GithubLinkRequest, PostProjectRequest } from '../models/api/project.model';
+import { GithubLinkRequest, PostProjectRequest, WorkflowRunStatus } from '../models/api/project.model';
+import { SseService } from './sse.service';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +23,7 @@ export class ApiService extends BaseApi {
     progress: ProgressService,
     router: Router,
     private readonly _snackbar: SnackbarService,
+    private readonly _sse: SseService,
   ) {
     super(http, progress, router);
   }
@@ -58,6 +61,10 @@ export class ApiService extends BaseApi {
 
   public async linkProjectToGithub(projectId: string, body: GithubLinkRequest): Promise<void> {
     await this.post(`/project/${projectId}/github-link`, body);
+  }
+
+  public createImageState(projectId: string): Observable<WorkflowRunStatus> {
+    return this._sse.getSse(`/project/${projectId}/building-link`);
   }
 
   public async linkProjectToDocker(projectId: string): Promise<void> {
