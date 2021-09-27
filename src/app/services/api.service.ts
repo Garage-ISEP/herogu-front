@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import { BaseApi } from '../utils/base-api.util';
 import { SnackbarService } from './snackbar.service';
-import { GithubLinkRequest, PostProjectRequest, WorkflowRunStatus } from '../models/api/project.model';
+import { PostProjectRequest, WorkflowRunStatus } from '../models/api/project.model';
 import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -59,8 +59,8 @@ export class ApiService extends BaseApi {
     return new Project(await this.post<PostProjectRequest, Project>(`/project`, body));
   }
 
-  public async linkProjectToGithub(projectId: string, body: GithubLinkRequest): Promise<void> {
-    await this.post(`/project/${projectId}/github-link`, body);
+  public async linkProjectToGithub(projectId: string): Promise<void> {
+    await this.post(`/project/${projectId}/github-link`);
   }
 
   public createImageState(projectId: string): Observable<WorkflowRunStatus> {

@@ -22,6 +22,8 @@ export class PostProjectRequest {
   public mysqlEnabled = false;
   public notificationsEnabled = false;
   public addedUsers: string[];
+  public accessToken: string;
+  public env: { [key: string]: string };
 
   constructor(createProject: CreateProjectRequest) {
     this.name = createProject.projectName;
@@ -30,14 +32,8 @@ export class PostProjectRequest {
     this.mysqlEnabled = createProject.enableMysql == "true";
     this.notificationsEnabled = createProject.enableNotifications == "true";
     this.addedUsers = createProject.addedUsers;
-  }
-}
-
-export class GithubLinkRequest {
-  public accessToken: string;
-
-  constructor(createProject: CreateProjectRequest) {
     this.accessToken = createProject.accessToken;
+    this.env = createProject.env;
   }
 }
 

@@ -27,7 +27,7 @@ h1 {
   }
   li {
     line-height: 2em;
-		a {
+		::ng-deep a {
 			text-decoration: underline;
 		}
   }
