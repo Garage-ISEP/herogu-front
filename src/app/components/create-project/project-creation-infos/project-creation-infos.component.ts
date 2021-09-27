@@ -62,31 +62,32 @@ export class ProjectCreationInfosComponent implements OnInit {
     try {
       this.createImageState = "loading";
       const observable = this._api.createImageState(this.createdProject.id);
-      observable.subscribe(o => {
+      await new Promise<void>((resolve, reject) => observable.subscribe(o => {
         if (typeof o === "object" && o.id)
           this._workflowId = o.id;
         switch (o) {
           case "none":
             this.createImageState = "error";
-            this.createImageError = "Aucun workflow détecté !"
+            this.createImageError = "Aucun workflow détecté !";
+            reject(this.createImageError);
             break;
           case "failure":
             this.createImageState = "error";
             this.createImageError = "Erreur lors de la création de l'image !"
+            reject(this.createImageError);
             break;
           case "in_progress":
             this.createImageState = "loading";
             break;
           case "success":
             this.createImageState = "loaded";
+            resolve();
             break;
         }
-      });
-      await observable.toPromise();
+      }));
     } catch (e) {
       console.error(e);
       this.createImageState = "error";
-      this.createImageError = "Erreur lors de la création de l'image sur le repository github";
     }
     try {
       this.dockerCreationState = "loading";
