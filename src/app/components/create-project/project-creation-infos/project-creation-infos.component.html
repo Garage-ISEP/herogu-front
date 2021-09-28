@@ -5,6 +5,4 @@
 <app-create-project-info [error]="githubCreationError" [state]="githubCreationState">
 	Création des fichiers de configuration sur le repository Github
 </app-create-project-info>
-<button mat-stroked-button>
-	
-</button>
+<button *ngIf="githubCreationState && createdProject" mat-stroked-button [routerLink]="'project' + createdProject.id">Accéder au project</button>

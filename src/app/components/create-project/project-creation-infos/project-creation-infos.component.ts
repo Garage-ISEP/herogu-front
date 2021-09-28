@@ -26,7 +26,7 @@ export class ProjectCreationInfosComponent implements OnInit {
 
   private _workflowId?: number;
 
-  private createdProject?: Project;
+  public createdProject?: Project;
 
   constructor(
     private readonly _api: ApiService,
