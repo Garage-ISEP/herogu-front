@@ -1,4 +1,5 @@
 import { BaseModel } from "../base.model";
+import { ProjectType } from "./project.model";
 
 export class User extends BaseModel {
   public id: string;
@@ -36,10 +37,21 @@ export enum Role {
 
 export class Project extends BaseModel {
   id: string;
-  userId: number;
   name: string;
-  docker_img_link: string;
-  last_build: string;
-  createdAt: string;
-  updatedAt: string;
+  lastBuild: string;
+  githubLink: string;
+  shas?: string[];
+  repoId: number;
+  type: ProjectType;
+  mysqlUser: string;
+  mysqlPassword: string;
+  mysqlDatabase: string;
+  mysqlEnabled: boolean;
+  notificationsEnabled: boolean;
+  env: { [key: string]: string };
+  accessToken: string;
+  creator: User;
+  collaborators: Collaborator[];
+  createdDate: Date;
+  updatedDate: Date;
 }

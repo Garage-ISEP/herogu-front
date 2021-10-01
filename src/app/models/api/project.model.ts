@@ -38,3 +38,8 @@ export class PostProjectRequest {
 }
 
 export type WorkflowRunStatus = "none" | "success" | "in_progress" | "failure" | { id: number };
+
+export enum ProjectType {
+  NGINX = "NGINX",
+  PHP = "PHP",
+}

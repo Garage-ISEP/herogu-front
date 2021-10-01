@@ -1,0 +1,19 @@
+:host {
+	display: flex;
+	width: 100%;
+	padding: 25px;
+	align-items: center;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 7px;
+	box-sizing: border-box;
+}
+mat-divider {
+	height: 40px;
+	margin: 0 10px 0 10px;
+}
+p, h1 {
+	margin: 0;
+}
+a:hover {
+	text-decoration: underline;
+}
