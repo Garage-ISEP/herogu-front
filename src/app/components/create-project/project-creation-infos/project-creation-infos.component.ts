@@ -14,15 +14,9 @@ export class ProjectCreationInfosComponent implements OnInit {
 
   public projectCreationState?: LoadingState;
   public githubCreationState?: LoadingState;
-  public createImageState?: LoadingState;
-  public dockerCreationState?: LoadingState;
-  public mysqlCreationState?: LoadingState;
 
   public projectCreationError?: string;
   public githubCreationError?: string;
-  public createImageError?: string;
-  public dockerCreationError?: string;
-  public mysqlCreationError?: string;
 
   private _workflowId?: number;
 
