@@ -36,6 +36,7 @@ import { NgModule } from '@angular/core';
 import { appearance } from './style/default';
 import { ProjectCreationInfosComponent } from './components/create-project/project-creation-infos/project-creation-infos.component';
 import { CreateProjectInfoComponent } from './components/create-project/project-creation-infos/create-project-info/create-project-info.component';
+import { DashboardHeaderComponent } from './components/dashboard/dashboard-header/dashboard-header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import { CreateProjectInfoComponent } from './components/create-project/project-
     CreateProjectComponent,
     AddStudentComponent,
     ProjectCreationInfosComponent,
-    CreateProjectInfoComponent
+    CreateProjectInfoComponent,
+    DashboardHeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 <div class="wrapper" [style.opacity]="!!user">
   <h1>Mes projets</h1>
   <div class="projects" *ngIf="user">
-    <button class="project" mat-stroked-button *ngFor="let project of user.projects || []">
+    <button class="project" mat-stroked-button *ngFor="let project of user.projects || []" [routerLink]="'project/' + project.id">
       <mat-icon>folder_special</mat-icon><br>
       <span>{{ project.name }}</span>
     </button>
