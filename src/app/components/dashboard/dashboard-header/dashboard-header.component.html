@@ -1,3 +1,9 @@
-<h1>{{ project.name }}</h1>
+<div>
+	<h1>{{ project.name }}</h1>
 <mat-divider [vertical]="true"></mat-divider>
 <a [href]="project.githubLink" target="_blank">{{ project.githubLink }}</a>
+</div>
+<div>
+	<app-project-status [project]="project"></app-project-status>
+	<button mat-icon-button [routerLink]="['./settings']"><mat-icon class="mat-18">settings</mat-icon></button>
+</div>

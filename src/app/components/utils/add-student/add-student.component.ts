@@ -10,6 +10,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class AddStudentComponent {
 
   public readonly addUserAction = [COMMA, ENTER, SPACE];
+
+  @Input()
   public addedUsers: string[] = [];
 
   @Output()

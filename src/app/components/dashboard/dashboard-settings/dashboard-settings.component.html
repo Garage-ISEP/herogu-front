@@ -1,0 +1,12 @@
+<h3>Paramètres :</h3>
+<ng-container *ngIf="project">
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Nom du projet</mat-label>
+		<input matInput [(ngModel)]="project.name">
+	</mat-form-field>
+	<app-add-student *ngIf="isAuthor" [addedUsers]="collaborators" [allUsers]="collaborators"></app-add-student>
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Type d'hébergement du projet</mat-label>
+		<input matInput [(ngModel)]="project.type" disabled>
+	</mat-form-field>
+</ng-container>

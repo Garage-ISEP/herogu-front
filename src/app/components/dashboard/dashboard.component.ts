@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class DashboardComponent implements OnInit {
 
-  private projectId?: string;
+  public project?: Project;
 
   constructor(
     private readonly _api: ApiService,
@@ -18,11 +18,6 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this._route.params.subscribe(params => this.projectId = params.id);
+    this._route.params.subscribe(async params => this.project = await this._api.loadProject(params.id));
   }
-
-  public get project(): Project {
-    return this._api.user!.projects.find(el => el.id === this.projectId);
-  }
-
 }

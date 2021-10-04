@@ -37,6 +37,8 @@ import { appearance } from './style/default';
 import { ProjectCreationInfosComponent } from './components/create-project/project-creation-infos/project-creation-infos.component';
 import { CreateProjectInfoComponent } from './components/create-project/project-creation-infos/create-project-info/create-project-info.component';
 import { DashboardHeaderComponent } from './components/dashboard/dashboard-header/dashboard-header.component';
+import { ProjectStatusComponent } from './components/dashboard/dashboard-header/project-status/project-status.component';
+import { DashboardSettingsComponent } from './components/dashboard/dashboard-settings/dashboard-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,9 @@ import { DashboardHeaderComponent } from './components/dashboard/dashboard-heade
     AddStudentComponent,
     ProjectCreationInfosComponent,
     CreateProjectInfoComponent,
-    DashboardHeaderComponent
+    DashboardHeaderComponent,
+    ProjectStatusComponent,
+    DashboardSettingsComponent
   ],
   imports: [
     BrowserModule,

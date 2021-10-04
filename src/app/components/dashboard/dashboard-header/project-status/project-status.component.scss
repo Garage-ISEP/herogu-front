@@ -1,0 +1,17 @@
+.badge {
+	width: 10px;
+	height: 10px;
+	border-radius: 50px;
+	&[status=SUCCESS] {
+		background-color: #5cb85c;
+	}
+	&[status=IN_PROGRESS] {
+		background-color: #f0ad4e;
+	}
+	&[status=ERROR] {
+		background-color: #d9534f;
+	}
+	&[status=""] {
+		display: none;
+	}
+}

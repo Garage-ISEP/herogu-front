@@ -51,6 +51,7 @@ export class Project extends BaseModel {
   env: { [key: string]: string };
   accessToken: string;
   creator: User;
+  creatorId: string;
   collaborators: Collaborator[];
   createdDate: Date;
   updatedDate: Date;

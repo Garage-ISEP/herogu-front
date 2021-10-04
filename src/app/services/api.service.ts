@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import { BaseApi } from '../utils/base-api.util';
 import { SnackbarService } from './snackbar.service';
-import { PostProjectRequest, WorkflowRunStatus } from '../models/api/project.model';
+import { PostProjectRequest, ProjectStatusResponse, WorkflowRunStatus } from '../models/api/project.model';
 import { SseService } from './sse.service';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 export class ApiService extends BaseApi {
 
   public user?: User;
+  public project?: Project;
 
   constructor(
     http: HttpClient,
@@ -48,6 +49,25 @@ export class ApiService extends BaseApi {
       console.error(e);
       this.logout();
       this._snackbar.snack("Connexion impossible !");
+    }
+  }
+
+  public async loadProject(id: string): Promise<Project> {
+    if (!this.logged) return undefined;
+    if (this.project) return this.project;
+    try {
+      return this.project = new Project(await this.get<Project>(`/project/${id}`));
+    } catch (e) {
+      console.error(e);
+      this._snackbar.snack("Impossible de charger le projet");
+    }
+  }
+
+  public watchStatus(projectId: string): Observable<ProjectStatusResponse> {
+    try {
+      return this._sse.getSse(`/project/${projectId}/status`, { authorization: this.token });
+    } catch (e) {
+      console.error(e);
     }
   }
 
