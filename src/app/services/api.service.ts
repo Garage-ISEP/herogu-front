@@ -10,7 +10,8 @@ import { BaseApi } from '../utils/base-api.util';
 import { SnackbarService } from './snackbar.service';
 import { PostProjectRequest, ProjectStatusResponse } from '../models/api/project.model';
 import { SseService } from './sse.service';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import { finalize } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +19,8 @@ export class ApiService extends BaseApi {
 
   public user?: User;
   public project?: Project;
+  
+  private _subject: Subject<ProjectStatusResponse>;
 
   constructor(
     http: HttpClient,
@@ -52,9 +55,9 @@ export class ApiService extends BaseApi {
     }
   }
 
-  public async loadProject(id: string): Promise<Project> {
+  public async loadProject(id: string, force = false): Promise<Project> {
     if (!this.logged) return undefined;
-    if (this.project) return this.project;
+    if (this.project && !force) return this.project;
     try {
       return this.project = new Project(await this.get<Project>(`/project/${id}`));
     } catch (e) {
@@ -63,9 +66,15 @@ export class ApiService extends BaseApi {
     }
   }
 
-  public watchStatus(projectId: string): Observable<ProjectStatusResponse> {
+  public watchStatus(projectId: string): Subject<ProjectStatusResponse> {
     try {
-      return this._sse.getSse(`/project/${projectId}/status`, { authorization: this.token });
+      if (!this._subject) {
+        this._subject = new Subject<ProjectStatusResponse>();
+        this._sse.getSse(`/project/${projectId}/status`, { authorization: this.token })
+          .pipe(finalize(() => { this._subject = null }))
+          .subscribe(this._subject);
+      }
+      return this._subject;
     } catch (e) {
       console.error(e);
     }

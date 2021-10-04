@@ -40,6 +40,7 @@ import { DashboardHeaderComponent } from './components/dashboard/dashboard-heade
 import { ProjectStatusComponent } from './components/dashboard/dashboard-header/project-status/project-status.component';
 import { DashboardSettingsComponent } from './components/dashboard/dashboard-settings/dashboard-settings.component';
 import { DashboardMainComponent } from './components/dashboard/dashboard-main/dashboard-main.component';
+import { BuildProjectComponent } from './components/dashboard/dashboard-main/build-project/build-project.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +57,8 @@ import { DashboardMainComponent } from './components/dashboard/dashboard-main/da
     DashboardHeaderComponent,
     ProjectStatusComponent,
     DashboardSettingsComponent,
-    DashboardMainComponent
+    DashboardMainComponent,
+    BuildProjectComponent
   ],
   imports: [
     BrowserModule,

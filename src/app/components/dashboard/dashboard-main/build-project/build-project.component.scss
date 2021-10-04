@@ -1,0 +1,18 @@
+:host {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
+	div {
+		display: flex;
+		align-items: center;
+	}
+}
+mat-icon {
+	font-size: 24px;
+	color: red;
+}
+h3 {
+	margin: 0;
+	margin-left: 10px;
+}

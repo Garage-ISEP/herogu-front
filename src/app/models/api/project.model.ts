@@ -39,7 +39,7 @@ export class PostProjectRequest {
 
 export type ProjectStatusResponse = {
   status: ProjectStatus | ContainerStatus;
-  origin?: Origin;
+  origin: Origin;
   exitCode?: number,
 }
 export enum ProjectType {

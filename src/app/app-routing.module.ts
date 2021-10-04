@@ -1,3 +1,4 @@
+import { DashboardMainComponent } from './components/dashboard/dashboard-main/dashboard-main.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
 import { AccountComponent } from './components/account/account.component';
 import { ProjectsComponent } from './components/projects/projects.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: "project/create", component: CreateProjectComponent, canActivate: [LoggedGuard] },
   {
     path: "project/:id", component: DashboardComponent, canActivate: [LoggedGuard, ProjectGuard], children: [
+      { path: "", component: DashboardMainComponent },
       { path: "settings", component: DashboardSettingsComponent },
     ]
   },

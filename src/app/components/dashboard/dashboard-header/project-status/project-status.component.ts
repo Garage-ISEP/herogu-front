@@ -41,10 +41,5 @@ export class ProjectStatusComponent implements OnInit {
       this.viewErrors = false;
   }
 
-  public get errors(): ProjectStatusResponse[] {
-    console.log(Array.from(this.projectStatus.values()).filter(status => status.origin));
-    return Array.from(this.projectStatus.values()).filter(status => status.origin);
-  }
-
 }
 
