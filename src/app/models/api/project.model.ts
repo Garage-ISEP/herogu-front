@@ -38,11 +38,10 @@ export class PostProjectRequest {
 }
 
 export type ProjectStatusResponse = {
-  status: ProjectStatus;
+  status: ProjectStatus | ContainerStatus;
+  origin?: Origin;
+  exitCode?: number,
 }
-
-export type WorkflowRunStatus = "none" | "success" | "in_progress" | "failure" | { id: number };
-
 export enum ProjectType {
   NGINX = "NGINX",
   PHP = "PHP",
@@ -53,3 +52,11 @@ export enum ProjectStatus {
   IN_PROGRESS = "IN_PROGRESS",
   SUCCESS = "SUCCESS",
 }
+export enum ContainerStatus {
+  Running = "Running",
+  Error = "Error",
+  Stopped = "Stopped",
+  Restarting = "Restarting",
+  NotFound = "NotFound"
+}
+export type Origin = "docker" | "container" | "mysql" | "github";

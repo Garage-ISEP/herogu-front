@@ -16,7 +16,7 @@ export class DashboardHeaderComponent implements OnInit {
     private readonly _api: ApiService,
   ) { }
 
-  public ngOnInit(): void {
+  public async ngOnInit() {
   }
 
 }

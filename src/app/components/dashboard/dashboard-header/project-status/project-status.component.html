@@ -1,3 +1,7 @@
-<div class="badge" *ngIf="projectStatus" [attr.status]="projectStatus.status">
-	
+<div class="badge" *ngIf="projectStatus" [attr.status]="status" (click)="viewErrors = !viewErrors"></div>
+<div class="view-errors" *ngIf="viewErrors">
+	<div class="error" *ngFor="let error of errors">
+		<div class="badge" [attr.status]="error.status"></div>
+		<div class="origin">Origine : {{ error.origin }}</div>
+	</div>
 </div>
