@@ -103,4 +103,8 @@ export class ApiService extends BaseApi {
   public async toggleContainer(projectId: string) {
     await this.post(`/project/${projectId}/toggle`);
   }
+
+  public async deleteProject(projectId: string) {
+    await this.delete(`/project/${projectId}`);
+  }
 }

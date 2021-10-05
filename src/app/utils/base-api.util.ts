@@ -55,6 +55,18 @@ export abstract class BaseApi {
     }
   }
 
+  protected async delete<R>(path: string, captcha?: string) {
+    this.progress.toggle();
+    try {
+      if (path.startsWith("/"))
+        path = path.substring(1);
+      const headers = new HttpHeaders({ Authorization: `Bearer ${this.token}`, recaptcha: captcha || '' });
+      return this.http.delete<R>(`${environment.api}/${path}`, { headers }).toPromise();
+    } finally {
+      this.progress.toggle();
+    }
+  }
+
   public async logout() {
     this.token = null;
     this.router.navigateByUrl("/auth");
