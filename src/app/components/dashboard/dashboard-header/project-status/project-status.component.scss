@@ -16,6 +16,9 @@
 	&[status=ERROR], &[status=NotFound] {
 		background-color: #d9534f;
 	}
+	&[status=Stopped] {
+		background-color: #808080;
+	}
 	&[status=""] {
 		display: none;
 	}

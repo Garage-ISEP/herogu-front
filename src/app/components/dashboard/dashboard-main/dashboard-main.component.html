@@ -1,3 +1,5 @@
 <ng-container *ngIf="project">
 	<app-build-project origin="container" [statusMap]="projectStatus" button="Redéployer le projet" (btnClick)="redeployProject()" *ngIf="shouldRebuildContainer">Ce projet est mal ou pas déployé ! (Container non trouvé)</app-build-project>
+	<app-build-project origin="mysql" [statusMap]="projectStatus" button="Réinstaller la base de donnée" (btnClick)="redeployMysql()" *ngIf="shouldRebuildMysql">La base de donnée n'est pas correctement créée</app-build-project>
+	<app-mysql-creds *ngIf="hasMysql" [project]="project"></app-mysql-creds>
 </ng-container>

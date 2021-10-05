@@ -25,12 +25,14 @@ export class ProjectStatusComponent implements OnInit {
     this._api.watchStatus(this.project.id).subscribe(status => this.projectStatus.set(status.origin, status));
   }
 
-  public get status(): ProjectStatus {
+  public get status(): ProjectStatus | ContainerStatus.Stopped {
     for (const response of this.projectStatus.values()) {
       if (response.status === ProjectStatus.IN_PROGRESS || response.status === ContainerStatus.Restarting)
         return ProjectStatus.IN_PROGRESS;
-      else if (response.status === ProjectStatus.ERROR || response.status === ContainerStatus.Error || response.status === ContainerStatus.NotFound || response.status === ContainerStatus.Stopped)
+      else if (response.status === ProjectStatus.ERROR || response.status === ContainerStatus.Error || response.status === ContainerStatus.NotFound)
         return ProjectStatus.ERROR;
+      else if (response.status === ContainerStatus.Stopped)
+        return ContainerStatus.Stopped;
     }
     return ProjectStatus.SUCCESS;
   }

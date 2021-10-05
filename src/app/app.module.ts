@@ -41,6 +41,7 @@ import { ProjectStatusComponent } from './components/dashboard/dashboard-header/
 import { DashboardSettingsComponent } from './components/dashboard/dashboard-settings/dashboard-settings.component';
 import { DashboardMainComponent } from './components/dashboard/dashboard-main/dashboard-main.component';
 import { BuildProjectComponent } from './components/dashboard/dashboard-main/build-project/build-project.component';
+import { MysqlCredsComponent } from './components/dashboard/dashboard-main/mysql-creds/mysql-creds.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +59,8 @@ import { BuildProjectComponent } from './components/dashboard/dashboard-main/bui
     ProjectStatusComponent,
     DashboardSettingsComponent,
     DashboardMainComponent,
-    BuildProjectComponent
+    BuildProjectComponent,
+    MysqlCredsComponent,
   ],
   imports: [
     BrowserModule,

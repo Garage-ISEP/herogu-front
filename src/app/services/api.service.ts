@@ -96,7 +96,11 @@ export class ApiService extends BaseApi {
     await this.post(`/project/${projectId}/docker-link`);
   }
 
-  public async linkProjectToMysql(projectId: string): Promise<void> {
-    await this.post(`/project/${projectId}/mysql-link`);
+  public async linkProjectToMysql(projectId: string): Promise<Project> {
+    return new Project(await this.post(`/project/${projectId}/mysql-link`));
+  }
+
+  public async toggleContainer(projectId: string) {
+    await this.post(`/project/${projectId}/toggle`);
   }
 }
