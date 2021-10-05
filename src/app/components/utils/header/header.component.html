@@ -1,5 +1,5 @@
 <div class="app-header">
-  <mat-progress-bar [mode]="progress.mode"  [value]="progress.value" [style.opacity]="progress.display ? 1 : 0"></mat-progress-bar>
+  <mat-progress-bar [mode]="mode"  [value]="value" *ngIf="display"></mat-progress-bar>
   <mat-toolbar>
     <a routerLink="/">
       <img src="/assets/garage.png" class="garage-icon" alt="Garage Logo" />

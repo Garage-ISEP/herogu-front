@@ -22,6 +22,11 @@ div {
 	display: flex;
 	align-items: center;
 }
-.toggle-btn {
+.toggle-btn, mat-progress-spinner {
 	margin-right: 10px;
+}
+mat-progress-spinner, mat-progress-spinner ::ng-deep svg {
+	width: 30px !important;
+	height: 30px !important;
+	overflow: visible !important;
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ɵɵtrustConstantResourceUrl } from '@angular/core';
-import { ContainerStatus } from 'src/app/models/api/project.model';
+import { ContainerStatus, ProjectStatus } from 'src/app/models/api/project.model';
 import { Project } from 'src/app/models/api/user.model';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -14,6 +14,9 @@ export class DashboardHeaderComponent implements OnInit {
   public project: Project;
 
   public started?: boolean;
+  public changing = false;
+
+  private _previousStatus: ContainerStatus | ProjectStatus;
 
   constructor(
     private readonly _api: ApiService,
@@ -23,16 +26,20 @@ export class DashboardHeaderComponent implements OnInit {
     this._api.watchStatus(this.project.id).subscribe(status => {
       if (status.origin !== "docker")
         return;
-      if (status.status === ContainerStatus.Running)
+      if (this.changing && status.status !== this._previousStatus) {
+        this.changing = false;
+        this._previousStatus = status.status;
+      }
+      if (status.status === ContainerStatus.Running || status.status === ProjectStatus.SUCCESS)
         this.started = true;
       else if (status.status === ContainerStatus.Stopped)
         this.started = false;
       else this.started = undefined;
-      console.log(this.started);
     });
   }
 
   public async toggleContainer() {
-    this._api.toggleContainer(this.project.id);
+    this.changing = true;
+    await this._api.toggleContainer(this.project.id);
   }
 }
