@@ -9,12 +9,16 @@ import { MatChipInputEvent } from '@angular/material/chips';
 })
 export class AddStudentComponent {
 
-  public allUsers: string[] = ['thpr60710', 'moba56512', 'gebu32132'];
   public readonly addUserAction = [COMMA, ENTER, SPACE];
+
+  @Input()
   public addedUsers: string[] = [];
 
   @Output()
   public users: EventEmitter<string[]> = new EventEmitter<string[]>();
+
+  @Input()
+  public allUsers: string[] = [];
 
   @ViewChild("userInput")
   public userInput: ElementRef<HTMLInputElement>;
@@ -26,10 +30,8 @@ export class AddStudentComponent {
   public addUser(event: MatAutocompleteSelectedEvent | MatChipInputEvent) {
     const value = event instanceof MatAutocompleteSelectedEvent ? event.option.viewValue : event.value;
 
-    if (this.allUsers.includes(value) && !this.addedUsers.includes(value)) {
-      this.addedUsers.push(value);
-      this.allUsers.splice(this.allUsers.indexOf(value), 1);
-    }
+    this.addedUsers.push(value);
+    this.allUsers.splice(this.allUsers.indexOf(value), 1);
     this.userInput.nativeElement.value = '';
     this.sendUsers();
   }

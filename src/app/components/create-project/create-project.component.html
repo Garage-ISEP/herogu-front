@@ -1,65 +1,75 @@
-<h1>Créer un nouveau projet Herogu</h1>
-<mat-vertical-stepper linear class="stepper" color="accent" #stepper (selectionChange)="getDockerfile(input.checked)">
+<h1>Créer un projet Herogu</h1>
+<mat-vertical-stepper linear class="stepper" color="accent" #stepper>
 
   <mat-step [stepControl]="infosForm">
     <form [formGroup]="infosForm">
-      <ng-template matStepLabel>Configuration du nouveau projet</ng-template>
-      <mat-form-field appearance="outline" color="accent">
+      <ng-template matStepLabel>Configuration du projet</ng-template>
+      <mat-form-field appearance="outline" color="accent" class="project-name">
         <mat-label>Nom du projet</mat-label>
-        <input type="text" matInput placeholder="MonSuperProjet" formControlName="projectName" #projectName required>
-      </mat-form-field>
+        <input type="text" matInput placeholder="mon-projet" formControlName="projectName" required>
+				<mat-error>Le nom doit être compris entre 3 et 10 caractères et ne pas contenir de caractères spéciaux et de nombres</mat-error>
+      </mat-form-field><br><br>
       <section>
-        <mat-checkbox formControlName="enablePHP" #input>Utiliser PHP</mat-checkbox>
+        <mat-checkbox formControlName="enablePHP" #usePhp>Utiliser PHP</mat-checkbox>
       </section>
       <section>
-        <mat-checkbox formControlName="enableMysql" [disabled]="!input.checked">Utiliser une base de donnée MySQL</mat-checkbox>
+        <mat-checkbox formControlName="enableMysql" [disabled]="!usePhp.checked">Utiliser une base de donnée MySQL</mat-checkbox>
       </section><br>
-      <app-add-student class="user-add" (users)="addedUsers = $event"></app-add-student>
+      <app-add-student class="user-add" (users)="infosForm.value.addedUsers = $event"></app-add-student>
       <div>
         <button mat-stroked-button matStepperNext color="accent">Suivant</button>
       </div>
     </form>
   </mat-step>
-
-  <mat-step [stepControl]="configForm" #firstStep>
-    <ng-template matStepLabel>Configurer un repository DockerHub</ng-template>
+	<mat-step>
+		<ng-template matStepLabel>Configurer des variables d'environnement</ng-template>
+		<br>
+		<div *ngFor="let item of envForm | keyvalue; let index = index" class="env">
+			<mat-form-field color="accent">
+				<mat-label>Clef</mat-label>
+				<input matInput type="text" (keydown.space)="$event.preventDefault()" [(ngModel)]="item.key" />
+			</mat-form-field>
+			<span class="delimiter">:</span>
+			<mat-form-field color="accent">
+				<mat-label>Valeur</mat-label>
+				<input type="text" matInput [(ngModel)]="item.value" />
+				<button matSuffix mat-icon-button color="accent" (click)="removeEntry(index)">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-form-field>
+		</div>
+		<button [style.display]="'block'" mat-stroked-button color="accent" (click)="addEntry()">Ajouter une variable d'environment</button>
+		<br>
+		<button [style.display]="'block'" mat-stroked-button color="accent" matStepperNext>Continuer</button>
+	</mat-step>
+  <mat-step [stepControl]="configForm">
+    <ng-template matStepLabel>Configuration du repository</ng-template>
     <br>
-    <img src="/assets/dockerhub1.png" class="doc-img" alt="">
-    <li>Ton code source doit être sur un repository Github</li>
-    <li>Créer un fichier nommé <code>Dockerfile</code> à la racine du repository avec le contenu suivant</li>
-    <nge-monaco-viewer [code]="dockerfile" [language]="'dockerfile'"></nge-monaco-viewer>
-    <li>Créer un compte sur <a href="https://hub.docker.com" target="_blank" style="color: #099cec; font-weight: 500">DockerHub</a></li>
-    <li>Lier le compte Dockerhub au compte Github via les paramètres de Dockerhub</li>
-    <li>Créer un repository public nommé <code>{{ projectName.value }}</code> sur Dockerhub depuis le repository Github. Cliquer sur ➕ dans la partie <code>Build Rules</code>, cela va ajouter une règle de build par défaut, veillez à ce que la branche source soit la branche principale de votre repository Github (<code>main</code> ou <code>master</code>)</li>
-    <li>Terminer la création du projet en cliquant sur <button class="docker-btn">Create & Build</button></li>
-    <li>Une fois le projet créé, aller dans la section <button class="docker-build-btn">Builds</button> et attendre quelques minutes le premier build se termine...</li>
-    <li>Si le build s'est déroulé correctement entrer le tag de l'image Docker :</li>
-    <!-- <youtube-player [videoId]="'EjvNWa_GTK0'" [width]="videoConfig.w" [height]="videoConfig.h" ></youtube-player> -->
-
+    <li>Ton code source doit être sur un repository publique Github !</li>
+		<li>Tu dois connecter le bot Herogu au repository, il ajoutera les fichiers de configuration nécessaires dans les dossiers .github et docker (sans toucher au code présent)</li>
+		<li>Tu dois ensuite créer un access token avec les droit de création de package <a target="_blank" href="https://github.com/settings/tokens">https://github.com/settings/tokens</a></li>
     <form [formGroup]="configForm">
-      <mat-form-field appearance="outline" color="accent">
-        <mat-label>Tag du repository docker</mat-label>
-        <input type="text" matInput placeholder="theodoreprevot/myproject" formControlName="tagName" required #dockerTag>
-      </mat-form-field>
-      <div>
-        <button mat-stroked-button matStepperNext #checkManifestBtn color="accent">Suivant</button>
-      </div>
-    </form>
-  </mat-step>
-
-  <mat-step [formGroup]="webhookForm">
-    <ng-template matStepLabel>Configurer l'intégration continue</ng-template>
-    <p>Il reste une dernière étape !</p>
-    <li>Ajouter un webhook dans l'onglet <button class="docker-build-btn">Webhooks</button> avec le nom : <code>Deploy</code> et l'URL : <code>https://deploy.garageisep.com/deploy/{{ projectName.value }}</code></li><br>
-    <li>Grâce à cela à chaque fois que tu fais un push sur la branche master de ton github, en quelques minutes ton projet sera mis à jour sur nos serveurs !</li>
-    <form [formGroup]="webhookForm" (submit)="createProject()">
-      <section>
+			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter Herogu à mon repository</a><br><br>
+			<mat-form-field appearance="outline" color="accent" class="repo-link">
+				<mat-label>Lien du repository Github</mat-label>
+				<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required>
+				<mat-icon class="repo-icons" [style.color]="'green'" matSuffix [style.display]="botInstalled === true ? 'inline' : 'none'">done</mat-icon>
+				<mat-icon class="repo-icons" [style.color]="'red'" matSuffix [style.display]="botInstalled === false ? 'inline' : 'none'">close</mat-icon>
+			</mat-form-field><br>
+			<mat-form-field appearance="outline" color="accent" class="repo-link">
+				<mat-label>Token secret</mat-label>
+				<input type="text" matInput formControlName="accessToken" required>
+			</mat-form-field>
+			<section>
         <mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement</mat-checkbox>
       </section><br>
       <div>
-        <button mat-stroked-button type="submit" color="accent">Créer mon projet !</button>
+        <button mat-stroked-button color="accent" matStepperNext [disabled]="botInstalled !== true">Créer mon projet !</button>
       </div>
     </form>
   </mat-step>
-
+	<mat-step>
+		<ng-template matStepLabel>Création du projet</ng-template>
+		<app-project-creation-infos *ngIf="createInfos" [createInfos]="createInfos"></app-project-creation-infos>
+	</mat-step>
 </mat-vertical-stepper>

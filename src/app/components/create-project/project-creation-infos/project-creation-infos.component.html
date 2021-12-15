@@ -1,0 +1,9 @@
+<br>
+<app-create-project-info [error]="projectCreationError" [state]="projectCreationState">
+	Création du projet
+</app-create-project-info>
+<app-create-project-info [error]="githubCreationError" [state]="githubCreationState">
+	Création des fichiers de configuration sur le repository Github
+</app-create-project-info>
+<br>
+<button *ngIf="githubCreationState === 'loaded' && createdProject" mat-stroked-button [routerLink]="'project' + createdProject.id">Accéder au project</button>

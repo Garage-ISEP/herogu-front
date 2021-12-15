@@ -1,11 +1,10 @@
-import { Project } from './../../models/user.model';
-import { ProgressService } from './../../services/progress.service';
+import { CreateProjectRequest } from './../../models/api/project.model';
 import { ApiService } from './../../services/api.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material/stepper';
-import { MatButton } from '@angular/material/button';
-import { CreateProjectModel } from 'src/app/models/api/project.model';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { makeid } from 'src/app/utils/string.util';
 
 @Component({
   selector: 'app-create-project',
@@ -15,95 +14,67 @@ import { CreateProjectModel } from 'src/app/models/api/project.model';
 export class CreateProjectComponent implements OnInit {
   public infosForm: FormGroup;
   public configForm: FormGroup;
-  public webhookForm: FormGroup;
+  public envForm: { [key: string]: string } = { };
 
-  public addedUsers: string[] = [];
-  public videoConfig: { w: number, h: number };
-  public dockerfile: string;
+  public botInstalled?: boolean;
+  public timeoutChecked?: number;
 
-  @ViewChild("stepper")
-  private stepper: MatVerticalStepper;
-
-  @ViewChild("checkManifestBtn")
-  private checkManifestBtn: MatButton;
+  @ViewChild(MatVerticalStepper)
+  public stepper: MatVerticalStepper;
 
   constructor(
-    private api: ApiService,
-    private formBuilder: FormBuilder,
-    private progress: ProgressService
+    private readonly _api: ApiService,
+    private readonly _formBuilder: FormBuilder,
+    private readonly _snackbar: SnackbarService,
   ) { }
 
-  ngOnInit(): void {
-    this.processVideoConfig();
-    window.addEventListener("resize", () => this.processVideoConfig());
-    this.initYt();
-
-    this.infosForm = this.formBuilder.group({
-      projectName: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[a-zA-Z ]*'), Validators.pattern('^((?!create).)*$')]],
+  public ngOnInit(): void {
+    this.infosForm = this._formBuilder.group({
+      projectName: ['', [Validators.required, Validators.pattern(/^(?!(create|admin|garage|isep))\w{3,10}$/)]],
       enablePHP: ['true'],
       enableMysql: ['true'],
+      addedUsers: [[]]
     });
-    this.configForm = this.formBuilder.group({
-      tagName: ['', [Validators.required]],
-    }, { asyncValidators: (control) => this.verifyManifest(control), updateOn: 'submit' });
-    this.webhookForm = this.formBuilder.group({
-      enableNotifications: ['true']
+    this.configForm = this._formBuilder.group({
+      githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
+      accessToken: ['', [Validators.required]],
+      enableNotifications: ['true'],
     });
+    this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());
   }
 
-  public async verifyManifest(manifest: AbstractControl): Promise<ValidationErrors> {
-    if (manifest instanceof FormGroup) {
-      this.progress.toggle();
-      const button: HTMLButtonElement = this.checkManifestBtn._elementRef.nativeElement;
-      button.innerText = "Vérification...";
-      button.disabled = true;
-      const value = manifest?.get("tagName")?.value ?? manifest?.value;
-      try {
-        await this.api.getRequest(`/projects/manifest/${encodeURIComponent(value)}`);
-        button.innerText = "Suivant";
-        button.disabled = false;
-        this.progress.toggle();
-        return;
-      } catch (e) {
-        this.api.snack(`Le repository ${value} n'existe pas sur DockerHub ! Vérifiez les configurations et les builds...`, 4000);
-        this.progress.toggle();
-        button.innerText = "Suivant";
-        button.disabled = false;
-        return {
-          verifyManifest: {
-            valid: false
-          }
-        }
-      }
+  public removeEntry(index: number) {
+    delete this.envForm[Object.keys(this.envForm)[index]];
+  }
+
+  public addEntry() {
+    this.envForm['NEW_KEY_' + makeid(3)] = '';
+  }
+
+  public get createInfos() {
+    if (this.configForm.valid && this.infosForm.valid && this.stepper.selectedIndex === 3)
+      return new CreateProjectRequest(this.infosForm, this.configForm, this.envForm);
+    else return undefined;
+  }
+
+  private _setTimeoutGithubLink() {
+    if (this.timeoutChecked)
+      window.clearTimeout(this.timeoutChecked);
+    this.timeoutChecked = window.setTimeout(() => this._onGithubLinkUpdated(), 300);
+  }
+
+  private async _onGithubLinkUpdated() {
+    if (!/^((http)|(https):\/\/github.com\/).*$/.test(this.configForm.controls.githubLink.value))
+      return;
+    try {
+      this.botInstalled = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value);
+    } catch (e) {
+      console.error(e);
+      this._snackbar.snack("Impossible de vérifier l'installation du bot sur le repository !");
+      this.botInstalled = undefined;
+    } finally {
+      this.timeoutChecked = undefined;
     }
   }
 
-  public async getDockerfile(usePhp: boolean) {
-    this.dockerfile = `FROM garageisep/herogu:${usePhp ? 'php' : 'nginx'}\nCOPY . /var/www/html/`;
-  }
-
-  public async createProject() {
-    const project: CreateProjectModel = {
-      name: this.infosForm.get("projectName").value,
-      enableMysql: this.infosForm.get("enableMysql").value === "true",
-      users: this.addedUsers,
-      tag: this.configForm.get("tagName").value,
-      enableNotifications: this.webhookForm.get("enableNotifications").value === 'true'
-    }
-    //TODO: Create project
-  }
-
-
-  private initYt() {
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.body.appendChild(tag);
-  }
-
-  private processVideoConfig() {
-    this.videoConfig = {
-      w: window.innerWidth - (window.innerWidth / 8) > 500 ? 500 : window.innerWidth - (window.innerWidth / 8),
-      h: window.innerWidth - (window.innerWidth / 8) > 500 ? 500 * (3/4) : (window.innerWidth - (window.innerWidth / 10)) * (3 / 4)
-    };
-  }
 }

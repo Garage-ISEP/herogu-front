@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "https://api.herogu.garageisep.com",
+  api: "http://localhost:3000",
   captcha: "6LeGpxYaAAAAANN3Yoke3ZTMbVvfVbbLSLORDhHG"
 };
 

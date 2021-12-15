@@ -10,11 +10,14 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectsComponent implements OnInit {
 
   constructor(
-    public apiService: ApiService,
-    public router: Router
+    private readonly _api: ApiService,
   ) { }
 
   async ngOnInit() {
-    await this.apiService.loadUserData();
+    await this._api.loadUser();
+  }
+
+  public get user() {
+    return this._api.user;
   }
 }

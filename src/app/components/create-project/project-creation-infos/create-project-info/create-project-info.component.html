@@ -1,0 +1,7 @@
+<section>
+	<li><ng-content></ng-content></li>
+	<mat-progress-spinner [style.display]="state === 'loading' ? 'inline' : 'none'" mode="indeterminate" color="accent"></mat-progress-spinner>
+	<mat-icon matSuffix [style.display]="state === 'loaded' ? 'inline' : 'none'" [style.color]="'green'">done</mat-icon>
+	<mat-icon matSuffix [style.display]="state === 'error' ? 'inline' : 'none'" [style.color]="'red'">close</mat-icon>
+	<mat-error *ngIf="error">{{ error }}</mat-error>
+</section>

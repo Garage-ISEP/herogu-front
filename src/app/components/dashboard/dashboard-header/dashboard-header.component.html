@@ -1,0 +1,11 @@
+<div>
+	<h1>{{ project.name }}</h1>
+<mat-divider [vertical]="true"></mat-divider>
+<a [href]="project.githubLink" target="_blank">{{ project.githubLink }}</a>
+</div>
+<div>
+	<button class="toggle-btn" *ngIf="!changing && started !== undefined" mat-icon-button (click)="toggleContainer()"><mat-icon class="mat-18">{{ !started ? 'play_arrow' : 'pause' }}</mat-icon></button>
+	<mat-progress-spinner *ngIf="changing" mode="indeterminate" color="accent"></mat-progress-spinner>
+	<app-project-status [project]="project"></app-project-status>
+	<button mat-icon-button [routerLink]="['./settings']"><mat-icon class="mat-18">settings</mat-icon></button>
+</div>

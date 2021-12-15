@@ -1,7 +1,62 @@
-export interface CreateProjectModel {
-  name: string;
-  enableMysql: boolean;
-  users: string[];
-  tag: string;
-  enableNotifications: boolean;
+import { FormGroup } from "@angular/forms";
+
+export class CreateProjectRequest {
+
+  public projectName: string;
+  public enablePHP: "true" | "false";
+  public enableMysql: "true" | "false";
+  public enableNotifications: "true" | "false";
+  public addedUsers: string[];
+  public githubLink: string;
+  public accessToken: string;
+
+  constructor(infosForm: FormGroup, configForm: FormGroup, public env: { [key: string]: string }) {
+    Object.assign(this, infosForm.value, configForm.value);
+  }
 }
+export class PostProjectRequest {
+
+  public name: string;
+  public githubLink: string;
+  public type: "nginx" | "php";
+  public mysqlEnabled = false;
+  public notificationsEnabled = false;
+  public addedUsers: string[];
+  public accessToken: string;
+  public env: { [key: string]: string };
+
+  constructor(createProject: CreateProjectRequest) {
+    this.name = createProject.projectName;
+    this.githubLink = createProject.githubLink;
+    this.type = createProject.enablePHP == "true" ? "php" : "nginx";
+    this.mysqlEnabled = createProject.enableMysql == "true";
+    this.notificationsEnabled = createProject.enableNotifications == "true";
+    this.addedUsers = createProject.addedUsers;
+    this.accessToken = createProject.accessToken;
+    this.env = createProject.env;
+  }
+}
+
+export type ProjectStatusResponse = {
+  status: ProjectStatus | ContainerStatus;
+  origin: Origin;
+  exitCode?: number,
+}
+export enum ProjectType {
+  NGINX = "NGINX",
+  PHP = "PHP",
+}
+
+export enum ProjectStatus {
+  ERROR = "ERROR",
+  IN_PROGRESS = "IN_PROGRESS",
+  SUCCESS = "SUCCESS",
+}
+export enum ContainerStatus {
+  Running = "Running",
+  Error = "Error",
+  Stopped = "Stopped",
+  Restarting = "Restarting",
+  NotFound = "NotFound"
+}
+export type Origin = "docker" | "container" | "mysql" | "github";

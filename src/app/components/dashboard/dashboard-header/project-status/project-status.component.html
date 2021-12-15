@@ -1,0 +1,7 @@
+<div class="badge" *ngIf="projectStatus" [attr.status]="status" (click)="viewErrors = !viewErrors"></div>
+<div class="view-errors" *ngIf="viewErrors">
+	<div class="error" *ngFor="let error of projectStatus.values()">
+		<div class="badge" [attr.status]="error.status"></div>
+		<div class="origin">{{ error.origin | titlecase }}</div>
+	</div>
+</div>
