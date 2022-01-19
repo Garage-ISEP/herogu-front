@@ -30,3 +30,12 @@ mat-progress-spinner, mat-progress-spinner ::ng-deep svg {
 	height: 30px !important;
 	overflow: visible !important;
 }
+.link-wrapper {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: left;
+}
+a {
+	text-align: left;
+}

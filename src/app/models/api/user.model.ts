@@ -38,6 +38,7 @@ export enum Role {
 export class Project extends BaseModel {
   id: string;
   name: string;
+  uniqueName: string;
   lastBuild: string;
   githubLink: string;
   shas?: string[];
@@ -45,7 +46,6 @@ export class Project extends BaseModel {
   type: ProjectType;
   mysqlUser: string;
   mysqlPassword: string;
-  mysqlDatabase: string;
   mysqlEnabled: boolean;
   notificationsEnabled: boolean;
   env: { [key: string]: string };
