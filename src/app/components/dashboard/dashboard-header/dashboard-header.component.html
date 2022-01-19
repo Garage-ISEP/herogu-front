@@ -1,7 +1,10 @@
 <div>
 	<h1>{{ project.name }}</h1>
 <mat-divider [vertical]="true"></mat-divider>
-<a [href]="project.githubLink" target="_blank">{{ project.githubLink }}</a>
+<div class="link-wrapper">
+	<a [href]="project.githubLink" target="_blank">{{ project.githubLink }}</a>
+	<a [href]="garageLink" target="_blank">{{ garageLink }}</a>
+</div>
 </div>
 <div>
 	<button class="toggle-btn" *ngIf="!changing && started !== undefined" mat-icon-button (click)="toggleContainer()"><mat-icon class="mat-18">{{ !started ? 'play_arrow' : 'pause' }}</mat-icon></button>

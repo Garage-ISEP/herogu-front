@@ -42,4 +42,8 @@ export class DashboardHeaderComponent implements OnInit {
     this.changing = true;
     await this._api.toggleContainer(this.project.id);
   }
+
+  public get garageLink(): string {
+    return `https://${this.project.uniqueName}.herogu.garageisep.com`;
+  }
 }
