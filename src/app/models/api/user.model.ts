@@ -46,6 +46,7 @@ export class Project extends BaseModel {
   type: ProjectType;
   mysqlUser: string;
   mysqlPassword: string;
+  mysqlDatabase: string;
   mysqlEnabled: boolean;
   notificationsEnabled: boolean;
   env: { [key: string]: string };
