@@ -30,14 +30,13 @@ export class CreateProjectComponent implements OnInit {
 
   public ngOnInit(): void {
     this.infosForm = this._formBuilder.group({
-      projectName: ['', [Validators.required, Validators.pattern(/^(?!(create|admin|garage|isep))\w{3,10}$/)]],
+      projectName: ['', [Validators.required, Validators.pattern(/^(?!(create|admin|garage|isep))\w{3,15}$/)]],
       enablePHP: ['true'],
       enableMysql: ['true'],
       addedUsers: [[]]
     });
     this.configForm = this._formBuilder.group({
       githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
-      accessToken: ['', [Validators.required]],
       enableNotifications: ['true'],
     });
     this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());
@@ -70,7 +69,7 @@ export class CreateProjectComponent implements OnInit {
       this.botInstalled = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value);
     } catch (e) {
       console.error(e);
-      this._snackbar.snack("Impossible de vérifier l'installation du bot sur le repository !");
+      this._snackbar.snack("Impossible de vérifier l'installation du bot sur le repo Github !");
       this.botInstalled = undefined;
     } finally {
       this.timeoutChecked = undefined;

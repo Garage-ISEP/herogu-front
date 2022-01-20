@@ -38,6 +38,7 @@ export enum Role {
 export class Project extends BaseModel {
   id: string;
   name: string;
+  uniqueName: string;
   lastBuild: string;
   githubLink: string;
   shas?: string[];
