@@ -43,9 +43,9 @@ export class ApiService extends BaseApi {
     }
   }
 
-  public async loadUser(): Promise<User | undefined> {
+  public async loadUser(force = false): Promise<User | undefined> {
     if (!this.logged) return undefined;
-    if (this.user) return this.user;
+    if (this.user && !force) return this.user;
     try {
       return this.user = new User(await this.get<User>(`/auth/me`));
     } catch (e) {
@@ -66,7 +66,7 @@ export class ApiService extends BaseApi {
     }
   }
 
-  public watchStatus(projectId: string): Subject<ProjectStatusResponse> {
+  public watchStatus(projectId: string = this.project?.id): Subject<ProjectStatusResponse> {
     try {
       if (!this._subject) {
         this._subject = new Subject<ProjectStatusResponse>();
@@ -85,26 +85,31 @@ export class ApiService extends BaseApi {
   }
 
   public async createProject(body: PostProjectRequest): Promise<Project> {
-    return new Project(await this.post<PostProjectRequest, Project>(`/project`, body));
+    const project = new Project(await this.post<PostProjectRequest, Project>(`/project`, body));
+    this.user.addProject(project);
+    return project;
   }
 
-  public async linkProjectToGithub(projectId: string): Promise<void> {
+  public async linkProjectToGithub(projectId: string = this.project?.id): Promise<void> {
     await this.post(`/project/${projectId}/github-link`);
   }
 
-  public async linkProjectToDocker(projectId: string): Promise<void> {
+  public async linkProjectToDocker(projectId: string = this.project?.id): Promise<void> {
     await this.post(`/project/${projectId}/docker-link`);
   }
 
-  public async linkProjectToMysql(projectId: string): Promise<Project> {
+  public async linkProjectToMysql(projectId: string = this.project?.id): Promise<Project> {
     return new Project(await this.post(`/project/${projectId}/mysql-link`));
   }
 
-  public async toggleContainer(projectId: string) {
+  public async toggleContainer(projectId: string = this.project?.id) {
     await this.post(`/project/${projectId}/toggle`);
   }
 
-  public async deleteProject(projectId: string) {
+  public async deleteProject(projectId: string = this.project?.id) {
     await this.delete(`/project/${projectId}`);
+    this.user.removeProject(projectId);
+    if (this.project?.id == projectId)
+      this.project = undefined;
   }
 }

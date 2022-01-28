@@ -44,6 +44,6 @@ export class DashboardHeaderComponent implements OnInit {
   }
 
   public get garageLink(): string {
-    return `https://${this.project.uniqueName}.herogu.garageisep.com`;
+    return `https://${this.project.name}.herogu.garageisep.com`;
   }
 }

@@ -16,6 +16,14 @@ export class User extends BaseModel {
   public get projects() {
     return this.collaborators?.map(el => el.project) || [];
   }
+  public addProject(project: Project) {
+    if (!this.collaborators) this.collaborators = [];
+    this.collaborators.push(new Collaborator(project, this));
+  }
+  public removeProject(projectId: string) {
+    if (!this.collaborators) return;
+    this.collaborators = this.collaborators.filter(el => el.project.id !== projectId);
+  }
 }
 
 export class Collaborator extends BaseModel {
@@ -27,6 +35,19 @@ export class Collaborator extends BaseModel {
   public role: Role;
   public createdDate: Date;
   public updatedDate: Date;
+
+  constructor(project: Project, user: User) {
+    super({
+      id: null,
+      project: project,
+      projectId: project.id,
+      user: user,
+      userId: user.id,
+      role: Role.OWNER,
+      createdDate: null,
+      updatedDate: null
+    });
+  }
 }
 
 
@@ -38,7 +59,6 @@ export enum Role {
 export class Project extends BaseModel {
   id: string;
   name: string;
-  uniqueName: string;
   lastBuild: string;
   githubLink: string;
   shas?: string[];

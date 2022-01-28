@@ -25,9 +25,7 @@ export class DashboardSettingsComponent {
     this._dialog.open(TextDialogComponent, { data: "Es-tu sûr de supprimer ce projet ?" }).afterClosed().subscribe(async (e: string) => {
       if (e) {
         try {
-          await this._api.deleteProject(this.project.id);
-          this._api.project = null;
-          this._api.user.collaborators = this._api.user.collaborators.filter(el => el.projectId != this.project.id);
+          await this._api.deleteProject();
           this._router.navigateByUrl('/');
           this._snackbar.snack("Ce projet à été supprimé avec succès");
         } catch (e) {
