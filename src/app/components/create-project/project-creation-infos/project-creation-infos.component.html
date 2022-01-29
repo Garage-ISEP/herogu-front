@@ -5,5 +5,11 @@
 <app-create-project-info [error]="githubCreationError" [state]="githubCreationState">
 	Création des fichiers de configuration sur le repository Github
 </app-create-project-info>
+<app-create-project-info *ngIf="createdProject.mysqlEnabled" [error]="mysqlCreationError" [state]="mysqlCreationState">
+	Création de la base de données MySQL
+</app-create-project-info>
+<app-create-project-info [error]="dockerCreationError" [state]="dockerCreationState">
+	Création et mise en ligne du site
+</app-create-project-info>
 <br>
-<button *ngIf="githubCreationState === 'loaded' && createdProject" mat-stroked-button [routerLink]="'project' + createdProject.id">Accéder au project</button>
+<button *ngIf="isDone()" mat-stroked-button [routerLink]="'project' + createdProject.id">Accéder au project</button>

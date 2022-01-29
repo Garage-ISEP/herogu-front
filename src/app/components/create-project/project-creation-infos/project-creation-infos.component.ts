@@ -14,9 +14,13 @@ export class ProjectCreationInfosComponent implements OnInit {
 
   public projectCreationState?: LoadingState;
   public githubCreationState?: LoadingState;
+  public mysqlCreationState?: LoadingState;
+  public dockerCreationState?: LoadingState;
 
   public projectCreationError?: string;
   public githubCreationError?: string;
+  public mysqlCreationError?: string;
+  public dockerCreationError?: string;
 
   private _workflowId?: number;
 
@@ -29,9 +33,9 @@ export class ProjectCreationInfosComponent implements OnInit {
   public async ngOnInit() {
     try {
       await this._postProject();
-    } catch(e) { }
+    } catch (e) { }
   }
-  
+
   private async _postProject() {
     try {
       this.projectCreationState = "loading";
@@ -53,12 +57,40 @@ export class ProjectCreationInfosComponent implements OnInit {
       this.githubCreationError = "Erreur lors de la connexion avec GitHub";
       throw new Error(e);
     }
+    if (this.createdProject.mysqlEnabled) {
+      try {
+        this.mysqlCreationState = "loading";
+        await this._api.linkProjectToMysql(this.createdProject.id);
+        this.mysqlCreationState = "loaded";
+      } catch (e) {
+        console.error(e);
+        this.mysqlCreationState = "error";
+        this.mysqlCreationError = "Erreur lors de la création de la base de données MySQL";
+      }
+    }
+    try {
+      this.dockerCreationState = "loading";
+      await this._api.linkProjectToDocker(this.createdProject.id);
+      this.dockerCreationState = "loaded";
+    } catch (e) {
+      console.error(e);
+      this.dockerCreationState = "error";
+      this.dockerCreationError = "Erreur lors de la création du conteneur Docker";
+    }
   }
 
   public get workflowUrl(): string | undefined {
     if (!this._workflowId) return;
     const [owner, repo] = this.createInfos.githubLink.split("/").slice(-2);
     return `https://github.com/${owner}/${repo}/actions/runs/${this._workflowId}`;
+  }
+
+  public isDone(): boolean {
+    return this.createdProject
+      && this.projectCreationState === "loaded"
+      && this.githubCreationState === "loaded"
+      && this.mysqlCreationState === "loaded"
+      && this.dockerCreationState === "loaded";
   }
 }
 
