@@ -2,7 +2,7 @@
 <ng-container *ngIf="project">
 	<mat-form-field appearance="outline" color="accent">
 		<mat-label>Nom du projet</mat-label>
-		<input matInput [(ngModel)]="project.name">
+		<input matInput [(ngModel)]="project.name" disabled>
 	</mat-form-field>
 	<app-add-student *ngIf="isAuthor" [addedUsers]="collaborators" [allUsers]="collaborators"></app-add-student>
 	<mat-form-field appearance="outline" color="accent">
