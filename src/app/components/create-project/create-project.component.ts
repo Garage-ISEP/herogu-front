@@ -1,7 +1,8 @@
+import { Observable } from 'rxjs';
 import { CreateProjectRequest } from './../../models/api/project.model';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material/stepper';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { makeid } from 'src/app/utils/string.util';
@@ -14,7 +15,7 @@ import { makeid } from 'src/app/utils/string.util';
 export class CreateProjectComponent implements OnInit {
   public infosForm: FormGroup;
   public configForm: FormGroup;
-  public envForm: { [key: string]: string } = { };
+  public envForm: { [key: string]: string } = {};
 
   public botInstalled?: boolean;
   public timeoutChecked?: number;
@@ -30,7 +31,10 @@ export class CreateProjectComponent implements OnInit {
 
   public ngOnInit(): void {
     this.infosForm = this._formBuilder.group({
-      projectName: ['', [Validators.required, Validators.pattern(/^(?!(create|admin|garage|isep))\w{3,15}$/)]],
+      projectName: ['', [
+        Validators.required,
+        Validators.pattern(/^(?!(create|admin|garage|isep|-))([a-z-0-9-]{3,15})[^-]$/),
+      ], [this._getProjectNameValidator()]],
       enablePHP: ['true'],
       enableMysql: ['true'],
       addedUsers: [[]]
@@ -60,6 +64,17 @@ export class CreateProjectComponent implements OnInit {
     if (this.timeoutChecked)
       window.clearTimeout(this.timeoutChecked);
     this.timeoutChecked = window.setTimeout(() => this._onGithubLinkUpdated(), 300);
+  }
+
+  private _getProjectNameValidator(): AsyncValidatorFn {
+    return async (control: FormGroup) => {
+      if (control.value?.length < 3)
+        return null;
+      const res = await this._api.checkProjectName(control.value);
+      if (!res)
+        return { existError: true };
+      else return null;
+    };
   }
 
   private async _onGithubLinkUpdated() {

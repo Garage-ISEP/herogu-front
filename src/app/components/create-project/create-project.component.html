@@ -7,7 +7,7 @@
       <mat-form-field appearance="outline" color="accent" class="project-name">
         <mat-label>Nom du projet</mat-label>
         <input type="text" matInput placeholder="mon-projet" formControlName="projectName" required>
-				<mat-error>Le nom doit être compris entre 3 et 15 caractères et ne pas contenir de caractères spéciaux et de nombres</mat-error>
+				<mat-error>Le nom doit être compris entre 3 et 15 caractères, ne pas contenir de caractères spéciaux hormi des '-' et il ne doit pas être déjà pris.</mat-error>
       </mat-form-field><br><br>
       <section>
         <mat-checkbox formControlName="enablePHP" #usePhp>Utiliser PHP</mat-checkbox>

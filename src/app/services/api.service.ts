@@ -19,7 +19,7 @@ export class ApiService extends BaseApi {
 
   public user?: User;
   public project?: Project;
-  
+
   private _subject: Subject<ProjectStatusResponse>;
 
   constructor(
@@ -84,11 +84,21 @@ export class ApiService extends BaseApi {
     return await this.get<boolean>(`/project/check-bot-github?link=${link}`);
   }
 
+  public async checkProjectName(name: string): Promise<boolean> {
+    try {
+      await this.get<boolean>(`/project/exists/${name}`);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   public async createProject(body: PostProjectRequest): Promise<Project> {
     const project = new Project(await this.post<PostProjectRequest, Project>(`/project`, body));
     this.user.addProject(project);
     return project;
   }
+
 
   public async linkProjectToGithub(projectId: string = this.project?.id): Promise<void> {
     await this.post(`/project/${projectId}/github-link`);
