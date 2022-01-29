@@ -12,8 +12,8 @@
       <section>
         <mat-checkbox formControlName="enablePHP" #usePhp>Utiliser PHP</mat-checkbox>
       </section>
-      <section>
-        <mat-checkbox formControlName="enableMysql" [disabled]="!usePhp.checked">Utiliser une base de donnée MySQL</mat-checkbox>
+      <section *ngIf="usePhp.checked">
+        <mat-checkbox formControlName="enableMysql">Utiliser une base de donnée MySQL</mat-checkbox>
       </section><br>
       <app-add-student class="user-add" (users)="infosForm.value.addedUsers = $event"></app-add-student>
       <div>

@@ -1,15 +1,15 @@
 <br>
-<app-create-project-info [error]="projectCreationError" [state]="projectCreationState">
+<app-create-project-info [error]="errors.project" [state]="states.project">
 	Création du projet
 </app-create-project-info>
-<app-create-project-info [error]="githubCreationError" [state]="githubCreationState">
+<app-create-project-info [error]="errors.github" [state]="states.github">
 	Création des fichiers de configuration sur le repository Github
 </app-create-project-info>
-<app-create-project-info *ngIf="createdProject.mysqlEnabled" [error]="mysqlCreationError" [state]="mysqlCreationState">
+<app-create-project-info *ngIf="createdProject?.mysqlEnabled" [error]="errors.mysql" [state]="states.mysql">
 	Création de la base de données MySQL
 </app-create-project-info>
-<app-create-project-info [error]="dockerCreationError" [state]="dockerCreationState">
+<app-create-project-info [error]="errors.docker" [state]="states.docker">
 	Création et mise en ligne du site
 </app-create-project-info>
 <br>
-<button *ngIf="isDone()" mat-stroked-button [routerLink]="'project' + createdProject.id">Accéder au project</button>
+<button *ngIf="isDone()" mat-stroked-button [routerLink]="'project' + createdProject.id">Accéder au projet</button>

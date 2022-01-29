@@ -1,17 +1,20 @@
+import { LoadingState } from './../../components/create-project/project-creation-infos/project-creation-infos.component';
 import { FormGroup } from "@angular/forms";
 
 export class CreateProjectRequest {
 
   public projectName: string;
-  public enablePHP: "true" | "false";
-  public enableMysql: "true" | "false";
-  public enableNotifications: "true" | "false";
+  public enablePHP: boolean;
+  public enableMysql: boolean;
+  public enableNotifications: boolean;
   public addedUsers: string[];
   public githubLink: string;
   public accessToken: string;
 
   constructor(infosForm: FormGroup, configForm: FormGroup, public env: { [key: string]: string }) {
     Object.assign(this, infosForm.value, configForm.value);
+    if (this.enableMysql && !this.enablePHP)
+      this.enableMysql = false;
   }
 }
 export class PostProjectRequest {
@@ -28,9 +31,9 @@ export class PostProjectRequest {
   constructor(createProject: CreateProjectRequest) {
     this.name = createProject.projectName;
     this.githubLink = createProject.githubLink;
-    this.type = createProject.enablePHP == "true" ? "php" : "nginx";
-    this.mysqlEnabled = createProject.enableMysql == "true";
-    this.notificationsEnabled = createProject.enableNotifications == "true";
+    this.type = createProject.enablePHP ? "php" : "nginx";
+    this.mysqlEnabled = createProject.enableMysql;
+    this.notificationsEnabled = createProject.enableNotifications;
     this.addedUsers = createProject.addedUsers;
     this.accessToken = createProject.accessToken;
     this.env = createProject.env;

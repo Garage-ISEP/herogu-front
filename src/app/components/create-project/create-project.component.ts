@@ -35,13 +35,13 @@ export class CreateProjectComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^(?!(create|admin|garage|isep|-))([a-z-0-9-]{3,15})[^-]$/),
       ], [this._getProjectNameValidator()]],
-      enablePHP: ['true'],
-      enableMysql: ['true'],
+      enablePHP: [true],
+      enableMysql: [true],
       addedUsers: [[]]
     });
     this.configForm = this._formBuilder.group({
       githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
-      enableNotifications: ['true'],
+      enableNotifications: [true],
     });
     this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());
   }
