@@ -61,3 +61,10 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+Object.fromEntries = (entries: [string, any][]) => {
+  const obj = {};
+  for (const [key, value] of entries)
+    obj[key] = value;
+  return obj;
+}

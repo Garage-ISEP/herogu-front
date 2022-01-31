@@ -10,9 +10,11 @@ export class CreateProjectRequest {
   public addedUsers: string[];
   public githubLink: string;
   public accessToken: string;
+  public env: [string, string][];
+  public rootDir: string;
 
-  constructor(infosForm: FormGroup, configForm: FormGroup, public env: { [key: string]: string }) {
-    Object.assign(this, infosForm.value, configForm.value);
+  constructor(infosForm: FormGroup, configForm: FormGroup, repoForm: FormGroup) {
+    Object.assign(this, infosForm.value, configForm.value, repoForm.value);
     if (this.enableMysql && !this.enablePHP)
       this.enableMysql = false;
   }
@@ -27,6 +29,7 @@ export class PostProjectRequest {
   public addedUsers: string[];
   public accessToken: string;
   public env: { [key: string]: string };
+  public rootDir: string;
 
   constructor(createProject: CreateProjectRequest) {
     this.name = createProject.projectName;
@@ -36,10 +39,25 @@ export class PostProjectRequest {
     this.notificationsEnabled = createProject.enableNotifications;
     this.addedUsers = createProject.addedUsers;
     this.accessToken = createProject.accessToken;
-    this.env = createProject.env;
+    this.rootDir = createProject.rootDir;
+    this.env = Object.fromEntries(createProject.env);
   }
 }
 
+export interface RepoTree {
+  sha: string;
+  url: string;
+  truncated: boolean;
+  tree: {
+    path?: string;
+    fullPath?: string;
+    mode?: string;
+    type?: string;
+    sha?: string;
+    size?: number;
+    url?: string;
+  }[];
+}
 export type ProjectStatusResponse = {
   status: ProjectStatus | ContainerStatus;
   origin: Origin;

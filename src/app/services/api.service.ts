@@ -1,3 +1,4 @@
+import { RepoTree } from './../models/api/project.model';
 import { Router } from '@angular/router';
 import { ProgressService } from './progress.service';
 import { Project, User } from '../models/api/user.model';
@@ -97,6 +98,10 @@ export class ApiService extends BaseApi {
     const project = new Project(await this.post<PostProjectRequest, Project>(`/project`, body));
     this.user.addProject(project);
     return project;
+  }
+
+  public async getRepoTree(url: string, sha?: string) {
+    return await this.get<RepoTree>(`/project/repo-tree?link=${encodeURIComponent(url)}` + (sha ? `&sha=${sha}` : ''));
   }
 
 

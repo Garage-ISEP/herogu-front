@@ -1,11 +1,11 @@
-import { Observable } from 'rxjs';
-import { CreateProjectRequest } from './../../models/api/project.model';
+import { CreateProjectRequest, RepoTree } from './../../models/api/project.model';
 import { ApiService } from './../../services/api.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material/stepper';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { makeid } from 'src/app/utils/string.util';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-create-project',
@@ -15,10 +15,14 @@ import { makeid } from 'src/app/utils/string.util';
 export class CreateProjectComponent implements OnInit {
   public infosForm: FormGroup;
   public configForm: FormGroup;
-  public envForm: { [key: string]: string } = {};
-
+  public repoForm: FormGroup;
+  public autocompleteDirTree?: RepoTree["tree"] = [];
+  public loadedAutocompleteDirChoices?: RepoTree;
   public botInstalled?: boolean;
   public timeoutChecked?: number;
+
+  @ViewChild(MatAutocompleteTrigger)
+  public autocompleteTrigger: MatAutocompleteTrigger;
 
   @ViewChild(MatVerticalStepper)
   public stepper: MatVerticalStepper;
@@ -27,6 +31,7 @@ export class CreateProjectComponent implements OnInit {
     private readonly _api: ApiService,
     private readonly _formBuilder: FormBuilder,
     private readonly _snackbar: SnackbarService,
+    private readonly _changeDetector: ChangeDetectorRef,
   ) { }
 
   public ngOnInit(): void {
@@ -43,20 +48,68 @@ export class CreateProjectComponent implements OnInit {
       githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
       enableNotifications: [true],
     });
+    this.repoForm = this._formBuilder.group({
+      rootDir: ['/', [Validators.required]],
+      env: [[] as [string, string][]],
+    });
     this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());
   }
 
   public removeEntry(index: number) {
-    delete this.envForm[Object.keys(this.envForm)[index]];
+    this.repoForm.value.env.splice(index, 1);
   }
 
   public addEntry() {
-    this.envForm['NEW_KEY_' + makeid(3)] = '';
+    this.repoForm.value.env.push(['NEW_KEY_' + makeid(3), '']);
+  }
+
+  public updateEntryKey(index: number, key: string) {
+    this.repoForm.value.env[index][0] = key;
+  }
+
+  public updateEntryValue(index: number, value: string) {
+    this.repoForm.value.env[index][1] = value;
+  }
+
+  public async getDirAutoComplete() {
+    if (!this.configForm.controls.githubLink.value)
+      return;
+    try {
+      const currentPath = this.rootDirVal;
+      const res = await this._api.getRepoTree(this.configForm.controls.githubLink.value, this.autocompleteDirTree[this.autocompleteDirTree.length - 1]?.sha);
+      for (const node of res.tree)
+        node.fullPath = currentPath + (!currentPath.endsWith('/') ? '/' : '') + node.path;
+      this.loadedAutocompleteDirChoices = res;
+      this._changeDetector.detectChanges();
+      return res;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async addAutoCompleteDir(dir: RepoTree["tree"][0]) {
+    this.autocompleteDirTree.push(dir);
+    await this.getDirAutoComplete();
+    this.autocompleteTrigger.openPanel();
+  }
+  public async removeLastAutoCompleteDir() {
+    if (this.autocompleteDirTree.length == 0)
+      return;
+    this.autocompleteDirTree.pop();
+    this.repoForm.get('rootDir').setValue(this.rootDirVal);
+    await this.getDirAutoComplete();
+  }
+
+  public get rootDirVal() {
+    const dir = this.autocompleteDirTree.reduce((acc, cur) => acc + '/' + cur.path, '');
+    if (!dir.startsWith('/'))
+      return '/' + dir;
+    return dir;
   }
 
   public get createInfos() {
-    if (this.configForm.valid && this.infosForm.valid && this.stepper.selectedIndex === 3)
-      return new CreateProjectRequest(this.infosForm, this.configForm, this.envForm);
+    if (this.configForm.valid && this.infosForm.valid && this.repoForm.valid && this.stepper.selectedIndex === 3)
+      return new CreateProjectRequest(this.infosForm, this.configForm, this.repoForm);
     else return undefined;
   }
 
@@ -82,6 +135,7 @@ export class CreateProjectComponent implements OnInit {
       return;
     try {
       this.botInstalled = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value);
+      await this.getDirAutoComplete();
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Impossible de vérifier l'installation du bot sur le repo Github !");
