@@ -1,14 +1,14 @@
 <mat-form-field appearance="outline" color="accent">
 	<mat-label>Nom de la base de donnée</mat-label>
-	<input matInput disabled [(ngModel)]="project.mysqlDatabase">
+	<input matInput disabled [(ngModel)]="project.mysqlInfo.database">
 </mat-form-field>
 <mat-form-field appearance="outline" color="accent">
 	<mat-label>Nom d'utilisateur</mat-label>
-	<input matInput disabled [attr.type]="!showUser ? 'password' : 'text'" [(ngModel)]="project.mysqlUser">
+	<input matInput disabled [attr.type]="!showUser ? 'password' : 'text'" [(ngModel)]="project.mysqlInfo.user">
 	<button mat-icon-button matSuffix (click)="showUser = !showUser"><mat-icon class="mat-18">{{ showUser ? 'visibility' : 'visibility_off' }}</mat-icon></button>
 </mat-form-field>
 <mat-form-field appearance="outline" color="accent">
 	<mat-label>Mot de passe</mat-label>
-	<input matInput disabled type="password" [attr.type]="!showPass ? 'password' : 'text'" [(ngModel)]="project.mysqlPassword">
+	<input matInput disabled type="password" [attr.type]="!showPass ? 'password' : 'text'" [(ngModel)]="project.mysqlInfo.password">
 	<button mat-icon-button matSuffix (click)="showPass = !showPass"><mat-icon class="mat-18">{{ showPass ? 'visibility' : 'visibility_off' }}</mat-icon></button>
 </mat-form-field>

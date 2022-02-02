@@ -61,19 +61,48 @@ export class Project extends BaseModel {
   name: string;
   lastBuild: string;
   githubLink: string;
-  shas?: string[];
   repoId: number;
   type: ProjectType;
-  mysqlUser: string;
-  mysqlPassword: string;
-  mysqlDatabase: string;
-  mysqlEnabled: boolean;
+  mysqlInfo: MysqlInfo;
+  phpInfo: PhpInfo;
   notificationsEnabled: boolean;
   env: { [key: string]: string };
-  accessToken: string;
   creator: User;
   creatorId: string;
   collaborators: Collaborator[];
   createdDate: Date;
   updatedDate: Date;
+
+  public get mysqlEnabled() {
+    return !!this.mysqlInfo;
+  }
+}
+
+export class MysqlInfo extends BaseModel {
+
+  public id: number;
+
+  public projectId: string;
+
+  public user: string;
+  public password: string;
+  public database: string;
+}
+
+export class PhpInfo extends BaseModel {
+
+  public id: number;
+
+  public project: Project;
+
+  public logLevel: PhpLogLevel;
+
+  public logEnabled: boolean;
+}
+
+export enum PhpLogLevel {
+  All = 'E_ALL',
+  Warning = 'E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT',
+  Error = 'E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT',
+  None = '~E_ALL',
 }
