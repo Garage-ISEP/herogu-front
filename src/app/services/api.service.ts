@@ -1,3 +1,4 @@
+import { PhpInfo } from './../models/api/user.model';
 import { RepoTree } from './../models/api/project.model';
 import { Router } from '@angular/router';
 import { ProgressService } from './progress.service';
@@ -119,6 +120,14 @@ export class ApiService extends BaseApi {
 
   public async toggleContainer(projectId: string = this.project?.id) {
     await this.post(`/project/${projectId}/toggle`);
+  }
+
+  public async patchPhpError(phpInfos: PhpInfo, projectId: string = this.project?.id) {
+    await this.patch(`/project/${projectId}/php-log-level`, phpInfos);
+  }
+
+  public async patchHttpRoot(projectId: string = this.project?.id, httpRootUrl: string) {
+    await this.patch(`/project/${projectId}/http-root-url`, { httpRootUrl });
   }
 
   public async deleteProject(projectId: string = this.project?.id) {

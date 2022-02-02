@@ -33,6 +33,10 @@ export class DashboardMainComponent implements OnInit {
     return this.project.mysqlEnabled && !this.shouldRebuildMysql;
   } 
 
+  public get hasPhp() {
+    return !!this.project.phpInfo;
+  }
+
   public get project() {
     return this._api.project;
   }

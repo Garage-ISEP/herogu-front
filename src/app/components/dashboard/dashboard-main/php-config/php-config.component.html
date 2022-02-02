@@ -1,0 +1,12 @@
+<h2>Configuration PHP</h2>
+<div class="errors">
+	<mat-slide-toggle [(ngModel)]="phpInfos.logEnabled">Activer les logs</mat-slide-toggle>
+	<div class="error-levels" *ngIf="phpInfos.logEnabled">
+		<div class="error-level" *ngFor="let icon of logLevelIcons">
+			<button mat-stroked-button>
+				<mat-icon>{{icon[0]}}</mat-icon>
+				<span>{{icon[1]}}</span>
+			</button>
+		</div>
+	</div>
+</div>

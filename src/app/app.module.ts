@@ -42,6 +42,7 @@ import { DashboardSettingsComponent } from './components/dashboard/dashboard-set
 import { DashboardMainComponent } from './components/dashboard/dashboard-main/dashboard-main.component';
 import { BuildProjectComponent } from './components/dashboard/dashboard-main/build-project/build-project.component';
 import { MysqlCredsComponent } from './components/dashboard/dashboard-main/mysql-creds/mysql-creds.component';
+import { PhpConfigComponent } from './components/dashboard/dashboard-main/php-config/php-config.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { MysqlCredsComponent } from './components/dashboard/dashboard-main/mysql
     DashboardMainComponent,
     BuildProjectComponent,
     MysqlCredsComponent,
+    PhpConfigComponent,
   ],
   imports: [
     BrowserModule,
