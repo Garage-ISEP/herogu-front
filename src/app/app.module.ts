@@ -19,6 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './components/auth/auth.component';
@@ -88,6 +89,7 @@ import { PhpConfigComponent } from './components/dashboard/dashboard-main/php-co
     MatChipsModule,
     MatAutocompleteModule,
     MatCheckboxModule,
+    MatTooltipModule
   ],
   providers: [
     {

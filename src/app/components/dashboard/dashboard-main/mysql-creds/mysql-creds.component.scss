@@ -1,4 +1,12 @@
-:host {
+h2 {
+	display: flex;
+	align-items: center;
+	mat-icon {
+		margin-left: 15px;
+		cursor: pointer;
+	}
+}
+.creds-wrapper {
 	display: flex;
 	justify-content: space-around;
 }
