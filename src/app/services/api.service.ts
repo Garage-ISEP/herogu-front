@@ -1,8 +1,7 @@
-import { PhpInfo } from './../models/api/user.model';
-import { RepoTree } from './../models/api/project.model';
+import { PhpInfo, Project, RepoTree } from './../models/api/project.model';
 import { Router } from '@angular/router';
 import { ProgressService } from './progress.service';
-import { Project, User } from '../models/api/user.model';
+import { User } from '../models/api/user.model';
 import { LoginResponseModel } from '../models/api/auth.model';
 import { LoginRequestModel } from '../models/api/auth.model';
 import { Injectable } from '@angular/core';
@@ -126,8 +125,8 @@ export class ApiService extends BaseApi {
     await this.patch(`/project/${projectId}/php-log-level`, phpInfos);
   }
 
-  public async patchHttpRoot(projectId: string = this.project?.id, httpRootUrl: string) {
-    await this.patch(`/project/${projectId}/http-root-url`, { httpRootUrl });
+  public async patchHttpRoot(projectId: string = this.project?.id, httpRootUrl: string, httpRootUrlSha: string) {
+    await this.patch(`/project/${projectId}/http-root-url`, { httpRootUrl, httpRootUrlSha });
   }
 
   public async deleteProject(projectId: string = this.project?.id) {

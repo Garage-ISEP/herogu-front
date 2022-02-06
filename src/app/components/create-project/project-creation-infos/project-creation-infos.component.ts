@@ -1,7 +1,7 @@
 import { CreateProjectRequest, PostProjectRequest } from './../../../models/api/project.model';
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { Project } from 'src/app/models/api/user.model';
+import { Project } from 'src/app/models/api/project.model';
 
 @Component({
   selector: 'app-project-creation-infos',

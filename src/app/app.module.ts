@@ -44,6 +44,8 @@ import { DashboardMainComponent } from './components/dashboard/dashboard-main/da
 import { BuildProjectComponent } from './components/dashboard/dashboard-main/build-project/build-project.component';
 import { MysqlCredsComponent } from './components/dashboard/dashboard-main/mysql-creds/mysql-creds.component';
 import { PhpConfigComponent } from './components/dashboard/dashboard-main/php-config/php-config.component';
+import { NginxConfigComponent } from './components/dashboard/dashboard-main/nginx-config/nginx-config.component';
+import { EnvConfigComponent } from './components/dashboard/dashboard-main/env-config/env-config.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +66,8 @@ import { PhpConfigComponent } from './components/dashboard/dashboard-main/php-co
     BuildProjectComponent,
     MysqlCredsComponent,
     PhpConfigComponent,
+    NginxConfigComponent,
+    EnvConfigComponent,
   ],
   imports: [
     BrowserModule,

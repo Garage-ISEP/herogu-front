@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Project } from 'src/app/models/api/user.model';
+import { Project } from 'src/app/models/api/project.model';
 
 @Component({
   selector: 'app-mysql-creds',

@@ -3,4 +3,5 @@
 	<app-build-project origin="mysql" [statusMap]="projectStatus" button="Réinstaller la base de donnée" (btnClick)="redeployMysql()" *ngIf="shouldRebuildMysql">La base de donnée n'est pas correctement créée</app-build-project>
 	<app-mysql-creds *ngIf="hasMysql" [project]="project"></app-mysql-creds>
 	<app-php-config *ngIf="hasPhp" [phpInfos]="project.phpInfo"></app-php-config>
+	<app-nginx-config [project]="project"></app-nginx-config>
 </ng-container>

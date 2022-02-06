@@ -1,7 +1,7 @@
 import { Origin, ProjectStatus, ContainerStatus } from './../../../../models/api/project.model';
 import { AfterContentInit, Component, HostListener, Input, OnInit } from '@angular/core';
 import { ProjectStatusResponse } from 'src/app/models/api/project.model';
-import { Project } from 'src/app/models/api/user.model';
+import { Project } from 'src/app/models/api/project.model';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({

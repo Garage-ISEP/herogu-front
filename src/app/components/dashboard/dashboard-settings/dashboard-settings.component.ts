@@ -1,11 +1,11 @@
 import { MatDialog } from '@angular/material/dialog';
 import { User } from './../../../models/api/user.model';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Project } from 'src/app/models/api/user.model';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { TextDialogComponent } from '../../utils/text-dialog/text-dialog.component';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Project } from 'src/app/models/api/project.model';
 
 @Component({
   selector: 'app-dashboard-settings',

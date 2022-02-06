@@ -1,7 +1,7 @@
 import { SnackbarService } from './../../../../services/snackbar.service';
-import { PhpInfo, PhpLogLevel } from './../../../../models/api/user.model';
 import { Component, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { PhpInfo, PhpLogLevel } from 'src/app/models/api/project.model';
 
 @Component({
   selector: 'app-php-config',

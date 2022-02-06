@@ -50,6 +50,7 @@ export class CreateProjectComponent implements OnInit {
     });
     this.repoForm = this._formBuilder.group({
       rootDir: ['/', [Validators.required]],
+      rootDirSha: [''],
       env: [[] as [string, string][]],
     });
     this.configForm.controls.githubLink.valueChanges.subscribe(() => this._setTimeoutGithubLink());
@@ -108,6 +109,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
   public get createInfos() {
+    this.repoForm.get('rootDirSha').setValue(this.autocompleteDirTree[this.autocompleteDirTree.length - 1]?.sha);
     if (this.configForm.valid && this.infosForm.valid && this.repoForm.valid && this.stepper.selectedIndex === 3)
       return new CreateProjectRequest(this.infosForm, this.configForm, this.repoForm);
     else return undefined;

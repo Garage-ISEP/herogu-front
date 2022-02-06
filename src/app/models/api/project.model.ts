@@ -1,5 +1,6 @@
-import { LoadingState } from './../../components/create-project/project-creation-infos/project-creation-infos.component';
 import { FormGroup } from "@angular/forms";
+import { BaseModel } from '../base.model';
+import { User, Collaborator } from './user.model';
 
 export class CreateProjectRequest {
 
@@ -12,6 +13,7 @@ export class CreateProjectRequest {
   public accessToken: string;
   public env: [string, string][];
   public rootDir: string;
+  public rootDirSha: string;
 
   constructor(infosForm: FormGroup, configForm: FormGroup, repoForm: FormGroup) {
     Object.assign(this, infosForm.value, configForm.value, repoForm.value);
@@ -30,6 +32,7 @@ export class PostProjectRequest {
   public accessToken: string;
   public env: { [key: string]: string };
   public rootDir: string;
+  public rootDirSha: string;
 
   constructor(createProject: CreateProjectRequest) {
     this.name = createProject.projectName;
@@ -40,8 +43,73 @@ export class PostProjectRequest {
     this.addedUsers = createProject.addedUsers;
     this.accessToken = createProject.accessToken;
     this.rootDir = createProject.rootDir;
+    this.rootDirSha = createProject.rootDirSha;
     this.env = Object.fromEntries(createProject.env);
   }
+}
+
+
+export class Project extends BaseModel {
+  id: string;
+  name: string;
+  lastBuild: string;
+  githubLink: string;
+  repoId: number;
+  type: ProjectType;
+  mysqlInfo: MysqlInfo;
+  phpInfo: PhpInfo;
+  nginxInfo: NginxInfo;
+  notificationsEnabled: boolean;
+  env: { [key: string]: string };
+  creator: User;
+  creatorId: string;
+  collaborators: Collaborator[];
+  createdDate: Date;
+  updatedDate: Date;
+
+  public get mysqlEnabled() {
+    return !!this.mysqlInfo;
+  }
+}
+
+export class MysqlInfo extends BaseModel {
+
+  public id: number;
+
+  public projectId: string;
+
+  public user: string;
+  public password: string;
+  public database: string;
+}
+
+export class PhpInfo extends BaseModel {
+
+  public id: number;
+
+  public project: Project;
+
+  public logLevel: PhpLogLevel;
+
+  public logEnabled: boolean;
+}
+
+export class NginxInfo extends BaseModel {
+
+  public id: number;
+
+  public project: Project;
+
+  public rootDir: string;
+
+  public rootDirSha: string;
+}
+
+export enum PhpLogLevel {
+  All = 'E_ALL',
+  Warning = 'E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT',
+  Error = 'E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT',
+  None = '~E_ALL',
 }
 
 export interface RepoTree {

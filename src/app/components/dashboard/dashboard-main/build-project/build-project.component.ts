@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ContainerStatus, Origin, ProjectStatus, ProjectStatusResponse } from 'src/app/models/api/project.model';
-import { Project } from 'src/app/models/api/user.model';
 
 @Component({
   selector: 'app-build-project',
