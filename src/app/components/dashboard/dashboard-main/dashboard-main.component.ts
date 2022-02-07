@@ -18,7 +18,10 @@ export class DashboardMainComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this._api.watchStatus(this.project.id).subscribe(el => { this.projectStatus.set(el.origin, el); console.log(el); });
+    this._api.watchStatus(this.project.id).subscribe(el => {
+      this.projectStatus.set(el.origin, el);
+      console.log(el);
+    });
   }
 
   public async redeployProject() {
@@ -31,7 +34,7 @@ export class DashboardMainComponent implements OnInit {
 
   public get hasMysql() {
     return this.project.mysqlEnabled && !this.shouldRebuildMysql;
-  } 
+  }
 
   public get hasPhp() {
     return !!this.project.phpInfo;
@@ -42,7 +45,11 @@ export class DashboardMainComponent implements OnInit {
   }
 
   public get shouldRebuildContainer() {
-    return this.projectStatus.get("docker")?.status === ContainerStatus.NotFound || this.projectStatus.get("container")?.status === ContainerStatus.Restarting || this.projectStatus.get("container")?.status === ContainerStatus.Error;
+    return (
+      this.projectStatus.get("docker")?.status === ContainerStatus.NotFound ||
+      this.projectStatus.get("container")?.status === ContainerStatus.Restarting ||
+      this.projectStatus.get("container")?.status === ContainerStatus.Error
+    ) && this.projectStatus.get("docker")?.status !== ContainerStatus.Running;
   }
   public get shouldRebuildMysql() {
     return (this.projectStatus.get("mysql")?.status === ProjectStatus.ERROR || this.projectStatus.get("mysql")?.status === ProjectStatus.IN_PROGRESS) && this.project.mysqlEnabled;
