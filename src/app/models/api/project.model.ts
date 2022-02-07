@@ -92,7 +92,11 @@ export class PhpInfo extends BaseModel {
   public logLevel: PhpLogLevel;
 
   public logEnabled: boolean;
+
+  public env: EnvVars;
 }
+
+export type EnvVars = { [key: string]: string };
 
 export class NginxInfo extends BaseModel {
 

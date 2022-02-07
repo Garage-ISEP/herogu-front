@@ -16,6 +16,8 @@ export class ProjectCreationInfosComponent implements OnInit {
   public states: { [key: string]: LoadingState } = {};
   public errors: { [key: string]: string } = {};
 
+  public createdProject: Project;
+
   constructor(
     private readonly _api: ApiService,
     private readonly _changeDetector: ChangeDetectorRef
@@ -31,7 +33,7 @@ export class ProjectCreationInfosComponent implements OnInit {
   private async _postProject() {
     try {
       this.states.project = "loading";
-      await this._api.createProject(new PostProjectRequest(this.createInfos));
+      this.createdProject = await this._api.createProject(new PostProjectRequest(this.createInfos));
       this.states.project = "loaded";
     } catch (e) {
       console.error(e);
@@ -88,10 +90,6 @@ export class ProjectCreationInfosComponent implements OnInit {
       && this.states.github === "loaded"
       && (!this.createInfos.enableMysql || this.states.mysql === "loaded")
       && this.states.docker === "loaded";
-  }
-
-  public get createdProject(): Project {
-    return this._api.user.projects.find(el => el.githubLink === this.createInfos.githubLink)
   }
 }
 

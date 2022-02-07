@@ -1,1 +1,29 @@
-<p>env-config works!</p>
+<div class="header">
+	<h3>Variables d'environnement</h3>
+	<mat-icon matTooltip="Les variables d'environnement permettent d'intégrer des variables contenant des données sensibles ou variables selont les déploiement (ex: clefs d'API, identifiants de connexion)">help</mat-icon>
+	<button matTooltip="Uploader un fichier .env" mat-icon-button class="upload-btn">
+		<input id="env-upload-input" type="file" accept=".env" (change)="uploadEnvFile($event.target.files[0])">
+		<label for="env-upload-input"></label>
+		<mat-icon>upload</mat-icon>
+	</button>
+</div>
+<div *ngFor="let item of envEntries; let index = index" class="env">
+	<mat-form-field color="accent">
+		<mat-label>Clef</mat-label>
+		<input matInput type="text" (keydown.space)="$event.preventDefault()" [(ngModel)]="item[0]"
+			(ngModelChange)="updateEntryKey(index, $event)" />
+	</mat-form-field>
+	<span class="delimiter">:</span>
+	<mat-form-field color="accent">
+		<mat-label>Valeur</mat-label>
+		<input type="text" matInput [(ngModel)]="item[1]" (ngModelChange)="updateEntryValue(index, $event)" />
+		<button matSuffix mat-icon-button color="accent" (click)="removeEntry(index)">
+			<mat-icon>close</mat-icon>
+		</button>
+	</mat-form-field>
+</div>
+<div class="buttons">
+	<button mat-stroked-button color="accent" (click)="addEntry()">Ajouter une variable d'environment</button>
+	<button mat-stroked-button color="accent" (click)="applyChanges()" *ngIf="modified">Appliquer les modifications</button>
+</div>
+<br>

@@ -1,3 +1,4 @@
+import { polyfill as smoothScrollPolyfill } from 'seamless-scroll-polyfill';
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.
@@ -52,6 +53,7 @@
  *
  */
 
+smoothScrollPolyfill();
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */

@@ -1,4 +1,4 @@
-import { PhpInfo, Project, RepoTree } from './../models/api/project.model';
+import { PhpInfo, Project, RepoTree, EnvVars } from './../models/api/project.model';
 import { Router } from '@angular/router';
 import { ProgressService } from './progress.service';
 import { User } from '../models/api/user.model';
@@ -127,6 +127,10 @@ export class ApiService extends BaseApi {
 
   public async patchHttpRoot(projectId: string = this.project?.id, httpRootUrl: string, httpRootUrlSha: string) {
     await this.patch(`/project/${projectId}/http-root-url`, { httpRootUrl, httpRootUrlSha });
+  }
+
+  public async patchEnv(projectId: string = this.project?.id, env: EnvVars) {
+    await this.patch(`/project/${projectId}/env`, { env });
   }
 
   public async deleteProject(projectId: string = this.project?.id) {
