@@ -1,0 +1,13 @@
+<mat-form-field color="accent">
+	<mat-label>Clef</mat-label>
+	<input [disabled]="disabled" matInput type="text" (keydown.space)="$event.preventDefault()" [(ngModel)]="key"
+		(ngModelChange)="keyChange.emit($event)" />
+</mat-form-field>
+<span class="delimiter">:</span>
+<mat-form-field color="accent" class="value">
+	<mat-label>Valeur</mat-label>
+	<input [disabled]="disabled" type="text" matInput [(ngModel)]="value" (ngModelChange)="valueChange.emit($event)" />
+	<button *ngIf="!disabled" matSuffix mat-icon-button color="accent" (click)="remove.emit()">
+		<mat-icon>close</mat-icon>
+	</button>
+</mat-form-field>

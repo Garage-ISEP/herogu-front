@@ -1,3 +1,4 @@
+import { MysqlInfo } from './../../../../models/api/project.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { EnvVars } from 'src/app/models/api/project.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -14,9 +15,14 @@ export class EnvConfigComponent implements OnInit {
   @Input()
   public env: EnvVars;
 
+  @Input()
+  public mysqlConfig?: MysqlInfo;
+
   public envEntries: [string, string][] = [];
 
   public modified = false;
+
+  public mysqlEnv: [string, string][] = [];
 
   constructor(
     private readonly _api: ApiService,
@@ -25,9 +31,16 @@ export class EnvConfigComponent implements OnInit {
 
   public ngOnInit(): void {
     this.envEntries = Object.entries(this.env);
+    if (this.mysqlConfig) {
+      this.mysqlEnv.push(
+        ['MYSQL_DATABASE', this.mysqlConfig.database],
+        ['MYSQL_USER', this.mysqlConfig.user],
+        ['MYSQL_PASSWORD', this.mysqlConfig.password],
+      );
+    }
   }
 
-  
+
   public removeEntry(index: number) {
     this.modified = true;
     this.envEntries.splice(index, 1);
@@ -67,7 +80,8 @@ export class EnvConfigComponent implements OnInit {
 
   public async uploadEnvFile(file: File) {
     const previousHeight = document.body.clientHeight;
-    this.envEntries.push(...parseEnvFile(await file.text()));
+    this.envEntries.push(...parseEnvFile(await file.text())
+      .filter(([key]) => !["MYSQL_DATABASE", "MYSQL_USER", "MYSQL_PASSWORD"].includes(key)));
     setTimeout(() => {
       window.scrollBy({ top: document.body.clientHeight - previousHeight, behavior: 'smooth' });
     }, 0);

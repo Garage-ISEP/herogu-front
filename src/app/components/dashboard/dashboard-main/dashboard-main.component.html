@@ -4,5 +4,5 @@
 	<app-mysql-creds *ngIf="hasMysql" [project]="project"></app-mysql-creds>
 	<app-php-config *ngIf="hasPhp" [phpInfos]="project.phpInfo"></app-php-config>
 	<app-nginx-config [project]="project"></app-nginx-config>
-	<app-env-config *ngIf="hasPhp" [env]="project.phpInfo.env"></app-env-config>
+	<app-env-config *ngIf="hasPhp" [env]="project.phpInfo.env" [mysqlConfig]="project.mysqlInfo"></app-env-config>
 </ng-container>
