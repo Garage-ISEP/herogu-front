@@ -1,6 +1,5 @@
 <h1>Créer mon projet Herogu</h1>
 <mat-vertical-stepper linear class="stepper" color="accent" #stepper>
-
 	<mat-step [stepControl]="infosForm">
 		<form [formGroup]="infosForm">
 			<ng-template matStepLabel>Configuration du projet</ng-template>
@@ -9,7 +8,9 @@
 				<input type="text" matInput placeholder="mon-projet" formControlName="projectName" required>
 				<mat-error>Le nom doit être compris entre 3 et 15 caractères, ne pas contenir de caractères spéciaux hormi des
 					'-' et il ne doit pas être déjà pris.</mat-error>
-			</mat-form-field><br><br>
+				<mat-hint>Url: https://{{ infosForm.get('projectName').value }}.herogu.garageisep.com</mat-hint>
+			</mat-form-field>
+			<br ><br>
 			<section>
 				<mat-checkbox formControlName="enablePHP" #usePhp>Utiliser PHP</mat-checkbox>
 			</section>

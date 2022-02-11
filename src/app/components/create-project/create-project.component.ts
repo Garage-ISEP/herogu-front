@@ -38,14 +38,15 @@ export class CreateProjectComponent implements OnInit {
     this.infosForm = this._formBuilder.group({
       projectName: ['', [
         Validators.required,
-        Validators.pattern(/^(?!(create|admin|garage|isep|-))([a-z-0-9-]{3,15})[^-]$/),
+        Validators.pattern(/^(?!(create|admin|garage|isep|herogu|-))([a-z-0-9-]{3,15})(?<!-)$/),
       ], [this._getProjectNameValidator()]],
       enablePHP: [true],
       enableMysql: [true],
       addedUsers: [[]]
     });
     this.configForm = this._formBuilder.group({
-      githubLink: ['', [Validators.required, Validators.pattern(/^((http)|(https):\/\/github.com\/).*$/)]],
+      //Github link regex:
+      githubLink: ['', [Validators.required, Validators.pattern(/^(https?:\/\/github.com\/[a-zA-Z-0-9-]{2,}\/[a-z-0-9-]{2,})$/)]],
       enableNotifications: [true],
     });
     this.repoForm = this._formBuilder.group({
@@ -133,11 +134,12 @@ export class CreateProjectComponent implements OnInit {
   }
 
   private async _onGithubLinkUpdated() {
-    if (!/^((http)|(https):\/\/github.com\/).*$/.test(this.configForm.controls.githubLink.value))
+    if (this.configForm.get('githubLink').invalid)
       return;
     try {
       this.botInstalled = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value);
-      await this.getDirAutoComplete();
+      if (this.botInstalled)
+        await this.getDirAutoComplete();
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Impossible de vérifier l'installation du bot sur le repo Github !");
