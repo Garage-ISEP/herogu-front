@@ -6,6 +6,7 @@ import { MatVerticalStepper } from '@angular/material/stepper';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { makeid } from 'src/app/utils/string.util';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-project',
@@ -20,6 +21,8 @@ export class CreateProjectComponent implements OnInit {
   public loadedAutocompleteDirChoices?: RepoTree;
   public botInstalled?: boolean;
   public timeoutChecked?: number;
+
+  public readonly projectDomain = environment.projectDomain;
 
   @ViewChild(MatAutocompleteTrigger)
   public autocompleteTrigger: MatAutocompleteTrigger;
