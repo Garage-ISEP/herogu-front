@@ -49,7 +49,7 @@ export class CreateProjectComponent implements OnInit {
     });
     this.configForm = this._formBuilder.group({
       //Github link regex:
-      githubLink: ['', [Validators.required, Validators.pattern(/^(https?:\/\/github.com\/[a-zA-Z-0-9-]{2,}\/[a-z-0-9-]{2,})$/)]],
+      githubLink: ['', [Validators.required, Validators.pattern(/^(https?:\/\/github.com\/.{2,}\/.{2,})$/)]],
       enableNotifications: [true],
     });
     this.repoForm = this._formBuilder.group({
