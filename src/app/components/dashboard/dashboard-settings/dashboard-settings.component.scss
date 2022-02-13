@@ -22,20 +22,14 @@ h2 {
 	flex-direction: column;
 	justify-content: center;
 
-	mat-form-field {
-		width: 60%;
+	mat-form-field, app-add-student, .notification {
+		width: 70%;
 		display: inline-block;
 		margin: auto;
 	}
 
 	mat-divider {
 		border-color: rgb(143, 0, 0);
-	}
-
-	app-add-student {
-		width: 300px;
-		display: block;
-		margin: auto;
 	}
 
 	.header {
@@ -60,5 +54,9 @@ h2 {
 	button:not(.resend-mail),
 	a {
 		border-color: rgb(143, 0, 0);
+	}
+
+	.notifications {
+    margin: 0px auto 20px auto;
 	}
 }

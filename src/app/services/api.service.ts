@@ -133,6 +133,10 @@ export class ApiService extends BaseApi {
     await this.patch(`/project/${projectId}/env`, { env });
   }
 
+  public async toggleNotifications(projectId: string = this.project?.id) {
+    return this.patch(`/project/${projectId}/toggle-notifications`);
+  }
+
   public async deleteProject(projectId: string = this.project?.id) {
     await this.delete(`/project/${projectId}`);
     this.user.removeProject(projectId);

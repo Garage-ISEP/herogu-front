@@ -14,5 +14,9 @@
 		<mat-label>Type d'hébergement du projet</mat-label>
 		<input matInput [(ngModel)]="project.type" disabled>
 	</mat-form-field>
+	<section class="notifications">
+		<mat-checkbox [(ngModel)]="project.notificationsEnabled" (ngModelChange)="toggleNotifications()">Être notifié par mail lors de chaque déploiement
+		</mat-checkbox>
+	</section>
 	<button mat-stroked-button (click)="deleteProject()">Supprimer le projet</button>
 </ng-container>

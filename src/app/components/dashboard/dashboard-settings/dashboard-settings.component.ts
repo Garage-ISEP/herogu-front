@@ -35,6 +35,16 @@ export class DashboardSettingsComponent {
     })
   }
 
+  public async toggleNotifications() {
+    try {
+      await this._api.toggleNotifications();
+      this._snackbar.snack("Les notifications ont bien été modifiées");
+    } catch (e) {
+      this._snackbar.snack("Une erreur est survenue lors de la modification des notifications");
+      this.project.notificationsEnabled = !this.project.notificationsEnabled;
+    }
+  }
+
   public get project(): Project {
     return this._api.project;
   }
