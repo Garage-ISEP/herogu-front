@@ -66,6 +66,9 @@ export class Project extends BaseModel {
   collaborators: Collaborator[];
   createdDate: Date;
   updatedDate: Date;
+  storageOverageDate: Date;
+  maxRwSize: number;
+  rwSize: number;
 
   public get mysqlEnabled() {
     return !!this.mysqlInfo;

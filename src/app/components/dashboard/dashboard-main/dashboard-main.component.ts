@@ -25,7 +25,7 @@ export class DashboardMainComponent implements OnInit {
   }
 
   public async redeployProject() {
-    const res = await this._api.linkProjectToDocker(this.project.id);
+    this._api.project = await this._api.linkProjectToDocker(this.project.id);
   }
 
   public async redeployMysql() {
@@ -38,6 +38,10 @@ export class DashboardMainComponent implements OnInit {
 
   public get hasPhp() {
     return !!this.project.phpInfo;
+  }
+
+  public get hasQuota() {
+    return !!this.project.rwSize;
   }
 
   public get project() {

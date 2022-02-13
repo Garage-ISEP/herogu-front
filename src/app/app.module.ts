@@ -47,6 +47,7 @@ import { PhpConfigComponent } from './components/dashboard/dashboard-main/php-co
 import { NginxConfigComponent } from './components/dashboard/dashboard-main/nginx-config/nginx-config.component';
 import { EnvConfigComponent } from './components/dashboard/dashboard-main/env-config/env-config.component';
 import { EnvPairComponent } from './components/dashboard/dashboard-main/env-config/env-pair/env-pair.component';
+import { StorageQuotaComponent } from './components/dashboard/dashboard-main/storage-quota/storage-quota.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +71,7 @@ import { EnvPairComponent } from './components/dashboard/dashboard-main/env-conf
     NginxConfigComponent,
     EnvConfigComponent,
     EnvPairComponent,
+    StorageQuotaComponent,
   ],
   imports: [
     BrowserModule,

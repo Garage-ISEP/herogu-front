@@ -5,4 +5,5 @@
 	<app-php-config *ngIf="hasPhp" [phpInfos]="project.phpInfo"></app-php-config>
 	<app-nginx-config [project]="project"></app-nginx-config>
 	<app-env-config *ngIf="hasPhp" [env]="project.phpInfo.env" [mysqlConfig]="project.mysqlInfo"></app-env-config>
+	<app-storage-quota *ngIf="hasQuota" [project]="project"></app-storage-quota>
 </ng-container>
