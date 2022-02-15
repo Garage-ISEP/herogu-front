@@ -53,8 +53,8 @@ export class DashboardSettingsComponent {
     return this._api.user!.id === this.project.creatorId;
   }
 
-  public get collaborators(): User[] {
-    return this.project.collaborators.filter(el => el.userId != this._api.user!.id).map(el => el.user);
+  public get collaborators(): string[] {
+    return this.project.collaborators.filter(el => el.userId != this._api.user!.id).map(el => el.user.studentId);
   }
 
 

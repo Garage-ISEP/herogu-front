@@ -17,7 +17,7 @@
 			<section *ngIf="usePhp.checked">
 				<mat-checkbox formControlName="enableMysql">Utiliser une base de donnée MySQL</mat-checkbox>
 			</section><br>
-			<app-add-student class="user-add" (users)="infosForm.value.addedUsers = $event"></app-add-student>
+			<app-add-student class="user-add" (users)="infosForm.get('addedUsers').setValue($event)"></app-add-student>
 			<div>
 				<button mat-stroked-button matStepperNext color="accent">Suivant</button>
 			</div>
