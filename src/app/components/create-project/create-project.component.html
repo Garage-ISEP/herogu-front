@@ -5,7 +5,7 @@
 			<ng-template matStepLabel>Configuration du projet</ng-template>
 			<mat-form-field appearance="outline" color="accent" class="project-name">
 				<mat-label>Nom du projet</mat-label>
-				<input type="text" matInput placeholder="mon-projet" formControlName="projectName" required>
+				<input type="text" matInput placeholder="mon-projet" (keydown.space)="$event.preventDefault()" formControlName="projectName" required>
 				<mat-error>Le nom doit être compris entre 3 et 15 caractères, ne pas contenir de caractères spéciaux hormi des
 					'-' et il ne doit pas être déjà pris.</mat-error>
 				<mat-hint>Url: https://{{ infosForm.get('projectName').value }}{{ projectDomain }}</mat-hint>
