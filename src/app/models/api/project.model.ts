@@ -119,6 +119,15 @@ export enum PhpLogLevel {
   None = '~E_ALL',
 }
 
+
+export interface GithubUrlVerificationValid {
+  status: true;
+  tree: RepoTree;
+}
+export interface GithubUrlVerificationError {
+  status: false;
+}
+export type GithubUrlVerification = GithubUrlVerificationValid | GithubUrlVerificationError; 
 export interface RepoTree {
   sha: string;
   url: string;

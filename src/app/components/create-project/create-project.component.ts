@@ -76,17 +76,17 @@ export class CreateProjectComponent implements OnInit {
     this.repoForm.value.env[index][1] = value;
   }
 
-  public async getDirAutoComplete() {
+  public async getDirAutoComplete(repoTree?: RepoTree) {
     if (!this.configForm.controls.githubLink.value)
       return;
     try {
       const currentPath = this.rootDirVal;
-      const res = await this._api.getRepoTree(this.configForm.controls.githubLink.value, this.autocompleteDirTree[this.autocompleteDirTree.length - 1]?.sha);
-      for (const node of res.tree)
+      repoTree ??= await this._api.getRepoTree(this.configForm.controls.githubLink.value, this.autocompleteDirTree[this.autocompleteDirTree.length - 1]?.sha);
+      for (const node of repoTree.tree)
         node.fullPath = currentPath + (!currentPath.endsWith('/') ? '/' : '') + node.path;
-      this.loadedAutocompleteDirChoices = res;
+      this.loadedAutocompleteDirChoices = repoTree;
       this._changeDetector.detectChanges();
-      return res;
+      return repoTree;
     } catch (e) {
       console.error(e);
     }
@@ -140,9 +140,10 @@ export class CreateProjectComponent implements OnInit {
     if (this.configForm.get('githubLink').invalid)
       return;
     try {
-      this.botInstalled = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value);
-      if (this.botInstalled)
-        await this.getDirAutoComplete();
+      const res = await this._api.verifyRepositoryLink(this.configForm.controls.githubLink.value);
+      this.botInstalled = res.status;
+      if (res.status)
+        await this.getDirAutoComplete(res.tree);
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Impossible de vérifier l'installation du bot sur le repo Github !");

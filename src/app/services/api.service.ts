@@ -1,4 +1,4 @@
-import { PhpInfo, Project, RepoTree, EnvVars } from './../models/api/project.model';
+import { PhpInfo, Project, RepoTree, EnvVars, GithubUrlVerification } from './../models/api/project.model';
 import { Router } from '@angular/router';
 import { ProgressService } from './progress.service';
 import { User } from '../models/api/user.model';
@@ -81,8 +81,8 @@ export class ApiService extends BaseApi {
     }
   }
 
-  public async verifyRepositoryLink(link: string): Promise<boolean> {
-    return await this.get<boolean>(`/project/check-bot-github?link=${link}`);
+  public async verifyRepositoryLink(link: string): Promise<GithubUrlVerification> {
+    return await this.get<GithubUrlVerification>(`/project/check-bot-github?link=${link}`);
   }
 
   public async checkProjectName(name: string): Promise<boolean> {
