@@ -1,3 +1,4 @@
+import { SnackbarService } from './../../../services/snackbar.service';
 import { Component, OnInit } from '@angular/core';
 import { ContainerStatus, Origin, ProjectStatus, ProjectStatusResponse } from 'src/app/models/api/project.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -15,6 +16,7 @@ export class DashboardMainComponent implements OnInit {
 
   constructor(
     private readonly _api: ApiService,
+    private readonly _snackbar: SnackbarService,
   ) { }
 
   public ngOnInit() {
@@ -25,11 +27,21 @@ export class DashboardMainComponent implements OnInit {
   }
 
   public async redeployProject() {
-    this._api.project = await this._api.linkProjectToDocker(this.project.id);
+    try {
+      this._api.project = await this._api.linkProjectToDocker(this.project.id);
+    } catch (e) {
+      console.error(e);
+      this._snackbar.snack("Erreur lors du déploiement du project !");
+    }
   }
 
   public async redeployMysql() {
-    this._api.project = await this._api.linkProjectToMysql(this.project.id);
+    try {
+      this._api.project = await this._api.linkProjectToMysql(this.project.id);
+    } catch (e) {
+      console.error(e);
+      this._snackbar.snack("Erreur lors du déploiement de la base de données");
+    }
   }
 
   public get hasMysql() {
