@@ -6,7 +6,6 @@ export class User extends BaseModel {
   public firstName: string;
   public lastName: string;
   public mail: string;
-  public studentId: string;
   public admin: boolean;
   public role: Role;
   public collaborators?: Collaborator[];
@@ -27,11 +26,10 @@ export class User extends BaseModel {
 }
 
 export class Collaborator extends BaseModel {
-  public id: number;
+  public userId: string;
   public project: Project;
   public projectId: string;
   public user: User;
-  public userId: string;
   public role: Role;
   public createdDate: Date;
   public updatedDate: Date;

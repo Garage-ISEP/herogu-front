@@ -14,8 +14,11 @@ export class AddStudentComponent {
   @Input()
   public addedUsers: string[] = [];
 
+  @Input()
+  public disabled = false;
+
   @Output()
-  public users: EventEmitter<string[]> = new EventEmitter<string[]>();
+  public readonly users = new EventEmitter<string[]>();
 
   @Input()
   public allUsers: string[] = [];

@@ -45,6 +45,14 @@ export class DashboardSettingsComponent {
     }
   }
 
+  public async updateUsers(users: string[]) {
+    try {
+      await this._api.patchUsers(this.project.id, users);
+    } catch (e) {
+      this._snackbar.snack("Une erreur est survenu lors de la modification des collaborators");
+    }
+  }
+
   public get project(): Project {
     return this._api.project;
   }
@@ -54,7 +62,7 @@ export class DashboardSettingsComponent {
   }
 
   public get collaborators(): string[] {
-    return this.project.collaborators.filter(el => el.userId != this._api.user!.id).map(el => el.user.studentId);
+    return this.project.collaborators.filter(el => el.userId != this._api.user!.id).map(el => el.user.id);
   }
 
 

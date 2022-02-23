@@ -9,7 +9,7 @@
 		<mat-label>Nom du projet</mat-label>
 		<input matInput [(ngModel)]="project.name" disabled>
 	</mat-form-field>
-	<app-add-student *ngIf="isAuthor" [addedUsers]="collaborators"></app-add-student>
+	<app-add-student [disabled]="!isAuthor" [addedUsers]="collaborators" (users)="updateUsers($event)"></app-add-student>
 	<mat-form-field appearance="outline" color="accent">
 		<mat-label>Type d'hébergement du projet</mat-label>
 		<input matInput [(ngModel)]="project.type" disabled>

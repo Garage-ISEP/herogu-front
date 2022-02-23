@@ -132,6 +132,9 @@ export class ApiService extends BaseApi {
   public async patchEnv(projectId: string = this.project?.id, env: EnvVars) {
     await this.patch(`/project/${projectId}/env`, { env });
   }
+  public async patchUsers(projectId: string = this.project?.id, users: string[]) {
+    return this.project = await this.patch<unknown, Project>(`/project/${projectId}/user-access`, { users });
+  }
 
   public async toggleNotifications(projectId: string = this.project?.id) {
     return this.patch(`/project/${projectId}/toggle-notifications`);
