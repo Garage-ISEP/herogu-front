@@ -27,10 +27,8 @@ export class DashboardHeaderComponent implements OnInit {
     this._api.watchStatus(this.project.id).subscribe(status => {
       if (status.origin !== "docker")
         return;
-      if (this.changing && status.status !== this._previousStatus) {
-        this.changing = false;
+      if (this.changing && status.status !== this._previousStatus)
         this._previousStatus = status.status;
-      }
       if (status.status === ContainerStatus.Running || status.status === ProjectStatus.SUCCESS)
         this.started = true;
       else if (status.status === ContainerStatus.Stopped)
@@ -42,6 +40,7 @@ export class DashboardHeaderComponent implements OnInit {
   public async toggleContainer() {
     this.changing = true;
     await this._api.toggleContainer(this.project.id);
+    this.changing = false;
   }
 
   public get garageLink(): string {
