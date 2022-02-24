@@ -20,6 +20,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ClipboardModule } from "@angular/cdk/clipboard";
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './components/auth/auth.component';
@@ -97,7 +98,8 @@ import { StorageQuotaComponent } from './components/dashboard/dashboard-main/sto
     MatChipsModule,
     MatAutocompleteModule,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ClipboardModule,
   ],
   providers: [
     {
