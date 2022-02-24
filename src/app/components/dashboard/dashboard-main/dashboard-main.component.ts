@@ -73,5 +73,8 @@ export class DashboardMainComponent implements OnInit {
   public get shouldLinkToGithub() {
     return this.projectStatus.get("github")?.status === ProjectStatus.ERROR;
   }
+  public get projectPaused() {
+    return this.projectStatus.get("docker")?.status !== ContainerStatus.Running;
+  }
 
 }

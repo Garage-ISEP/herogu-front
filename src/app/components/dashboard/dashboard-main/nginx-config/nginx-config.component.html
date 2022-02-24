@@ -2,7 +2,7 @@
 <div class="root-dir help">
 	<mat-form-field #rootdirinput color="accent" class="root-dir-input">
 		<mat-label>Dossier racine:</mat-label>
-		<input autoActiveFirstOption type="text" autocomplete="off" matInput [matAutocomplete]="auto"
+		<input [disabled]="disabled" autoActiveFirstOption type="text" autocomplete="off" matInput [matAutocomplete]="auto"
 			(keydown)="$event.preventDefault()" (keydown.backspace)="removeLastAutoCompleteDir()" placeholder="/"
 			[value]="rootDirVal" required (focus)="onFocus()">
 		<mat-autocomplete #auto>

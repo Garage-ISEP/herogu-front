@@ -13,6 +13,9 @@ export class NginxConfigComponent implements OnInit {
 
   @Input()
   public project: Project;
+
+  @Input()
+  public disabled = false;
   
   @ViewChild(MatAutocompleteTrigger)
   public autocompleteTrigger: MatAutocompleteTrigger;

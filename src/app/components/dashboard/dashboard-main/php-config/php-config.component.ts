@@ -13,6 +13,9 @@ export class PhpConfigComponent {
   @Input()
   public phpInfos: PhpInfo;
 
+  @Input()
+  public disabled = false;
+
   public readonly logLevels = [["report", "Tout"], ["report_problem", "Alertes"], ["bug_report", "Erreurs"], ["report_off", "Aucun"]];
   
   constructor(
