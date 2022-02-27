@@ -18,6 +18,7 @@ import { finalize } from "rxjs/operators";
 })
 export class ApiService extends BaseApi {
 
+  private loadingUser: Promise<any>;
   public user?: User;
   public project?: Project;
 
@@ -45,14 +46,23 @@ export class ApiService extends BaseApi {
   }
 
   public async loadUser(force = false): Promise<User | undefined> {
-    if (!this.logged) return undefined;
-    if (this.user && !force) return this.user;
-    try {
-      return this.user = new User(await this.get<User>(`/auth/me`));
-    } catch (e) {
-      console.error(e);
-      this.logout();
-      this._snackbar.snack("Connexion impossible !");
+    // If there is already a request we wait for the request resolution and we return it
+    if (this.loadingUser) {
+      await this.loadingUser;
+      return this.loadUser(force);
+    } else {
+      if (!this.logged) return undefined;
+      if (this.user && !force) return this.user;
+      try {
+        // We return the user saved and we keep the request handle so we can wait for it
+        return this.user = new User(await (this.loadingUser = this.get<User>(`/auth/me`)));
+      } catch (e) {
+        console.error(e);
+        this.logout();
+        this._snackbar.snack("Connexion impossible !");
+      } finally {
+        this.loadingUser = undefined;
+      }
     }
   }
 
