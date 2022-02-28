@@ -24,7 +24,7 @@ export class DashboardHeaderComponent implements OnInit {
   ) { }
 
   public async ngOnInit() {
-    this._api.watchStatus(this.project.id).subscribe(status => {
+    this._api.watchStatus().subscribe(status => {
       if (status.origin !== "docker")
         return;
       if (this.changing && status.status !== this._previousStatus)
@@ -39,7 +39,7 @@ export class DashboardHeaderComponent implements OnInit {
 
   public async toggleContainer() {
     this.changing = true;
-    await this._api.toggleContainer(this.project.id);
+    await this._api.toggleContainer();
     this.changing = false;
   }
 

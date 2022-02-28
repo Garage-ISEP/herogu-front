@@ -46,7 +46,7 @@ export class ProjectCreationInfosComponent implements OnInit {
     try {
       this.states.github = "loading";
         this._changeDetector.detectChanges();
-        await this._api.linkProjectToGithub(this.createdProject.id);
+        await this._api.linkProjectToGithub();
       this.states.github = "loaded";
     } catch (e) {
       console.error(e);
@@ -60,7 +60,7 @@ export class ProjectCreationInfosComponent implements OnInit {
       try {
         this.states.mysql = "loading";
         this._changeDetector.detectChanges();
-        await this._api.linkProjectToMysql(this.createdProject.id);
+        await this._api.linkProjectToMysql();
         this.states.mysql = "loaded";
       } catch (e) {
         console.error(e);
@@ -73,7 +73,7 @@ export class ProjectCreationInfosComponent implements OnInit {
     try {
       this.states.docker = "loading";
       this._changeDetector.detectChanges();
-      await this._api.linkProjectToDocker(this.createdProject.id);
+      await this._api.linkProjectToDocker();
       this.states.docker = "loaded";
     } catch (e) {
       console.error(e);

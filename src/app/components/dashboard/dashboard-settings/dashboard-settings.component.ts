@@ -47,7 +47,7 @@ export class DashboardSettingsComponent {
 
   public async updateUsers(users: string[]) {
     try {
-      await this._api.patchUsers(this.project.id, users);
+      await this._api.patchUsers(users);
     } catch (e) {
       this._snackbar.snack("Une erreur est survenu lors de la modification des collaborators");
     }

@@ -22,7 +22,7 @@ export class ProjectStatusComponent implements AfterContentInit {
   ) { }
 
   public ngAfterContentInit(): void {
-    this._api.watchStatus(this.project.id).subscribe(status => this.projectStatus.set(status.origin, status));
+    this._api.watchStatus().subscribe(status => this.projectStatus.set(status.origin, status));
   }
 
   public get status(): ProjectStatus | ContainerStatus.Stopped {

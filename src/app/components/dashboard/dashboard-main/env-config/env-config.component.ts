@@ -70,7 +70,7 @@ export class EnvConfigComponent implements OnInit {
       this.modified = false;
       this.env = Object.fromEntries(this.envEntries);
       console.log(this.env);
-      await this._api.patchEnv(undefined, this.env);
+      await this._api.patchEnv(this.env);
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Impossible de mettre à jour les variables d'environnement !");

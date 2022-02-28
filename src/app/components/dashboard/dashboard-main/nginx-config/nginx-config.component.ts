@@ -74,7 +74,7 @@ export class NginxConfigComponent implements OnInit {
 
   public async applyChanges() {
     try {
-      await this._api.patchHttpRoot(this.project.id, this.rootDirVal, this.autocompleteDirTree[this.autocompleteDirTree.length - 1]?.sha);
+      await this._api.patchHttpRoot(this.rootDirVal, this.autocompleteDirTree[this.autocompleteDirTree.length - 1]?.sha);
       this.previousDir = this.rootDirVal;
     } catch (e) {
       console.error(e);

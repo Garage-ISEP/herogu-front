@@ -20,7 +20,7 @@ export class DashboardMainComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this._api.watchStatus(this.project.id).subscribe(el => {
+    this._api.watchStatus().subscribe(el => {
       this.projectStatus.set(el.origin, el);
       console.log(el);
     });
@@ -28,7 +28,7 @@ export class DashboardMainComponent implements OnInit {
 
   public async redeployProject() {
     try {
-      this._api.project = await this._api.linkProjectToDocker(this.project.id);
+      this._api.project = await this._api.linkProjectToDocker();
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Erreur lors du déploiement du project !");
@@ -37,7 +37,7 @@ export class DashboardMainComponent implements OnInit {
 
   public async redeployMysql() {
     try {
-      this._api.project = await this._api.linkProjectToMysql(this.project.id);
+      this._api.project = await this._api.linkProjectToMysql();
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Erreur lors du déploiement de la base de données");
