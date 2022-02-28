@@ -8,3 +8,8 @@ export interface LoginResponseModel {
   token: string;
   user: User;
 }
+
+export interface AuthErrorModel {
+  reason: "admin" | "promotion";
+  message: string;
+}
