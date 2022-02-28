@@ -1,6 +1,7 @@
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -76,6 +77,7 @@ import { StorageQuotaComponent } from './components/dashboard/dashboard-main/sto
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
