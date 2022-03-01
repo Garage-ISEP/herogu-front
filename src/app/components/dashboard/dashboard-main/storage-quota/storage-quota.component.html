@@ -1,0 +1,17 @@
+<div class="header">
+	<h3>Quotas de stockage</h3>
+	<mat-icon
+		matTooltip="Le quota de stockage représente la quantité max de fichiers que tu peux sauvegarder sur ton projet, en cas de dépassement ton projet sera réinitialisé">
+		help</mat-icon>
+</div>
+<div class="quota-wrapper">
+	<span>{{ usage }}</span>
+	<div class="quota">
+		<div class="inner-quota" [style.width.%]="quotaPercentage"></div>
+	</div>
+	<span>{{ quota }}</span>
+</div>
+<div class="quota-info">
+	<p *ngIf="quotaPercentage >= 90 && quotaPercentage < 100">Le quota est bientôt atteint !</p>
+	<p style="color: red" *ngIf="quotaPercentage >= 100 && !!project.storageOverageDate">Le quota est dépassé, le projet sera réinitalisé le {{ deleteDate }}</p>
+</div>

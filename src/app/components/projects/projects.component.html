@@ -5,7 +5,7 @@
       <mat-icon>folder_special</mat-icon><br>
       <span>{{ project.name }}</span>
     </button>
-    <button class="project" mat-stroked-button routerLink="project/create">
+    <button *ngIf="user.admin || !user.projects || user.projects.length == 0" class="project" mat-stroked-button routerLink="project/create">
       <mat-icon>add</mat-icon><br>
       <span>Créer un projet</span>
     </button>

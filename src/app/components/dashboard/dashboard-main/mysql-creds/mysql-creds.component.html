@@ -1,14 +1,20 @@
-<mat-form-field appearance="outline" color="accent">
-	<mat-label>Nom de la base de donnée</mat-label>
-	<input matInput disabled [(ngModel)]="project.mysqlDatabase">
-</mat-form-field>
-<mat-form-field appearance="outline" color="accent">
-	<mat-label>Nom d'utilisateur</mat-label>
-	<input matInput disabled [attr.type]="!showUser ? 'password' : 'text'" [(ngModel)]="project.mysqlUser">
-	<button mat-icon-button matSuffix (click)="showUser = !showUser"><mat-icon class="mat-18">{{ showUser ? 'visibility' : 'visibility_off' }}</mat-icon></button>
-</mat-form-field>
-<mat-form-field appearance="outline" color="accent">
-	<mat-label>Mot de passe</mat-label>
-	<input matInput disabled type="password" [attr.type]="!showPass ? 'password' : 'text'" [(ngModel)]="project.mysqlPassword">
-	<button mat-icon-button matSuffix (click)="showPass = !showPass"><mat-icon class="mat-18">{{ showPass ? 'visibility' : 'visibility_off' }}</mat-icon></button>
-</mat-form-field>
+<h2>Configuration MySQL <mat-icon matTooltip="Tu peux te connecter à la base de donnée avec les identifiants suivant pour pouvoir la modifier comme tu le souhaites">help</mat-icon></h2>
+<div class="creds-wrapper">
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Nom de la base de donnée</mat-label>
+		<input matInput disabled [(ngModel)]="project.mysqlInfo.database">
+		<button mat-icon-button matSuffix (click)="copy(project.mysqlInfo.database)"><mat-icon class="mat-18">content_copy</mat-icon></button>
+	</mat-form-field>
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Nom d'utilisateur</mat-label>
+		<input matInput disabled [attr.type]="!showUser ? 'password' : 'text'" [(ngModel)]="project.mysqlInfo.user">
+		<button mat-icon-button matSuffix (click)="copy(project.mysqlInfo.user)"><mat-icon class="mat-18">content_copy</mat-icon></button>
+		<button mat-icon-button matSuffix (click)="showUser = !showUser"><mat-icon class="mat-18">{{ showUser ? 'visibility' : 'visibility_off' }}</mat-icon></button>
+	</mat-form-field>
+	<mat-form-field appearance="outline" color="accent">
+		<mat-label>Mot de passe</mat-label>
+		<input matInput disabled type="password" [attr.type]="!showPass ? 'password' : 'text'" [(ngModel)]="project.mysqlInfo.password">
+		<button mat-icon-button matSuffix (click)="copy(project.mysqlInfo.password)"><mat-icon class="mat-18">content_copy</mat-icon></button>
+		<button mat-icon-button matSuffix (click)="showPass = !showPass"><mat-icon class="mat-18">{{ showPass ? 'visibility' : 'visibility_off' }}</mat-icon></button>
+	</mat-form-field>
+</div>

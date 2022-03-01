@@ -1,13 +1,22 @@
-<h3>Paramètres :</h3>
+<div class="header">
+	<button mat-icon-button routerLink="..">
+		<mat-icon>arrow_back</mat-icon>
+	</button>
+	<h3>Paramètres :</h3>
+</div>
 <ng-container *ngIf="project">
 	<mat-form-field appearance="outline" color="accent">
 		<mat-label>Nom du projet</mat-label>
-		<input matInput [(ngModel)]="project.name">
+		<input matInput [(ngModel)]="project.name" disabled>
 	</mat-form-field>
-	<app-add-student *ngIf="isAuthor" [addedUsers]="collaborators" [allUsers]="collaborators"></app-add-student>
+	<app-add-student [disabled]="!isAuthor" [addedUsers]="collaborators" (users)="updateUsers($event)"></app-add-student>
 	<mat-form-field appearance="outline" color="accent">
 		<mat-label>Type d'hébergement du projet</mat-label>
 		<input matInput [(ngModel)]="project.type" disabled>
 	</mat-form-field>
+	<section class="notifications">
+		<mat-checkbox [(ngModel)]="project.notificationsEnabled" (ngModelChange)="toggleNotifications()">Être notifié par mail lors de chaque déploiement
+		</mat-checkbox>
+	</section>
 	<button mat-stroked-button (click)="deleteProject()">Supprimer le projet</button>
 </ng-container>

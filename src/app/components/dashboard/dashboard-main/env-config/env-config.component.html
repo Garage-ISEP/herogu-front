@@ -1,0 +1,26 @@
+<div class="header">
+	<h3>Variables d'environnement</h3>
+	<mat-icon
+		matTooltip="Les variables d'environnement permettent d'intégrer des variables contenant des données sensibles ou variables selont les déploiement (ex: clefs d'API, identifiants de connexion)">
+		help</mat-icon>
+	<button matTooltip="Uploader un fichier .env" mat-icon-button class="upload-btn">
+		<input id="env-upload-input" type="file" accept=".env" (change)="uploadEnvFile($event.target.files[0])">
+		<label for="env-upload-input"></label>
+		<mat-icon>upload</mat-icon>
+	</button>
+</div>
+<ng-container *ngIf="mysqlEnv && mysqlEnv.length > 0">
+	<div *ngFor="let mysqlItem of mysqlEnv; let i = index">
+		<app-env-pair [disabled]="true" [key]="mysqlItem[0]" [value]="mysqlItem[1]"></app-env-pair>
+	</div>
+</ng-container>
+<div *ngFor="let item of envEntries; let index = index" class="env">
+	<app-env-pair [(key)]="item[0]" [(value)]="item[1]" (keyChange)="updateEntryKey(index, $event)"
+		(valueChange)="updateEntryValue(index, $event)" (remove)="removeEntry(index)"></app-env-pair>
+</div>
+<div class="buttons">
+	<button mat-stroked-button color="accent" (click)="addEntry()">Ajouter une variable d'environment</button>
+	<button mat-stroked-button color="accent" (click)="applyChanges()" *ngIf="modified">Appliquer les
+		modifications</button>
+</div>
+<br>

@@ -1,7 +1,7 @@
 import { Origin, ProjectStatus, ContainerStatus } from './../../../../models/api/project.model';
 import { AfterContentInit, Component, HostListener, Input, OnInit } from '@angular/core';
 import { ProjectStatusResponse } from 'src/app/models/api/project.model';
-import { Project } from 'src/app/models/api/user.model';
+import { Project } from 'src/app/models/api/project.model';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProjectStatusComponent implements AfterContentInit {
   ) { }
 
   public ngAfterContentInit(): void {
-    this._api.watchStatus(this.project.id).subscribe(status => this.projectStatus.set(status.origin, status));
+    this._api.watchStatus().subscribe(status => this.projectStatus.set(status.origin, status));
   }
 
   public get status(): ProjectStatus | ContainerStatus.Stopped {

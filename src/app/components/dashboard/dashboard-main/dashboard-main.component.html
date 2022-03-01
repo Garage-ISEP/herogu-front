@@ -2,4 +2,8 @@
 	<app-build-project origin="container" [statusMap]="projectStatus" button="Redéployer le projet" (btnClick)="redeployProject()" *ngIf="shouldRebuildContainer">Ce projet est mal ou pas déployé ! (Container non trouvé)</app-build-project>
 	<app-build-project origin="mysql" [statusMap]="projectStatus" button="Réinstaller la base de donnée" (btnClick)="redeployMysql()" *ngIf="shouldRebuildMysql">La base de donnée n'est pas correctement créée</app-build-project>
 	<app-mysql-creds *ngIf="hasMysql" [project]="project"></app-mysql-creds>
+	<app-php-config *ngIf="hasPhp" [disabled]="projectPaused" [phpInfos]="project.phpInfo"></app-php-config>
+	<app-nginx-config [project]="project" [disabled]="projectPaused"></app-nginx-config>
+	<app-env-config *ngIf="hasPhp" [env]="project.phpInfo.env" [mysqlConfig]="project.mysqlInfo"></app-env-config>
+	<app-storage-quota *ngIf="hasQuota" [project]="project"></app-storage-quota>
 </ng-container>

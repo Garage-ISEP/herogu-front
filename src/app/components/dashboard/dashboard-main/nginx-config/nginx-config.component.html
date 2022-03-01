@@ -1,0 +1,21 @@
+<h2>Configuration Serveur</h2>
+<div class="root-dir help">
+	<mat-form-field #rootdirinput color="accent" class="root-dir-input">
+		<mat-label>Dossier racine:</mat-label>
+		<input [disabled]="disabled" autoActiveFirstOption type="text" autocomplete="off" matInput [matAutocomplete]="auto"
+			(keydown)="$event.preventDefault()" (keydown.backspace)="removeLastAutoCompleteDir()" placeholder="/"
+			[value]="rootDirVal" required (focus)="onFocus()">
+		<mat-autocomplete #auto>
+			<mat-option *ngFor="let node of loadedAutocompleteDirChoices?.tree || []" [value]="node.fullPath"
+				(click)="addAutoCompleteDir(node)">
+				{{ node.fullPath }}
+			</mat-option>
+		</mat-autocomplete>
+		<button mat-icon-button matSuffix *ngIf="previousDir !== rootDirVal" (click)="applyChanges()">
+			<mat-icon>check_circle</mat-icon>
+		</button>
+	</mat-form-field>
+	<mat-icon
+		matTooltip="Le dossier racine est le dossier à partir duquel tes fichiers seront desservis par l'URL de ton projet">
+		help</mat-icon>
+</div>

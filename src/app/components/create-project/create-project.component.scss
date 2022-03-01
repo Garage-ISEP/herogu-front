@@ -1,37 +1,44 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
+:host {
+	padding-bottom: 20px;
+	display: block;
+}
 * {
-  color: whitesmoke;
+	color: whitesmoke;
 }
 h1 {
-  color: whitesmoke;
-  text-align: center;
-  font-size: 2.5rem;
-  margin: 35px 0;
-  line-height: 3rem;
+	color: whitesmoke;
+	text-align: center;
+	font-size: 2.5rem;
+	margin: 35px 0;
+	line-height: 3rem;
 }
 .stepper {
-  background-color: #212121;
-  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 4px;
-  width: 95%;
-  margin: auto;
-  form {
-    margin-top: 20px;
-  }
-  .user-add {
-    display: block;
-    width: 100%;
+	background-color: #212121;
+	box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14),
+		0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 4px;
+	width: 95%;
+	margin: auto;
+	form {
+		margin-top: 20px;
+	}
+	.user-add {
+		display: block;
+		width: 100%;
 		max-width: 500px;
-  }
-  li {
-    line-height: 2em;
+	}
+	li {
+		line-height: 2em;
 		::ng-deep a {
 			text-decoration: underline;
 		}
-  }
-	.repo-link, .project-name {
+	}
+	.repo-link,
+	.project-name,
+	.root-dir-input {
 		width: 100%;
 		max-width: 350px;
 	}
@@ -44,35 +51,35 @@ h1 {
 		}
 	}
 }
-p, li {
-  font-size: 1rem;
+p,
+li {
+	font-size: 1rem;
 }
 
-
 @media (max-width: 450px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-  p {
-    font-size: 1em;
-  }
-  .stepper {
-    li {
-      line-height: 1.2em;
-      text-align: justify;
-      margin-bottom: 10px;
-    }
-  }
-  :host ::ng-deep .mat-vertical-content-container {
-    margin-left: 0px;
-    &::before {
-      border: none;
-    }
-  }
-  :host ::ng-deep .mat-step-header {
-    padding: 24px 16px;
-  }
-  :host ::ng-deep .mat-vertical-content {
-    padding: 0 16px;
-  }
+	h1 {
+		font-size: 1.5rem;
+	}
+	p {
+		font-size: 1em;
+	}
+	.stepper {
+		li {
+			line-height: 1.2em;
+			text-align: justify;
+			margin-bottom: 10px;
+		}
+	}
+	:host ::ng-deep .mat-vertical-content-container {
+		margin-left: 0px;
+		&::before {
+			border: none;
+		}
+	}
+	:host ::ng-deep .mat-step-header {
+		padding: 24px 16px;
+	}
+	:host ::ng-deep .mat-vertical-content {
+		padding: 0 16px;
+	}
 }

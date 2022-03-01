@@ -1,0 +1,22 @@
+:host {
+	display: block;
+	margin-bottom: 24px;
+}
+mat-form-field {
+	max-width: 350px;
+	width: 100%;
+	&::ng-deep {
+		.mat-form-field-wrapper {
+			padding-bottom: 0;
+			margin-bottom: 0;
+		}
+	}
+}
+.help {
+	display: flex;
+	align-items: center;
+	mat-icon {
+		margin-left: 15px;
+		cursor: pointer;
+	}
+}

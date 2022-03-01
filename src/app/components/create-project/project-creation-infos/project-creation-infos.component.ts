@@ -1,7 +1,7 @@
 import { CreateProjectRequest, PostProjectRequest } from './../../../models/api/project.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { Project } from 'src/app/models/api/user.model';
+import { Project } from 'src/app/models/api/project.model';
 
 @Component({
   selector: 'app-project-creation-infos',
@@ -12,53 +12,84 @@ export class ProjectCreationInfosComponent implements OnInit {
   @Input()
   public createInfos: CreateProjectRequest;
 
-  public projectCreationState?: LoadingState;
-  public githubCreationState?: LoadingState;
+  
+  public states: { [key: string]: LoadingState } = {};
+  public errors: { [key: string]: string } = {};
 
-  public projectCreationError?: string;
-  public githubCreationError?: string;
-
-  private _workflowId?: number;
-
-  public createdProject?: Project;
+  public createdProject: Project;
 
   constructor(
     private readonly _api: ApiService,
+    private readonly _changeDetector: ChangeDetectorRef
   ) { }
 
   public async ngOnInit() {
     try {
-      await this._postProject();
-    } catch(e) { }
+      if (!this.createdProject)
+        this._postProject();
+    } catch (e) { }
   }
-  
+
   private async _postProject() {
     try {
-      this.projectCreationState = "loading";
+      this.states.project = "loading";
       this.createdProject = await this._api.createProject(new PostProjectRequest(this.createInfos));
-      this.projectCreationState = "loaded";
+      this.states.project = "loaded";
     } catch (e) {
       console.error(e);
-      this.projectCreationState = "error";
-      this.projectCreationError = "Erreur lors de la création du projet";
+      this.states.project = "error";
+      this.errors.project = "Erreur lors de la création du projet";
       throw new Error(e);
+    } finally {
+      this._changeDetector.detectChanges();
     }
     try {
-      this.githubCreationState = "loading";
-      await this._api.linkProjectToGithub(this.createdProject.id);
-      this.githubCreationState = "loaded";
+      this.states.github = "loading";
+        this._changeDetector.detectChanges();
+        await this._api.linkProjectToGithub(this.createdProject.id);
+      this.states.github = "loaded";
     } catch (e) {
       console.error(e);
-      this.githubCreationState = "error";
-      this.githubCreationError = "Erreur lors de la connexion avec GitHub";
+      this.states.github = "error";
+      this.errors.github = "Erreur lors de la connexion avec GitHub";
       throw new Error(e);
+    } finally {
+      this._changeDetector.detectChanges();
+    }
+    if (this.createdProject.mysqlEnabled) {
+      try {
+        this.states.mysql = "loading";
+        this._changeDetector.detectChanges();
+        await this._api.linkProjectToMysql(this.createdProject.id);
+        this.states.mysql = "loaded";
+      } catch (e) {
+        console.error(e);
+        this.states.mysql = "error";
+        this.errors.mysql = "Erreur lors de la création de la base de données MySQL";
+      } finally {
+        this._changeDetector.detectChanges();
+      }
+    }
+    try {
+      this.states.docker = "loading";
+      this._changeDetector.detectChanges();
+      await this._api.linkProjectToDocker(this.createdProject.id);
+      this.states.docker = "loaded";
+    } catch (e) {
+      console.error(e);
+      this.states.docker = "error";
+      this.errors.docker = "Erreur lors de la mise en ligne du site";
+    } finally {
+      this._changeDetector.detectChanges();
     }
   }
 
-  public get workflowUrl(): string | undefined {
-    if (!this._workflowId) return;
-    const [owner, repo] = this.createInfos.githubLink.split("/").slice(-2);
-    return `https://github.com/${owner}/${repo}/actions/runs/${this._workflowId}`;
+  public isDone(): boolean {
+    return this.createdProject
+      && this.states.project === "loaded"
+      && this.states.github === "loaded"
+      && (!this.createInfos.enableMysql || this.states.mysql === "loaded")
+      && this.states.docker === "loaded";
   }
 }
 

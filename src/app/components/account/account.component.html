@@ -4,12 +4,16 @@
     <ng-container>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Code élève</mat-label>
-        <input matInput [value]="user.studentId" disabled />
+        <input matInput [value]="user.id" disabled />
       </mat-form-field>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Email</mat-label>
         <input matInput [value]="user.mail" disabled/>
       </mat-form-field>
+			<mat-form-field appearance="outline" color="accent">
+				<mat-label>Promotion</mat-label>
+				<input matInput [value]="user.graduatingYear" disabled/>
+			</mat-form-field>
     </ng-container>
     <a href="mailto:serveur@garageisep.com" target="_blank" mat-stroked-button >J'ai un problème !</a>
     <button mat-stroked-button (click)="logout()">Me déconnecter</button>

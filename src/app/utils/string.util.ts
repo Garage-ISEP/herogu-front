@@ -8,3 +8,15 @@ export function makeid(length: number): string {
   }
   return result;
 }
+
+export function parseEnvFile(env: string): [string, string][] {
+  const lines = env.split(/\r?\n/);
+  const res: [string, string][] = [];
+  for (const line of lines) {
+    const match = line.match(/^([^=#]+)=(.*)$/);
+    if (match) {
+      res.push([match[1], match[2]]);
+    }
+  }
+  return res;
+}

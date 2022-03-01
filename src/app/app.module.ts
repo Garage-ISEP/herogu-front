@@ -19,6 +19,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ClipboardModule } from "@angular/cdk/clipboard";
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './components/auth/auth.component';
@@ -42,6 +44,11 @@ import { DashboardSettingsComponent } from './components/dashboard/dashboard-set
 import { DashboardMainComponent } from './components/dashboard/dashboard-main/dashboard-main.component';
 import { BuildProjectComponent } from './components/dashboard/dashboard-main/build-project/build-project.component';
 import { MysqlCredsComponent } from './components/dashboard/dashboard-main/mysql-creds/mysql-creds.component';
+import { PhpConfigComponent } from './components/dashboard/dashboard-main/php-config/php-config.component';
+import { NginxConfigComponent } from './components/dashboard/dashboard-main/nginx-config/nginx-config.component';
+import { EnvConfigComponent } from './components/dashboard/dashboard-main/env-config/env-config.component';
+import { EnvPairComponent } from './components/dashboard/dashboard-main/env-config/env-pair/env-pair.component';
+import { StorageQuotaComponent } from './components/dashboard/dashboard-main/storage-quota/storage-quota.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +68,11 @@ import { MysqlCredsComponent } from './components/dashboard/dashboard-main/mysql
     DashboardMainComponent,
     BuildProjectComponent,
     MysqlCredsComponent,
+    PhpConfigComponent,
+    NginxConfigComponent,
+    EnvConfigComponent,
+    EnvPairComponent,
+    StorageQuotaComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +98,8 @@ import { MysqlCredsComponent } from './components/dashboard/dashboard-main/mysql
     MatChipsModule,
     MatAutocompleteModule,
     MatCheckboxModule,
+    MatTooltipModule,
+    ClipboardModule,
   ],
   providers: [
     {

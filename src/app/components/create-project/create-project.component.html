@@ -1,70 +1,96 @@
-<h1>Créer un projet Herogu</h1>
+<h1>Créer mon projet Herogu</h1>
 <mat-vertical-stepper linear class="stepper" color="accent" #stepper>
-
-  <mat-step [stepControl]="infosForm">
-    <form [formGroup]="infosForm">
-      <ng-template matStepLabel>Configuration du projet</ng-template>
-      <mat-form-field appearance="outline" color="accent" class="project-name">
-        <mat-label>Nom du projet</mat-label>
-        <input type="text" matInput placeholder="mon-projet" formControlName="projectName" required>
-				<mat-error>Le nom doit être compris entre 3 et 15 caractères et ne pas contenir de caractères spéciaux et de nombres</mat-error>
-      </mat-form-field><br><br>
-      <section>
-        <mat-checkbox formControlName="enablePHP" #usePhp>Utiliser PHP</mat-checkbox>
-      </section>
-      <section>
-        <mat-checkbox formControlName="enableMysql" [disabled]="!usePhp.checked">Utiliser une base de donnée MySQL</mat-checkbox>
-      </section><br>
-      <app-add-student class="user-add" (users)="infosForm.value.addedUsers = $event"></app-add-student>
-      <div>
-        <button mat-stroked-button matStepperNext color="accent">Suivant</button>
-      </div>
-    </form>
-  </mat-step>
-	<mat-step>
-		<ng-template matStepLabel>Configurer des variables d'environnement</ng-template>
+	<mat-step [stepControl]="infosForm">
+		<form [formGroup]="infosForm">
+			<ng-template matStepLabel>Configuration du projet</ng-template>
+			<mat-form-field appearance="outline" color="accent" class="project-name">
+				<mat-label>Nom du projet</mat-label>
+				<input type="text" matInput placeholder="mon-projet" (keydown.space)="$event.preventDefault()" formControlName="projectName" required>
+				<mat-error>Le nom doit être compris entre 3 et 15 caractères, ne pas contenir de caractères spéciaux hormi des
+					'-' et il ne doit pas être déjà pris.</mat-error>
+				<mat-hint>Url: https://{{ infosForm.get('projectName').value }}{{ projectDomain }}</mat-hint>
+			</mat-form-field>
+			<br ><br>
+			<section>
+				<mat-checkbox formControlName="enablePHP" #usePhp>Utiliser PHP</mat-checkbox>
+			</section>
+			<section *ngIf="usePhp.checked">
+				<mat-checkbox formControlName="enableMysql">Utiliser une base de donnée MySQL</mat-checkbox>
+			</section><br>
+			<app-add-student class="user-add" (users)="infosForm.get('addedUsers').setValue($event)"></app-add-student>
+			<div>
+				<button mat-stroked-button matStepperNext color="accent">Suivant</button>
+			</div>
+		</form>
+	</mat-step>
+	<mat-step [stepControl]="configForm">
+		<ng-template matStepLabel>Configuration du repository</ng-template>
 		<br>
-		<div *ngFor="let item of envForm | keyvalue; let index = index" class="env">
+		<li>Ton code source doit être sur un repository Github publique ou privé !</li>
+		<li>Tu dois connecter le bot Herogu au repository, il ajoutera les fichiers de configuration nécessaires dans le
+			dossier docker (sans toucher au code présent)</li>
+		<li>Herogu se chargera ensuite de mettre en ligne ton site avec un super nom de domaine rien que pour toi :D</li>
+		<li>À chaque push sur ta branche principale Herogu mettra à jour ton site automatiquement</li>
+		<li>La branche principale ne dois pas être en mode protégé⚠️</li>
+		<form [formGroup]="configForm">
+			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter Herogu
+				à mon repository</a><br><br>
+			<mat-form-field appearance="outline" color="accent" class="repo-link">
+				<mat-label>Lien du repository Github</mat-label>
+				<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink"
+					required>
+				<mat-icon class="repo-icons" [style.color]="'green'" matSuffix
+					[style.display]="botInstalled === true ? 'inline' : 'none'">done</mat-icon>
+				<mat-icon class="repo-icons" [style.color]="'red'" matSuffix
+					[style.display]="botInstalled === false ? 'inline' : 'none'">close</mat-icon>
+			</mat-form-field><br>
+			<section>
+				<mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement
+				</mat-checkbox>
+			</section><br>
+			<button [style.display]="'block'" mat-stroked-button color="accent" matStepperNext>Continuer</button>
+		</form>
+	</mat-step>
+	<mat-step>
+		<ng-template matStepLabel>Configuration de la mise en ligne</ng-template>
+		<br>
+		<div *ngFor="let item of repoForm.value.env; let index = index" class="env">
 			<mat-form-field color="accent">
 				<mat-label>Clef</mat-label>
-				<input matInput type="text" (keydown.space)="$event.preventDefault()" [(ngModel)]="item.key" />
+				<input matInput type="text" (keydown.space)="$event.preventDefault()" [(ngModel)]="item[0]"
+					(ngModelChange)="updateEntryKey(index, $event)" />
 			</mat-form-field>
 			<span class="delimiter">:</span>
 			<mat-form-field color="accent">
 				<mat-label>Valeur</mat-label>
-				<input type="text" matInput [(ngModel)]="item.value" />
+				<input type="text" matInput [(ngModel)]="item[1]" (ngModelChange)="updateEntryValue(index, $event)" />
 				<button matSuffix mat-icon-button color="accent" (click)="removeEntry(index)">
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-form-field>
 		</div>
-		<button [style.display]="'block'" mat-stroked-button color="accent" (click)="addEntry()">Ajouter une variable d'environment</button>
+		<button [style.display]="'block'" mat-stroked-button color="accent" (click)="addEntry()">Ajouter une variable
+			d'environment</button>
 		<br>
-		<button [style.display]="'block'" mat-stroked-button color="accent" matStepperNext>Continuer</button>
+		<form [formGroup]="repoForm">
+			<mat-form-field #rootdirinput color="accent" class="root-dir-input">
+				<mat-label>Dossier racine:</mat-label>
+				<input autoActiveFirstOption type="text" autocomplete="off" matInput [matAutocomplete]="auto"
+					(keydown)="$event.preventDefault()" (keydown.backspace)="removeLastAutoCompleteDir()" placeholder="/"
+					formControlName="rootDir" required>
+				<mat-autocomplete #auto >
+					<mat-option *ngFor="let node of loadedAutocompleteDirChoices?.tree || []" [value]="node.fullPath"
+						(click)="addAutoCompleteDir(node)">
+						{{ node.fullPath }}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+		</form>
+		<div>
+			<button mat-stroked-button color="accent" matStepperNext [disabled]="botInstalled !== true">Créer mon projet
+				!</button>
+		</div>
 	</mat-step>
-  <mat-step [stepControl]="configForm">
-    <ng-template matStepLabel>Configuration du repository</ng-template>
-    <br>
-    <li>Ton code source doit être sur un repository Github publique ou privé !</li>
-		<li>Tu dois connecter le bot Herogu au repository, il ajoutera les fichiers de configuration nécessaires dans les dossiers .github et docker (sans toucher au code présent)</li>
-		<li>Herogu se chargera ensuite de mettre en ligne ton site avec un super nom de domaine rien que pour toi :D</li>
-		<li>À chaque push sur ta branche principale Herogu mettra à jour ton site</li>
-    <form [formGroup]="configForm">
-			<a mat-stroked-button href="https://github.com/apps/herogu-app/installations/new" target="_blank">Connecter Herogu à mon repository</a><br><br>
-			<mat-form-field appearance="outline" color="accent" class="repo-link">
-				<mat-label>Lien du repository Github</mat-label>
-				<input type="text" matInput placeholder="https://github.com/Garage-ISEP/GarageBot" formControlName="githubLink" required>
-				<mat-icon class="repo-icons" [style.color]="'green'" matSuffix [style.display]="botInstalled === true ? 'inline' : 'none'">done</mat-icon>
-				<mat-icon class="repo-icons" [style.color]="'red'" matSuffix [style.display]="botInstalled === false ? 'inline' : 'none'">close</mat-icon>
-			</mat-form-field><br>
-			<section>
-        <mat-checkbox formControlName="enableNotifications">Être notifié par mail lors de chaque déploiement</mat-checkbox>
-      </section><br>
-      <div>
-        <button mat-stroked-button color="accent" matStepperNext [disabled]="botInstalled !== true">Créer mon projet !</button>
-      </div>
-    </form>
-  </mat-step>
 	<mat-step>
 		<ng-template matStepLabel>Création du projet</ng-template>
 		<app-project-creation-infos *ngIf="createInfos" [createInfos]="createInfos"></app-project-creation-infos>

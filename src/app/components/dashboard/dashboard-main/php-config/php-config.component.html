@@ -1,0 +1,15 @@
+<h2>Configuration PHP</h2>
+<div class="errors">
+	<div class="help">
+		<mat-slide-toggle [disabled]="disabled" [(ngModel)]="phpInfos.logEnabled" (ngModelChange)="applyChanges()">Activer les logs</mat-slide-toggle>
+		<mat-icon
+			matTooltip="Le niveau de log défini si les erreurs PHP s'afficheront sur ton site. Lors d'une présentation par exemple il est conseillé de cacher les erreurs">
+			help</mat-icon>
+	</div>
+	<div class="error-levels" *ngIf="phpInfos.logEnabled">
+		<button [disabled]="disabled" mat-stroked-button (click)="updateLogLevel(i)" *ngFor="let icon of logLevels; let i = index;" [class.selected]="i === logSelectedIndex">
+			<mat-icon>{{ icon[0] }}</mat-icon>
+			<span>{{ icon[1] }}</span>
+		</button>
+	</div>
+</div>

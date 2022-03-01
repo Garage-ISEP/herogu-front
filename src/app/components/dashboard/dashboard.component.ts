@@ -1,6 +1,6 @@
+import { Project } from 'src/app/models/api/project.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Project } from 'src/app/models/api/user.model';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({

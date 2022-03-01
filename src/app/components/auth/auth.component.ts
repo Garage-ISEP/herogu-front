@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthErrorModel } from 'src/app/models/api/auth.model';
 
 @Component({
   selector: 'app-auth',
@@ -31,9 +32,17 @@ export class AuthComponent {
       this._router.navigateByUrl("/");
       this._snackbar.snack(`Bienvenue ${res.firstName} !`);
     } catch (e) {
-      if (e instanceof HttpErrorResponse && (e.status === 401 || e.status === 400))
-        this._snackbar.snack("Ton identifiant ou mot de passe est incorrect.");
-      else
+      if (e instanceof HttpErrorResponse) {
+        if (e.status === 401 || e.status === 400)
+          this._snackbar.snack("Ton identifiant ou mot de passe est incorrect.");
+        else if (e.status === 403) {
+          const body: AuthErrorModel = e.error;
+          if (body.reason === "promotion")
+            this._snackbar.snack("Tu n'es pas autorisé à te connecter. Plateforme réservée aux Garagistes pour le moment.");
+          else
+            this._snackbar.snack("Tu n'es pas autorisé à te connecter.");
+        }
+      }
         this._snackbar.snack("Une erreur est survenue.");
       this._api.logout();
     } finally {

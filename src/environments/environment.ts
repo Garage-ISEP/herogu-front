@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   api: "http://localhost:3000",
+  projectDomain: "localhost:8081",
   captcha: "6LeGpxYaAAAAANN3Yoke3ZTMbVvfVbbLSLORDhHG"
 };
 
