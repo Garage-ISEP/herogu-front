@@ -90,6 +90,12 @@ export class ApiService extends BaseApi {
       console.error(e);
     }
   }
+  public unwatchStatus() {
+    if (this._subject) {
+      this._subject.complete();
+      this._subject = null;
+    }
+  }
 
   public async verifyRepositoryLink(link: string): Promise<GithubUrlVerification> {
     return await this.get<GithubUrlVerification>(`/project/check-bot-github?link=${link}`);
