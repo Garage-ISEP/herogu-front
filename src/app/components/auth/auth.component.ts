@@ -38,11 +38,11 @@ export class AuthComponent {
         else if (e.status === 403) {
           const body: AuthErrorModel = e.error;
           if (body.reason === "promotion")
-            this._snackbar.snack("Tu n'es pas autorisé à te connecter. Plateforme réservée aux Garagistes pour le moment.");
+            this._snackbar.snack("Tu n'es pas autorisé à te connecter. Plateforme réservée aux A1 pour le moment.");
           else
             this._snackbar.snack("Tu n'es pas autorisé à te connecter.");
         }
-      }
+      } else
         this._snackbar.snack("Une erreur est survenue.");
       this._api.logout();
     } finally {
