@@ -1,6 +1,9 @@
 :host {
 	display: block;
 	padding: 25px 20px;
+	@media (max-width: 600px) {
+		padding: 20px 5px;
+	}
 }
 app-build-project {
 	margin-bottom: 20px;

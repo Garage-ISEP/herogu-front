@@ -7,16 +7,18 @@
 	height: 12px;
 	border-radius: 50px;
 	cursor: pointer;
-	&[status=SUCCESS], &[status=Running] {
+	&[status="SUCCESS"],
+	&[status="Running"] {
 		background-color: #5cb85c;
 	}
-	&[status=IN_PROGRESS] {
+	&[status="IN_PROGRESS"] {
 		background-color: #f0ad4e;
 	}
-	&[status=ERROR], &[status=NotFound] {
+	&[status="ERROR"],
+	&[status="NotFound"] {
 		background-color: #d9534f;
 	}
-	&[status=Stopped] {
+	&[status="Stopped"] {
 		background-color: #808080;
 	}
 	&[status=""] {
@@ -29,7 +31,7 @@
 	background-color: #212121;
 	transform: translateX(-50%);
 	width: 150px;
-	border: 1px solid rgba(255,255,255,.12);
+	border: 1px solid rgba(255, 255, 255, 0.12);
 	border-radius: 4px;
 	padding: 0 5px;
 	box-shadow: 0px 0px 3px 1px #00000040;
@@ -44,10 +46,14 @@
 		margin: 5px 0px;
 		padding: 7px 0px 7px 5px;
 		&:not(:last-of-type) {
-			border-bottom: 1px solid rgba(255,255,255,.12);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 		}
 		.origin {
 			margin-left: 15px;
 		}
+	}
+	@media (max-width: 600px) {
+		right: 0px;
+		transform: none;
 	}
 }

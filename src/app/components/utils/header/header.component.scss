@@ -22,6 +22,9 @@
   .projects-button {
     margin-right: 16px;
     transform: scale(1.3);
+		@media (max-width: 600px) {
+			display: none;
+		}
   }
   button {
     // transform: scale(1.5);

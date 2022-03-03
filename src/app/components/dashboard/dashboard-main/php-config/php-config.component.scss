@@ -17,6 +17,7 @@
 }
 .error-levels {
 	display: flex;
+	flex-wrap: wrap;
 	width: 100%;
 	justify-content: space-around;
 	margin-top: 20px;
@@ -24,6 +25,7 @@
 	button {
 		height: 150px;
 		width: 150px;
+		margin: 15px;
 		::ng-deep .mat-button-wrapper {
 			height: 100%;
 			display: flex;
