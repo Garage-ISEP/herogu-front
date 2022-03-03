@@ -18,9 +18,6 @@ export class MysqlCredsComponent {
   @Input()
   public project: Project;
 
-  public showPass = false;
-  public showUser = false;
-
   public copy(value: string) {
     this._clipboard.copy(value);
     this._snackbar.snack("Information copiée dans le presse-papier ! ");
