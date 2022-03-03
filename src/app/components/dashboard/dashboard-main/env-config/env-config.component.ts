@@ -36,6 +36,7 @@ export class EnvConfigComponent implements OnInit {
         ['MYSQL_DATABASE', this.mysqlConfig.database],
         ['MYSQL_USER', this.mysqlConfig.user],
         ['MYSQL_PASSWORD', this.mysqlConfig.password],
+        ['MYSQL_HOST', 'herogu.garageisep.com'],
       );
     }
   }
