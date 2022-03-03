@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
   
   public ngOnDestroy(): void {
-    this._api.unwatchStatus();
+    this._api.exitProject();
   }
   
 }
