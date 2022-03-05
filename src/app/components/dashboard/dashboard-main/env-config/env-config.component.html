@@ -9,11 +9,11 @@
 		<mat-icon>upload</mat-icon>
 	</button>
 </div>
-<ng-container *ngIf="mysqlEnv && mysqlEnv.length > 0">
+<div class="env-wrapper" *ngIf="mysqlEnv && mysqlEnv.length > 0">
 	<div *ngFor="let mysqlItem of mysqlEnv; let i = index">
 		<app-env-pair [disabled]="true" [key]="mysqlItem[0]" [value]="mysqlItem[1]"></app-env-pair>
 	</div>
-</ng-container>
+</div>
 <div *ngFor="let item of envEntries; let index = index" class="env">
 	<app-env-pair [(key)]="item[0]" [(value)]="item[1]" (keyChange)="updateEntryKey(index, $event)"
 		(valueChange)="updateEntryValue(index, $event)" (remove)="removeEntry(index)"></app-env-pair>

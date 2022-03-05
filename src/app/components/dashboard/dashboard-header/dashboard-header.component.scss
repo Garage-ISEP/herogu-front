@@ -12,7 +12,8 @@ mat-divider {
 	height: 45px;
 	margin: 0 10px 0 10px;
 }
-p, h1 {
+p,
+h1 {
 	margin: 0;
 }
 a:hover {
@@ -22,10 +23,12 @@ div {
 	display: flex;
 	align-items: center;
 }
-.toggle-btn, mat-progress-spinner {
+.toggle-btn,
+mat-progress-spinner {
 	margin-right: 10px;
 }
-mat-progress-spinner, mat-progress-spinner ::ng-deep svg {
+mat-progress-spinner,
+mat-progress-spinner ::ng-deep svg {
 	width: 30px !important;
 	height: 30px !important;
 	overflow: visible !important;
@@ -38,4 +41,32 @@ mat-progress-spinner, mat-progress-spinner ::ng-deep svg {
 }
 a {
 	text-align: left;
+}
+@media (max-width: 600px) {
+	:host {
+		padding: 5px 10px;
+		& > div:first-of-type {
+			flex-direction: column;
+			align-items: start;
+			font-size: 13px;
+			flex: 1;
+			mat-divider {
+				display: none;
+			}
+		}
+		& > div:last-of-type {
+			height: 100%;
+			flex-direction: column;
+			align-items: flex-end;
+			button {
+				margin: 0;
+			}
+			app-project-status {
+				margin-right: 13px;
+			}
+			mat-progress-spinner {
+				margin: 8px 5px;
+			}
+		}
+	}
 }
