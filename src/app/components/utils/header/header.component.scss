@@ -1,55 +1,68 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 .mat-toolbar {
-  background-color: #383838;
-  color: white !important;
-  @include mat-elevation(3);
-  a {
-    height: 100%;
-    color: white;
-    display: flex;
-    align-items: center;
-    .garage-icon {
-      height: 60%;
-      width: auto;
-      margin-right: 16px;
-    }
-  }
+	background-color: #383838;
+	color: white !important;
+	@include mat-elevation(3);
+	a {
+		height: 100%;
+		color: white;
+		display: flex;
+		align-items: center;
+		span {
+			@media (max-width: 600px) {
+				font-size: 15px;
+			}
+		}
+		.garage-icon {
+			height: 60%;
+			width: auto;
+			margin-right: 16px;
+		}
+	}
 
-  .spacer {
-    flex: 1 1 auto;
-  }
-  .projects-button {
-    margin-right: 16px;
-    transform: scale(1.3);
+	.spacer {
+		flex: 1 1 auto;
+	}
+	.projects-button {
+		margin-right: 16px;
+		transform: scale(1.3);
 		@media (max-width: 600px) {
 			display: none;
 		}
-  }
-  button {
-    // transform: scale(1.5);
-    color: white !important;
-      mat-icon {
-      color: white !important;
-    }
-  }
+	}
+	button {
+		// transform: scale(1.5);
+		color: white !important;
+		mat-icon {
+			color: white !important;
+		}
+		@media (max-width: 600px) {
+			::ng-deep .mat-button-wrapper {
+				visibility: collapse;
+				font-size: 0px;
+				mat-icon {
+					visibility: visible;
+				}
+			}
+		}
+	}
 }
 mat-progress-bar {
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  transition: opacity 250ms;
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	transition: opacity 250ms;
 
-  ::ng-deep .mat-progress-bar-fill::after {
-    background-color: #d1d1d1 !important;
-  }
+	::ng-deep .mat-progress-bar-fill::after {
+		background-color: #d1d1d1 !important;
+	}
 
-  ::ng-deep .mat-progress-bar-buffer {
-    background: #383838 !important;
-  }
+	::ng-deep .mat-progress-bar-buffer {
+		background: #383838 !important;
+	}
 
-  ::ng-deep .mat-progress-bar {
-    border-radius: 2px;
-  }
-
+	::ng-deep .mat-progress-bar {
+		border-radius: 2px;
+	}
 }
