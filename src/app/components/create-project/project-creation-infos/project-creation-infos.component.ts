@@ -12,7 +12,7 @@ export class ProjectCreationInfosComponent implements OnInit {
   @Input()
   public createInfos: CreateProjectRequest;
 
-  
+
   public states: { [key: string]: LoadingState } = {};
   public errors: { [key: string]: string } = {};
 
@@ -43,33 +43,39 @@ export class ProjectCreationInfosComponent implements OnInit {
     } finally {
       this._changeDetector.detectChanges();
     }
-    try {
-      this.states.github = "loading";
-        this._changeDetector.detectChanges();
-        await this._api.linkProjectToGithub(this.createdProject.id);
-      this.states.github = "loaded";
-    } catch (e) {
-      console.error(e);
-      this.states.github = "error";
-      this.errors.github = "Erreur lors de la connexion avec GitHub";
-      throw new Error(e);
-    } finally {
-      this._changeDetector.detectChanges();
-    }
-    if (this.createdProject.mysqlEnabled) {
-      try {
-        this.states.mysql = "loading";
-        this._changeDetector.detectChanges();
-        await this._api.linkProjectToMysql(this.createdProject.id);
-        this.states.mysql = "loaded";
-      } catch (e) {
-        console.error(e);
-        this.states.mysql = "error";
-        this.errors.mysql = "Erreur lors de la création de la base de données MySQL";
-      } finally {
-        this._changeDetector.detectChanges();
-      }
-    }
+    await Promise.all([
+      (async () => {
+        try {
+          this.states.github = "loading";
+          this._changeDetector.detectChanges();
+          await this._api.linkProjectToGithub(this.createdProject.id);
+          this.states.github = "loaded";
+        } catch (e) {
+          console.error(e);
+          this.states.github = "error";
+          this.errors.github = "Erreur lors de la connexion avec GitHub";
+          throw new Error(e);
+        } finally {
+          this._changeDetector.detectChanges();
+        }
+      })(),
+      (async () => {
+        if (this.createdProject.mysqlEnabled) {
+          try {
+            this.states.mysql = "loading";
+            this._changeDetector.detectChanges();
+            await this._api.linkProjectToMysql(this.createdProject.id);
+            this.states.mysql = "loaded";
+          } catch (e) {
+            console.error(e);
+            this.states.mysql = "error";
+            this.errors.mysql = "Erreur lors de la création de la base de données MySQL";
+          } finally {
+            this._changeDetector.detectChanges();
+          }
+        }
+      })(),
+    ]);
     try {
       this.states.docker = "loading";
       this._changeDetector.detectChanges();
