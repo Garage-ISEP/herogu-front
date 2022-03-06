@@ -64,14 +64,12 @@ export class DashboardMainComponent implements OnInit {
     return (
       this.projectStatus.get("docker")?.status === ContainerStatus.NotFound ||
       this.projectStatus.get("container")?.status === ContainerStatus.Restarting ||
-      this.projectStatus.get("container")?.status === ContainerStatus.Error
+      this.projectStatus.get("container")?.status === ContainerStatus.Error ||
+      this.projectStatus.get("image")?.status === ProjectStatus.ERROR
     ) && this.projectStatus.get("docker")?.status !== ContainerStatus.Running;
   }
   public get shouldRebuildMysql() {
     return (this.projectStatus.get("mysql")?.status === ProjectStatus.ERROR || this.projectStatus.get("mysql")?.status === ProjectStatus.IN_PROGRESS) && this.project.mysqlEnabled;
-  }
-  public get shouldLinkToGithub() {
-    return this.projectStatus.get("github")?.status === ProjectStatus.ERROR;
   }
   public get projectPaused() {
     return this.projectStatus.get("docker")?.status !== ContainerStatus.Running;
