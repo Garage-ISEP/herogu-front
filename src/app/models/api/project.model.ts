@@ -164,4 +164,4 @@ export enum ContainerStatus {
   Restarting = "Restarting",
   NotFound = "NotFound"
 }
-export type Origin = "docker" | "container" | "mysql" | "github";
+export type Origin = "docker" | "container" | "mysql" | "image";
