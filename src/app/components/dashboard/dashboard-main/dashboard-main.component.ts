@@ -29,6 +29,7 @@ export class DashboardMainComponent implements OnInit {
   public async redeployProject() {
     try {
       this._api.project = await this._api.linkProjectToDocker();
+      location.reload();
     } catch (e) {
       console.error(e);
       this._snackbar.snack("Erreur lors du déploiement du project !");
