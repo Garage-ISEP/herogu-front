@@ -14,8 +14,11 @@
 				<input type="password" required matInput formControlName="password">
 				<mat-error>Identifiants incorrects</mat-error>
 			</mat-form-field><br>
-			<button type="submit" color="accent" mat-stroked-button [disabled]="!enabled" (click)="submitAuth()">{{ submitting ? "Connexion..." : "Me connecter" }}</button>
+			<button type="submit" color="accent" mat-stroked-button [disabled]="!enabled" (click)="submitAuth()">{{ submitting
+				? "Connexion..." : "Me connecter" }}</button>
 		</form>
 	</div>
-
+	<div>
+		<h2 class="source-code">Code source disponible sur <a target="_blank" href="https://github.com/garage-isep/herogu-back">Github</a></h2>
+	</div>
 </div>
