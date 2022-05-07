@@ -41,7 +41,7 @@ export class CreateProjectComponent implements OnInit {
     this.infosForm = this._formBuilder.group({
       projectName: ['', [
         Validators.required,
-        Validators.pattern(/^(?!(create|admin|garage|isep|herogu|-))([a-z-0-9-]{3,15})(?<!-)$/),
+        Validators.pattern(/^(?!(create|admin|garage|isep|herogu|auth|phpmyadmin|portainer|traefik|data|post|get|put|dashboard|dash|board|-))([a-z-0-9-]{3,15})(?<!-)$/),
       ], [this._getProjectNameValidator()]],
       enablePHP: [true],
       enableMysql: [true],
