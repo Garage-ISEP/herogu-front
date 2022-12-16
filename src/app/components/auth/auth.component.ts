@@ -2,7 +2,7 @@ import { SnackbarService } from './../../services/snackbar.service';
 import { ApiService } from './../../services/api.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthErrorModel } from 'src/app/models/api/auth.model';
 
@@ -13,9 +13,9 @@ import { AuthErrorModel } from 'src/app/models/api/auth.model';
 })
 export class AuthComponent {
 
-  public readonly connexionForm = new FormGroup({
-    password: new FormControl('', [Validators.required]),
-    studentId: new FormControl('', [Validators.required, Validators.pattern(/^\w{4}\d{5}$/g)])
+  public readonly connexionForm = new UntypedFormGroup({
+    password: new UntypedFormControl('', [Validators.required]),
+    studentId: new UntypedFormControl('', [Validators.required, Validators.pattern(/^\w{4}\d{5}$/g)])
   });
   public submitting = false;
 

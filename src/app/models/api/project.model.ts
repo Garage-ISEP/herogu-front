@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { FormGroup } from '@angular/forms';
 import { BaseModel } from '../base.model';
 import { User, Collaborator } from './user.model';
 
